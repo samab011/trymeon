@@ -1,12 +1,13 @@
 # Meon — AI support studio website
 
-Marketing site for **Meon**, an AI support studio that plans websites, ships
-design systems, produces motion video, and runs always-on AI support for the
-teams behind them.
+Marketing site for **Meon**, a Karachi- and Lahore-based AI support studio that
+plans websites, ships bilingual design systems, produces motion video, and runs
+a WhatsApp AI support desk for businesses across Pakistan.
 
 Built as a dark editorial agency site: oversized display typography, a single
 acid accent, film grain, scroll-revealed sections, and an interactive plan
-builder that upsells add-ons on top of a base retainer.
+builder that upsells add-ons on top of a base retainer. All pricing is in
+Pakistani rupees.
 
 ## Run it
 
@@ -37,7 +38,7 @@ DESIGN.md               the design system: colour, type, spacing, motion
 | 01 | Services | Bento grid, six disciplines, one inverted accent card |
 | 02 | Process | Four-week timeline with per-step deliverables |
 | 03 | Work | Horizontal scroll-snap case rail, colour-coded per case |
-| 04 | Build a plan | Base plan + add-on upsells + billing toggle, live total |
+| 04 | Pricing | Base plan + add-on upsells + billing toggle, live PKR total |
 | 05 | FAQ | Native `<details>` accordion |
 | 06 | Contact | Client-validated form, pre-filled with the built plan |
 
@@ -45,7 +46,8 @@ DESIGN.md               the design system: colour, type, spacing, motion
 
 The pricing section is the site's conversion mechanic, and it's data-driven:
 
-- Base plans carry `data-price` (Sprint 3,200 / Partner 6,400 / Embedded 11,500).
+- Base plans carry `data-price` in PKR (Sprint 145,000 / Partner 320,000 /
+  Embedded 675,000 per month).
 - Add-ons carry `data-addon` and `data-price`, and toggle via `aria-pressed`.
 - Quarterly billing applies a 15% discount to `(base + add-ons) × 3` and shows
   the saved amount.
@@ -56,13 +58,39 @@ The pricing section is the site's conversion mechanic, and it's data-driven:
 Changing a price means editing one `data-price` attribute — nothing in the JS
 hardcodes an amount.
 
+Amounts are formatted with `Intl` under the `en-PK` locale, which groups in
+plain thousands (`145,000`, not `1,45,000`) and pairs with the `Rs` symbol used
+throughout. Rates are set for the Pakistani market rather than converted from a
+dollar rate — a straight USD conversion would put the entry tier near
+Rs 900,000/month and out of reach of the businesses this site is written for.
+
+## Localisation for Pakistan
+
+The content is written for the Pakistani market, not translated into it:
+
+- **Channels** — WhatsApp as the primary support and order-confirmation
+  channel; Instagram and TikTok as discovery.
+- **Payments** — Easypaisa, JazzCash, bank transfer and card gateways; PKR
+  invoicing with filer/non-filer withholding noted in the pricing fine print.
+- **Logistics** — cash on delivery, courier booking (TCS, Leopards, M&P,
+  PostEx), and return-to-origin as the headline conversion metric.
+- **Language** — Urdu, Roman Urdu and English support; a bilingual design
+  system covering Latin and Nastaliq, LTR and RTL. The footer line is set in
+  Noto Nastaliq Urdu with `lang="ur" dir="rtl"`.
+- **Reach** — page-weight budgets stated in terms of 4G outside the major
+  cities; city datalist and `+92` phone field on the contact form; Mon–Sat,
+  9am–9pm PKT stated as working hours.
+
 ## Notes
 
-- Fonts load from Google Fonts (Inter Tight, Instrument Serif, JetBrains Mono),
-  each with a system fallback stack.
+- Fonts load from Google Fonts (Inter Tight, Instrument Serif, JetBrains Mono,
+  Noto Nastaliq Urdu), each with a system fallback stack.
 - The contact form is client-side only — validation and success state, no
   network call. Wire the `submit` handler in `assets/js/main.js` to a real
   endpoint before launch.
-- Case studies, metrics and testimonials are placeholder content.
-- Verified in Chromium at 1440px and 390px: no horizontal overflow, no console
-  errors, and full `prefers-reduced-motion` fallbacks.
+- Case studies, metrics and testimonials are illustrative placeholder content.
+  The business names are invented and the work section says so on the page —
+  replace them with real engagements before launch.
+- Verified in Chromium at 1600/1440/1280/1024/768/390px: no horizontal
+  overflow, no console errors, no hero line wrapping at any width, and full
+  `prefers-reduced-motion` fallbacks.

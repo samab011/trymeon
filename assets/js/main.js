@@ -31,12 +31,12 @@
   function runCount(el) {
     var target = parseFloat(el.getAttribute('data-count'));
     var suffix = el.getAttribute('data-suffix') || '';
-    if (reduced) { el.textContent = target.toLocaleString('en-US') + suffix; return; }
+    if (reduced) { el.textContent = target.toLocaleString('en-PK') + suffix; return; }
     var start = performance.now(), dur = 1400;
     (function tick(now) {
       var p = Math.min((now - start) / dur, 1);
       var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * eased).toLocaleString('en-US') + suffix;
+      el.textContent = Math.round(target * eased).toLocaleString('en-PK') + suffix;
       if (p < 1) requestAnimationFrame(tick);
     })(start);
   }
@@ -92,7 +92,9 @@
   });
 
   /* ── Plan builder (base + upsell add-ons) ─────────────── */
-  var fmt = function (n) { return n.toLocaleString('en-US'); };
+  /* PKR: en-PK groups in plain thousands (145,000) and uses the Rs symbol. */
+  var fmt = function (n) { return n.toLocaleString('en-PK'); };
+  var rs  = function (n) { return 'Rs ' + fmt(n); };
 
   var state = {
     bill: 'monthly',
@@ -138,12 +140,13 @@
       quoteTotal.textContent = fmt(quarterly);
       quoteUnit.textContent = '/quarter';
       quoteSave.hidden = false;
-      quoteSave.textContent = 'You save $' + fmt(monthly * 3 - quarterly);
+      quoteSave.textContent = 'You save ' + rs(monthly * 3 - quarterly);
     }
 
     if (planField) {
-      planField.value = mix + ' — $' +
-        (state.bill === 'monthly' ? fmt(monthly) + '/month' : fmt(quarterly) + '/quarter');
+      planField.value = mix + ' — ' + (state.bill === 'monthly'
+        ? rs(monthly) + '/month'
+        : rs(quarterly) + '/quarter');
     }
   }
 

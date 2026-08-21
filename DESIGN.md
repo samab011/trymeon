@@ -26,10 +26,19 @@ Three families, strictly separated by job:
 
 - **Inter Tight** — all headings and UI. Tight tracking (`-.035em` to `-.05em`)
   at display sizes; that negative tracking is what makes it read as display type.
+  Hero lines are written short enough to never wrap — a wrapped line breaks the
+  mask-and-rise reveal and pushes the payoff below the fold.
 - **Instrument Serif italic** — one accented word per heading, in `--acid`.
   Never a full sentence.
 - **JetBrains Mono** — eyebrows, kickers, metrics labels, prices, tags.
   Uppercase, `.1em`–`.14em` letter-spacing, 11–13px.
+- **Noto Nastaliq Urdu** — the Urdu line in the footer only, at `line-height: 2.2`.
+  Nastaliq needs roughly double the leading of Latin type; anything tighter
+  clips the descenders of the script.
+
+Currency is set as `Rs` at half the numeral size, superscript-aligned, with
+`font-variant-numeric: tabular-nums` on every price and metric so rupee amounts
+line up in columns.
 
 Scale is fluid via `clamp()`. Hero `clamp(50px, 10.4vw, 142px)` at `.9` line-height;
 section headings `clamp(38px, 6.4vw, 84px)` at `.98`. Body is 17px / 1.55.
@@ -69,6 +78,10 @@ Card gaps stay at a flat `14px` at every breakpoint — the grid changes, the ga
 - **Accordion** — native `<details>`, custom `+`/`×` marker rotated 135°.
 
 ## Accessibility
+
+Urdu is marked `lang="ur" dir="rtl"` on the text itself rather than its
+container, so the block stays on the footer's left grid while the script still
+shapes and orders right-to-left.
 
 Skip link, visible `:focus-visible` ring in `--acid`, `aria-pressed` on add-ons,
 `role="radiogroup"` on plans, `role="status"` on form feedback, and a labelled
