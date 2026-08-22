@@ -213,6 +213,152 @@
     });
   }
 
+  /* ── Hero fractal tree ────────────────────────────────── */
+  /* Ported from the Fractal Bloom React component. Differences from the
+     original: brand palette, DPR-aware sizing, sized to the hero rather than
+     the window, pointer + touch input, strokes batched one Path2D per depth,
+     redraws only while growing or when the pointer moves, paused off-screen,
+     and a static fully-grown tree under prefers-reduced-motion. */
+  (function heroTree() {
+    var canvas = $('#heroTree');
+    if (!canvas || !canvas.getContext) return;
+
+    var ctx = canvas.getContext('2d');
+    if (!ctx || typeof Path2D === 'undefined') return;
+
+    var W = 0, H = 0;
+    var MAX = window.innerWidth < 700 ? 7 : 9;   /* 2^(MAX+1)-1 segments */
+    var SPREAD = Math.PI / 10;
+    var DECAY = 0.78;
+
+    var GROW_MS = 2600;          /* time-based, so 120Hz doesn't grow twice as fast */
+    var depth = 0;
+    var started = 0;
+    var grown = false;
+    var raf = null;
+    var onScreen = true;
+    var paused = 0;
+    var pointer = { x: 0, y: 0, live: false };
+
+    function size() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = canvas.getBoundingClientRect();
+      W = r.width; H = r.height;
+      if (!W || !H) return false;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.lineCap = 'round';
+      return true;
+    }
+
+    /* Collect segments into one Path2D per depth so each level is a single
+       stroke call — 10 strokes a frame instead of ~1000. */
+    function collect(x, y, angle, len, d, levels) {
+      var f = depth - d;
+      if (f <= 0) return;
+      if (f > 1) f = 1;
+
+      var cos = Math.cos(angle), sin = Math.sin(angle);
+      var fx = x + cos * len, fy = y + sin * len;         /* full extent */
+      var path = levels[d] || (levels[d] = new Path2D());
+      path.moveTo(x, y);
+      path.lineTo(x + cos * len * f, y + sin * len * f);  /* grown extent */
+
+      if (f < 1 || d >= MAX) return;   /* children wait for a full parent */
+
+      var off = 0;
+      if (pointer.live) {
+        var dist = Math.hypot(fx - pointer.x, fy - pointer.y);
+        var infl = 1 - dist / (H * 0.55);
+        if (infl > 0) off = (Math.PI / 9) * infl;
+      }
+      collect(fx, fy, angle - SPREAD - off, len * DECAY, d + 1, levels);
+      collect(fx, fy, angle + SPREAD + off, len * DECAY, d + 1, levels);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var levels = [];
+      /* Root sits right of centre on wide screens so the trunk grows through
+         open space instead of the left-aligned headline. */
+      var rootX = W < 700 ? W / 2 : W * 0.66;
+      collect(rootX, H, -Math.PI / 2, H / 5, 0, levels);
+      for (var d = 0; d < levels.length; d++) {
+        if (!levels[d]) continue;
+        var t = d / MAX;
+        ctx.strokeStyle = 'rgba(204,255,46,' + ((1 - t) * 0.55).toFixed(3) + ')';
+        ctx.lineWidth = Math.max(0.4, 1.6 - t * 1.25);
+        ctx.stroke(levels[d]);
+      }
+    }
+
+    function schedule() {
+      if (raf === null && onScreen) raf = requestAnimationFrame(loop);
+    }
+
+    function loop(now) {
+      raf = null;
+      if (!grown) {
+        if (!started) started = now;
+        var p = (now - started) / GROW_MS;
+        if (p >= 1) { p = 1; grown = true; }
+        depth = MAX * p;
+      }
+      draw();
+      if (!grown) schedule();
+    }
+
+    if (!size()) return;
+    canvas.classList.add('is-on');
+
+    if (reduced) {
+      depth = MAX; grown = true;
+      draw();
+      return;                       /* static tree, no loop, no listeners */
+    }
+
+    schedule();
+
+    /* Redraw on pointer move only once the tree has finished growing. */
+    function movePointer(cx, cy) {
+      var r = canvas.getBoundingClientRect();
+      pointer.x = cx - r.left;
+      pointer.y = cy - r.top;
+      pointer.live = true;
+      if (grown) schedule();
+    }
+    window.addEventListener('mousemove', function (e) {
+      movePointer(e.clientX, e.clientY);
+    }, { passive: true });
+    window.addEventListener('touchmove', function (e) {
+      if (e.touches && e.touches[0]) movePointer(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (size()) { pointer.live = false; draw(); }
+      }, 160);
+    }, { passive: true });
+
+    /* Stop burning frames once the hero scrolls away. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        onScreen = entries[0].isIntersecting;
+        if (!onScreen) {
+          if (raf !== null) { cancelAnimationFrame(raf); raf = null; }
+          paused = performance.now();
+        } else if (!grown) {
+          if (paused && started) started += performance.now() - paused;
+          paused = 0;
+          schedule();
+        }
+      }, { threshold: 0 }).observe(canvas);
+    }
+  })();
+
   /* ── Year ─────────────────────────────────────────────── */
   var year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());

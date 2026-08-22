@@ -167,6 +167,16 @@ input,textarea{font:inherit; color:inherit}
   width:min(1100px,120vw); aspect-ratio:1; pointer-events:none; z-index:-1;
   background:radial-gradient(circle, rgba(204,255,46,.10), transparent 62%);
 }
+/* Fractal tree canvas — ambient, masked away from the headline */
+.hero__tree{
+  position:absolute; inset:0; z-index:0; width:100%; height:100%;
+  pointer-events:none; opacity:0; transition:opacity 1.2s var(--ease);
+  -webkit-mask-image:linear-gradient(102deg, transparent 10%, rgba(0,0,0,.3) 46%, #000 80%);
+          mask-image:linear-gradient(102deg, transparent 10%, rgba(0,0,0,.3) 46%, #000 80%);
+}
+.hero__tree.is-on{opacity:1}
+.hero>.wrap{position:relative; z-index:1}
+
 .hero__title{
   font-size:clamp(50px, 10.4vw, 142px); line-height:.9; letter-spacing:-.05em; font-weight:700;
 }
@@ -491,6 +501,12 @@ input,textarea{font:inherit; color:inherit}
   .footer__sign p{margin-left:0}
 }
 @media (max-width:860px){
+  .hero__tree{
+    opacity:.55;
+    -webkit-mask-image:linear-gradient(to top, #000 18%, rgba(0,0,0,.22) 62%, transparent 88%);
+            mask-image:linear-gradient(to top, #000 18%, rgba(0,0,0,.22) 62%, transparent 88%);
+  }
+  .hero__tree.is-on{opacity:.55}
   .nav__links,.nav__call{display:none}
   .burger{display:grid}
   .stats{grid-template-columns:repeat(2,1fr)}
@@ -514,4 +530,5 @@ input,textarea{font:inherit; color:inherit}
   .marquee__track{animation:none}
   .reveal{opacity:1; transform:none}
   .hero__title .line>span{transform:none}
+  .hero__tree{transition:none}
 }

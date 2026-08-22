@@ -82,6 +82,36 @@ The content is written for the Pakistani market, not translated into it:
   cities; city datalist and `+92` phone field on the contact form; Mon–Sat,
   9am–9pm PKT stated as working hours.
 
+## The hero fractal tree
+
+`assets/js/main.js` draws a recursive fractal tree on a canvas behind the hero.
+It's a port of the "Fractal Bloom" React component into this project's vanilla
+stack, since the site has no React, Tailwind or build step. What changed in the
+port, beyond the palette:
+
+- **Time-based growth.** The original advanced a counter per frame, so it grew
+  twice as fast on a 120Hz display. Growth is now driven by elapsed time and
+  completes in 2.6s regardless of refresh rate.
+- **Batched strokes.** Segments are collected into one `Path2D` per depth
+  level, so a frame costs ~10 stroke calls instead of ~1000.
+- **Draws only when something changed.** It animates while growing, then stops;
+  after that it redraws only on pointer movement. The original ran a permanent
+  60fps loop.
+- **Paused off-screen** via `IntersectionObserver`, with elapsed grow time
+  adjusted so a tree paused mid-growth resumes rather than jumping.
+- **DPR-aware**, sized to the hero element rather than `window`, so it stays
+  sharp on retina and correct if the hero is not full-viewport.
+- **Touch as well as mouse** for the branch-angle influence.
+- **`prefers-reduced-motion`** renders one static, fully grown tree and
+  registers no listeners at all.
+- Depth drops from 9 to 7 below 700px (255 segments instead of 1023), and the
+  root sits right of centre on wide screens so the trunk doesn't run through
+  the left-aligned headline.
+
+The canvas is masked with a CSS gradient — horizontally on desktop so it's
+faintest behind the copy, vertically on narrow screens where the copy is full
+width.
+
 ## Notes
 
 - Fonts load from Google Fonts (Inter Tight, Instrument Serif, JetBrains Mono,

@@ -69,7 +69,11 @@ Card gaps stay at a flat `14px` at every breakpoint — the grid changes, the ga
 - Marquee is a duplicated track translated `-50%` over 34s.
 - Grain animates `background-position` (not `transform`) so it can't inflate
   document width.
-- Every animation is disabled under `prefers-reduced-motion: reduce`.
+- The hero fractal tree blooms over 2.6s on a canvas behind the copy, in
+  `--acid` at 55% alpha falling to zero at the branch tips. It is ambient, not
+  content: masked away from the headline, and it stops redrawing once grown.
+- Every animation is disabled under `prefers-reduced-motion: reduce`; the
+  fractal tree renders once, fully grown and static, rather than disappearing.
 
 ## Components
 
