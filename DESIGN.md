@@ -75,7 +75,8 @@ Card gaps stay at a flat `14px` at every breakpoint — the grid changes, the ga
 - **Rail** — horizontal scroll-snap with `scroll-padding-inline` matched to the
   content gutter, so the first card aligns to the headline above it.
 - **Plan builder** — one radio-style base plan, multi-select add-ons, and a
-  billing toggle. All totals derive from `data-price` attributes; the quote bar
+  billing toggle. Like the service grid, the add-on grid spans its last card
+  across the row at two columns so no breakpoint leaves a hole. All totals derive from `data-price` attributes; the quote bar
   and the contact form's plan field are both rendered from one `render()` pass.
 - **Accordion** — native `<details>`, custom `+`/`×` marker rotated 135°.
 

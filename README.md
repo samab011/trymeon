@@ -44,9 +44,10 @@ DESIGN.md               the design system: colour, type, spacing, motion
 
 ## The plan builder
 
-The services section covers the three core disciplines; everything else —
-design systems, payments and couriers, conversion and RTO, an Urdu storefront —
-is sold as an add-on in the pricing builder below it.
+The services section covers the three core disciplines. Design systems, motion
+and the WhatsApp support desk are sold as add-ons on top; payments, courier
+integration and the conversion/RTO programme are bundled into the Partner and
+Embedded plans rather than sold separately.
 
 The pricing section is the site's conversion mechanic, and it's data-driven:
 
