@@ -1,8 +1,13 @@
-# SparkUP AI — AI support studio website
+# SparkUP AI — website
 
-Marketing site for **SparkUP AI**, a Karachi- and Lahore-based AI support studio that
-plans websites, ships bilingual design systems, produces motion video, and runs
-a WhatsApp AI support desk for businesses across Pakistan.
+Marketing site for **SparkUP AI**, a Karachi- and Lahore-based AI studio
+working with businesses across Pakistan on three things:
+
+1. **High-converting websites** — to attract more customers and increase revenue.
+2. **Custom AI agents** — automating enquiries, bookings and 24/7 support so
+   teams save time and work smarter.
+3. **AI-powered virtual property tours** — letting buyers explore a property
+   remotely, without an agent on site.
 
 Built as a dark editorial agency site: oversized display typography, a single
 acid accent, film grain, scroll-revealed sections, and an interactive plan
@@ -35,7 +40,7 @@ DESIGN.md               the design system: colour, type, spacing, motion
 | # | Section | What it does |
 |---|---|---|
 | — | Hero | Masked line-by-line headline, animated stat counters |
-| 01 | Services | Three core disciplines, one inverted accent card |
+| 01 | Services | The three pillars, one inverted accent card |
 | 02 | Process | Four-week timeline with per-step deliverables |
 | 03 | Work | Horizontal scroll-snap case rail, colour-coded per case |
 | 04 | Pricing | Base plan + add-on upsells + billing toggle, live PKR total |
@@ -44,8 +49,8 @@ DESIGN.md               the design system: colour, type, spacing, motion
 
 ## The plan builder
 
-The services section covers the three core disciplines; the motion pack, the
-WhatsApp AI desk and the design system are sold as add-ons on top.
+The services section covers the three pillars; virtual tours, an extra AI agent
+and a design system are sold as add-ons on top.
 
 The pricing section is the site's conversion mechanic, and it's data-driven:
 
@@ -71,8 +76,8 @@ Rs 900,000/month and out of reach of the businesses this site is written for.
 
 The content is written for the Pakistani market, not translated into it:
 
-- **Channels** — WhatsApp as the primary support and order-confirmation
-  channel; Instagram and TikTok as discovery.
+- **Channels** — AI agents answer on the website and on WhatsApp, where
+  Pakistani customers already are.
 - **Billing** — PKR invoicing by bank transfer, with filer/non-filer
   withholding noted in the pricing fine print.
 - **Language** — Urdu, Roman Urdu and English support, with a bilingual design
