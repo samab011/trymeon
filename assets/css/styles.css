@@ -1,5 +1,5 @@
 /* ============================================================
-   MEON — AI support studio
+   SPARKUP AI — AI support studio
    Design system: dark editorial agency
    ============================================================ */
 
@@ -131,7 +131,7 @@ input,textarea{font:inherit; color:inherit}
 .nav.is-stuck .nav__inner{border-color:var(--line); background:rgba(11,11,12,.86)}
 .brand{display:flex; align-items:center; gap:9px; font-weight:700; letter-spacing:-.03em; font-size:19px}
 .brand__mark{color:var(--acid); display:flex}
-.brand__dot{width:5px; height:5px; border-radius:99px; background:var(--acid); margin-bottom:-10px}
+.brand__word em{font-style:normal; color:var(--acid); margin-left:.26em}
 .nav__links{display:flex; gap:6px}
 .nav__links a{
   font-size:14px; color:var(--fg-mute); padding:8px 14px; border-radius:99px;
@@ -447,7 +447,7 @@ input,textarea{font:inherit; color:inherit}
 /* ── Footer ───────────────────────────────────────────────── */
 .footer{border-top:1px solid var(--line); padding-top:clamp(48px,6vw,80px); padding-bottom:40px; overflow:hidden}
 .footer__big{
-  font-size:clamp(80px,20vw,290px); font-weight:800; letter-spacing:-.06em; line-height:.8;
+  font-size:clamp(50px,14.4vw,196px); font-weight:800; letter-spacing:-.06em; line-height:.9;
   color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.13);
   margin-bottom:clamp(36px,5vw,64px); user-select:none;
 }

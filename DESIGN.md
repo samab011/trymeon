@@ -1,4 +1,4 @@
-# Meon — Design System
+# SparkUP AI — Design System
 
 Dark editorial agency style: oversized display type, a single acid accent,
 mono utility text, film grain, and motion that reveals rather than decorates.
@@ -43,6 +43,13 @@ line up in columns.
 Scale is fluid via `clamp()`. Hero `clamp(50px, 10.4vw, 142px)` at `.9` line-height;
 section headings `clamp(38px, 6.4vw, 84px)` at `.98`. Body is 17px / 1.55.
 The intended contrast ratio is roughly 8:1 between hero and body.
+
+## Brand mark
+
+A four-pointed spark in `--acid` on an `--ink` rounded square, paired with the
+wordmark set in Inter Tight — "SparkUP" in `--fg`, "AI" in `--acid`. The footer
+signature repeats the wordmark as an outlined `-webkit-text-stroke` display
+line, sized to hold on one line from 390px up.
 
 ## Spacing
 

@@ -1,6 +1,6 @@
-# Meon — AI support studio website
+# SparkUP AI — AI support studio website
 
-Marketing site for **Meon**, a Karachi- and Lahore-based AI support studio that
+Marketing site for **SparkUP AI**, a Karachi- and Lahore-based AI support studio that
 plans websites, ships bilingual design systems, produces motion video, and runs
 a WhatsApp AI support desk for businesses across Pakistan.
 
