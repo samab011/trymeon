@@ -211,16 +211,14 @@ input,textarea{font:inherit; color:inherit}
   transition:border-color var(--fast), background var(--fast), transform var(--fast);
 }
 .card:hover{border-color:rgba(204,255,46,.4); background:var(--ink-3); transform:translateY(-3px)}
-.card--wide{grid-column:span 2}
-.card--full{grid-column:1/-1; min-height:230px}
 .card--accent{background:var(--acid); border-color:var(--acid); color:var(--ink)}
 .card--accent:hover{background:#dbff5e; border-color:#dbff5e}
 .card__no{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; color:var(--fg-faint)}
 .card--accent .card__no{color:rgba(11,11,12,.5)}
-.card h3{margin-top:auto; padding-top:52px; font-size:clamp(21px,2vw,27px); font-weight:600; letter-spacing:-.03em; line-height:1.15}
+.card h3{padding-top:52px; font-size:clamp(21px,2vw,27px); font-weight:600; letter-spacing:-.03em; line-height:1.15}
 .card p{margin-top:12px; color:var(--fg-mute); font-size:15.5px; max-width:48ch}
 .card--accent p{color:rgba(11,11,12,.72)}
-.tags{list-style:none; padding:0; margin-top:20px; display:flex; flex-wrap:wrap; gap:6px}
+.tags{list-style:none; padding:20px 0 0; margin-top:auto; display:flex; flex-wrap:wrap; gap:6px}
 .tags li{
   font-family:var(--mono); font-size:11px; letter-spacing:.06em; padding:5px 10px;
   border:1px solid var(--line); border-radius:99px; color:var(--fg-mute);
@@ -480,8 +478,7 @@ input,textarea{font:inherit; color:inherit}
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width:1080px){
   .bento{grid-template-columns:repeat(2,1fr)}
-  .card--wide{grid-column:span 2}
-  .card--full{grid-column:1/-1}
+  .bento>.card:last-child{grid-column:1/-1}
   .plans{grid-template-columns:1fr}
   .plan--star{order:-1}
   .addons__grid{grid-template-columns:repeat(2,1fr)}
@@ -501,8 +498,6 @@ input,textarea{font:inherit; color:inherit}
 }
 @media (max-width:660px){
   .bento{grid-template-columns:1fr}
-  .card--wide{grid-column:span 1}
-  .card--full{grid-column:span 1}
   .addons__grid{grid-template-columns:1fr}
   .form{grid-template-columns:1fr}
   .quote{flex-direction:column; align-items:flex-start}

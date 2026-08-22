@@ -35,7 +35,7 @@ DESIGN.md               the design system: colour, type, spacing, motion
 | # | Section | What it does |
 |---|---|---|
 | — | Hero | Masked line-by-line headline, animated stat counters |
-| 01 | Services | Bento grid, six disciplines, one inverted accent card |
+| 01 | Services | Three core disciplines, one inverted accent card |
 | 02 | Process | Four-week timeline with per-step deliverables |
 | 03 | Work | Horizontal scroll-snap case rail, colour-coded per case |
 | 04 | Pricing | Base plan + add-on upsells + billing toggle, live PKR total |
@@ -43,6 +43,10 @@ DESIGN.md               the design system: colour, type, spacing, motion
 | 06 | Contact | Client-validated form, pre-filled with the built plan |
 
 ## The plan builder
+
+The services section covers the three core disciplines; everything else —
+design systems, payments and couriers, conversion and RTO, an Urdu storefront —
+is sold as an add-on in the pricing builder below it.
 
 The pricing section is the site's conversion mechanic, and it's data-driven:
 
@@ -74,9 +78,9 @@ The content is written for the Pakistani market, not translated into it:
   invoicing with filer/non-filer withholding noted in the pricing fine print.
 - **Logistics** — cash on delivery, courier booking (TCS, Leopards, M&P,
   PostEx), and return-to-origin as the headline conversion metric.
-- **Language** — Urdu, Roman Urdu and English support; a bilingual design
-  system covering Latin and Nastaliq, LTR and RTL. The footer line is set in
-  Noto Nastaliq Urdu with `lang="ur" dir="rtl"`.
+- **Language** — Urdu, Roman Urdu and English support, with a bilingual design
+  system (Latin and Nastaliq, LTR and RTL) sold as an add-on. The footer line
+  is set in Noto Nastaliq Urdu with `lang="ur" dir="rtl"`.
 - **Reach** — page-weight budgets stated in terms of 4G outside the major
   cities; city datalist and `+92` phone field on the contact form; Mon–Sat,
   9am–9pm PKT stated as working hours.

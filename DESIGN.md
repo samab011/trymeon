@@ -68,8 +68,10 @@ Card gaps stay at a flat `14px` at every breakpoint — the grid changes, the ga
 
 - **Pill nav** — fixed, blurred, hides on scroll-down past 420px, unless the
   mobile menu is open.
-- **Bento** — 3 → 2 → 1 columns. `--wide` spans 2, `--full` spans the row.
-  One card per grid is inverted to `--acid`.
+- **Service grid** — 3 → 2 → 1 columns; at two columns the last card spans the
+  row so no breakpoint leaves a hole. Cards are equal-height with headings on a
+  shared baseline and the tag row pinned to the card floor via `margin-top:auto`.
+  One card is inverted to `--acid`.
 - **Rail** — horizontal scroll-snap with `scroll-padding-inline` matched to the
   content gutter, so the first card aligns to the headline above it.
 - **Plan builder** — one radio-style base plan, multi-select add-ons, and a
