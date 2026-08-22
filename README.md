@@ -44,10 +44,8 @@ DESIGN.md               the design system: colour, type, spacing, motion
 
 ## The plan builder
 
-The services section covers the three core disciplines. Design systems, motion
-and the WhatsApp support desk are sold as add-ons on top; payments, courier
-integration and the conversion/RTO programme are bundled into the Partner and
-Embedded plans rather than sold separately.
+The services section covers the three core disciplines; the motion pack, the
+WhatsApp AI desk and the design system are sold as add-ons on top.
 
 The pricing section is the site's conversion mechanic, and it's data-driven:
 
@@ -75,10 +73,8 @@ The content is written for the Pakistani market, not translated into it:
 
 - **Channels** — WhatsApp as the primary support and order-confirmation
   channel; Instagram and TikTok as discovery.
-- **Payments** — Easypaisa, JazzCash, bank transfer and card gateways; PKR
-  invoicing with filer/non-filer withholding noted in the pricing fine print.
-- **Logistics** — cash on delivery, courier booking (TCS, Leopards, M&P,
-  PostEx), and return-to-origin as the headline conversion metric.
+- **Billing** — PKR invoicing by bank transfer, with filer/non-filer
+  withholding noted in the pricing fine print.
 - **Language** — Urdu, Roman Urdu and English support, with a bilingual design
   system (Latin and Nastaliq, LTR and RTL) sold as an add-on. The footer line
   is set in Noto Nastaliq Urdu with `lang="ur" dir="rtl"`.
