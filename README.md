@@ -4,10 +4,14 @@ Marketing site for **SparkUP AI**, a Karachi- and Lahore-based AI studio
 working with businesses across Pakistan on three things:
 
 1. **High-converting websites** — to attract more customers and increase revenue.
-2. **Custom AI agents** — automating enquiries, bookings and 24/7 support so
-   teams save time and work smarter.
-3. **AI-powered virtual property tours** — letting buyers explore a property
-   remotely, without an agent on site.
+2. **Custom AI agents** — taking day-to-day work off the team: enquiries,
+   bookings, follow-ups and support at any hour.
+3. **Motion video** — for products, properties, services, launches; whatever
+   the business sells.
+
+The site is written for businesses of every kind. Real estate appears as one
+worked example among several — a property walkthrough is one thing motion video
+is good for — and is deliberately not the framing of any section.
 
 Built as a dark editorial agency site: oversized display typography, a single
 acid accent, film grain, scroll-revealed sections, and an interactive plan
@@ -49,7 +53,7 @@ DESIGN.md               the design system: colour, type, spacing, motion
 
 ## The plan builder
 
-The services section covers the three pillars; virtual tours, an extra AI agent
+The services section covers the three pillars; a motion pack, an extra AI agent
 and a design system are sold as add-ons on top.
 
 The pricing section is the site's conversion mechanic, and it's data-driven:
