@@ -244,7 +244,7 @@
   <div class="wrap">
     <header class="head">
       <p class="kicker reveal">[ 04 ] Build a plan</p>
-      <h2 class="h2 reveal">Pick a base. <em>Stack</em> what you need.</h2>
+      <h2 class="h2 reveal">Pick a package. <em>Stack</em> what you need.</h2>
       <p class="head__note reveal">All prices in Pakistani rupees, excluding sales tax. Invoiced monthly in PKR by bank transfer — no dollar billing, no 12-month lock-in.</p>
     </header>
 
@@ -253,46 +253,50 @@
       <button class="billing__opt" data-bill="quarterly" aria-pressed="false">Quarterly <b>−15%</b></button>
     </div>
 
-    <div class="plans" role="radiogroup" aria-label="Base plan">
-      <button class="plan reveal is-on" data-plan="sprint" data-price="145000" role="radio" aria-checked="true">
-        <span class="plan__no">Base A</span>
-        <h3>Sprint</h3>
-        <p class="plan__price"><b data-price-out>145,000</b><span>/mo</span></p>
-        <p class="plan__note">One focused workstream. Best for a first proper website, or a single AI agent.</p>
+    <div class="plans" role="radiogroup" aria-label="Package">
+      <button class="plan reveal is-on" data-plan="agent" data-price="185000" role="radio" aria-checked="true">
+        <span class="plan__no">Package 01</span>
+        <h3>Agent</h3>
+        <p class="plan__price"><b data-price-out>185,000</b><span>/mo</span></p>
+        <p class="plan__note">An AI agent that takes the day-to-day off your team, built and tuned around your business.</p>
         <ul class="plan__list">
-          <li>Site plan &amp; build spec</li>
-          <li>Up to 6 designed pages</li>
-          <li>1 revision round / week</li>
-          <li>WhatsApp group with the team</li>
+          <li>Trained on your real answers</li>
+          <li>Website &amp; WhatsApp channels</li>
+          <li>Urdu, Roman Urdu &amp; English</li>
+          <li>Bookings into your calendar</li>
+          <li>Human handover rules</li>
+          <li>Monthly tuning on real chats</li>
         </ul>
       </button>
 
-      <button class="plan plan--star reveal" data-plan="partner" data-price="320000" role="radio" aria-checked="false">
-        <span class="plan__no">Base B</span>
+      <button class="plan plan--star reveal" data-plan="website" data-price="245000" role="radio" aria-checked="false">
+        <span class="plan__no">Package 02</span>
         <span class="plan__flag">Most picked</span>
-        <h3>Partner</h3>
-        <p class="plan__price"><b data-price-out>320,000</b><span>/mo</span></p>
-        <p class="plan__note">Website and AI agent built together, running in parallel with your team.</p>
+        <h3>Website</h3>
+        <p class="plan__price"><b data-price-out>245,000</b><span>/mo</span></p>
+        <p class="plan__note">A website built to bring you customers — planned, designed, built and kept improving.</p>
         <ul class="plan__list">
-          <li>Everything in Sprint</li>
-          <li>Bilingual design system + UI kit</li>
+          <li>Site plan &amp; build spec</li>
+          <li>Up to 8 designed pages</li>
           <li>Front-end build &amp; launch</li>
-          <li>One AI agent included</li>
+          <li>Bilingual, Urdu &amp; English</li>
+          <li>Analytics &amp; enquiry tracking</li>
           <li>Weekly review call</li>
         </ul>
       </button>
 
-      <button class="plan reveal" data-plan="embedded" data-price="675000" role="radio" aria-checked="false">
-        <span class="plan__no">Base C</span>
-        <h3>Embedded</h3>
-        <p class="plan__price"><b data-price-out>675,000</b><span>/mo</span></p>
-        <p class="plan__note">We act as your digital team. Multi-brand, multi-city, whatever you sell.</p>
+      <button class="plan reveal" data-plan="films" data-price="165000" role="radio" aria-checked="false">
+        <span class="plan__no">Package 03</span>
+        <h3>Property Films</h3>
+        <p class="plan__price"><b data-price-out>165,000</b><span>/mo</span></p>
+        <p class="plan__note">Motion video for estate agents and developers — every listing worth watching before it is worth visiting.</p>
         <ul class="plan__list">
-          <li>Everything in Partner</li>
-          <li>Dedicated squad of 4</li>
-          <li>AI agents built &amp; managed</li>
-          <li>Motion pack included</li>
-          <li>Same-day response, Mon–Sat</li>
+          <li>4 property films a month</li>
+          <li>Walkthroughs &amp; exteriors</li>
+          <li>Cut for Reels, TikTok &amp; listings</li>
+          <li>Listing pages that embed them</li>
+          <li>Captions in Urdu &amp; English</li>
+          <li>48-hour turnaround per unit</li>
         </ul>
       </button>
     </div>
@@ -303,20 +307,35 @@
         <p>Tap to add. Priced per month, cancel any time.</p>
       </div>
       <div class="addons__grid" role="group" aria-label="Add-ons">
-        <button class="addon" data-addon="motion" data-price="85000" aria-pressed="false">
+        <button class="addon" data-addon="agent2" data-price="65000" aria-pressed="false">
           <span class="addon__tick" aria-hidden="true"></span>
-          <span class="addon__body"><b>Motion pack</b><em>6 product, property or explainer films monthly</em></span>
-          <span class="addon__price">+85,000</span>
-        </button>
-        <button class="addon" data-addon="agent" data-price="65000" aria-pressed="false">
-          <span class="addon__tick" aria-hidden="true"></span>
-          <span class="addon__body"><b>Extra AI agent</b><em>A second agent for another channel or brand</em></span>
+          <span class="addon__body"><b>Second AI agent</b><em>Another channel, branch or brand</em></span>
           <span class="addon__price">+65,000</span>
+        </button>
+        <button class="addon" data-addon="crm" data-price="45000" aria-pressed="false">
+          <span class="addon__tick" aria-hidden="true"></span>
+          <span class="addon__body"><b>CRM &amp; calendar sync</b><em>Leads and bookings land where your team works</em></span>
+          <span class="addon__price">+45,000</span>
+        </button>
+        <button class="addon" data-addon="pages" data-price="55000" aria-pressed="false">
+          <span class="addon__tick" aria-hidden="true"></span>
+          <span class="addon__body"><b>Landing page pack</b><em>4 campaign pages a month, built to convert</em></span>
+          <span class="addon__price">+55,000</span>
         </button>
         <button class="addon" data-addon="system" data-price="110000" aria-pressed="false">
           <span class="addon__tick" aria-hidden="true"></span>
           <span class="addon__body"><b>Design system</b><em>Bilingual tokens, components &amp; handover</em></span>
           <span class="addon__price">+110,000</span>
+        </button>
+        <button class="addon" data-addon="motion" data-price="85000" aria-pressed="false">
+          <span class="addon__tick" aria-hidden="true"></span>
+          <span class="addon__body"><b>Product motion pack</b><em>6 product or explainer films monthly</em></span>
+          <span class="addon__price">+85,000</span>
+        </button>
+        <button class="addon" data-addon="drone" data-price="70000" aria-pressed="false">
+          <span class="addon__tick" aria-hidden="true"></span>
+          <span class="addon__body"><b>Drone &amp; exteriors</b><em>Aerial and neighbourhood footage per project</em></span>
+          <span class="addon__price">+70,000</span>
         </button>
       </div>
     </div>
@@ -324,10 +343,10 @@
     <div class="quote reveal" id="quote">
       <div class="quote__left">
         <p class="quote__label">Your plan</p>
-        <p class="quote__mix" id="quoteMix">Sprint — no add-ons</p>
+        <p class="quote__mix" id="quoteMix">Agent — no add-ons</p>
       </div>
       <div class="quote__right">
-        <p class="quote__total"><span>Rs</span><b id="quoteTotal">145,000</b><em id="quoteUnit">/month</em></p>
+        <p class="quote__total"><span>Rs</span><b id="quoteTotal">185,000</b><em id="quoteUnit">/month</em></p>
         <p class="quote__save" id="quoteSave" hidden></p>
         <a class="btn btn--solid" href="#contact">Send this plan <span aria-hidden="true">→</span></a>
       </div>
@@ -411,7 +430,7 @@
         </div>
         <div class="field field--full">
           <label for="fPlan">Selected plan</label>
-          <input id="fPlan" name="plan" type="text" readonly value="Sprint — no add-ons — Rs 145,000/month" />
+          <input id="fPlan" name="plan" type="text" readonly value="Agent — no add-ons — Rs 185,000/month" />
         </div>
         <div class="field field--full">
           <label for="fMsg">What are you trying to fix?</label>

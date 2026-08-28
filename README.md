@@ -47,20 +47,24 @@ DESIGN.md               the design system: colour, type, spacing, motion
 | 01 | Services | The three pillars, one inverted accent card |
 | 02 | Process | Four-week timeline with per-step deliverables |
 | 03 | Work | Horizontal scroll-snap case rail, colour-coded per case |
-| 04 | Pricing | Base plan + add-on upsells + billing toggle, live PKR total |
+| 04 | Pricing | Service package + add-on upsells + billing toggle, live PKR total |
 | 05 | FAQ | Native `<details>` accordion |
 | 06 | Contact | Client-validated form, pre-filled with the built plan |
 
 ## The plan builder
 
-The services section covers the three pillars; a motion pack, an extra AI agent
-and a design system are sold as add-ons on top.
+The three packages in the builder are the three pillars sold directly — Agent,
+Website and Property Films — not good/better/best tiers of one thing. Add-ons
+are two per pillar, so whichever package a visitor picks there is something
+relevant to stack on it.
 
 The pricing section is the site's conversion mechanic, and it's data-driven:
 
-- Base plans carry `data-price` in PKR (Sprint 145,000 / Partner 320,000 /
-  Embedded 675,000 per month).
-- Add-ons carry `data-addon` and `data-price`, and toggle via `aria-pressed`.
+- Packages carry `data-price` in PKR (Agent 185,000 / Website 245,000 /
+  Property Films 165,000 per month).
+- Add-ons carry `data-addon` and `data-price`, and toggle via `aria-pressed`:
+  a second agent and CRM sync for Agent, landing pages and a design system for
+  Website, a product motion pack and drone footage for Property Films.
 - Quarterly billing applies a 15% discount to `(base + add-ons) × 3` and shows
   the saved amount.
 - The running total, the plan summary line, and the read-only **Selected plan**

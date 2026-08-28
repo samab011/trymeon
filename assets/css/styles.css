@@ -492,7 +492,6 @@ input,textarea{font:inherit; color:inherit}
   .plans{grid-template-columns:1fr}
   .plan--star{order:-1}
   .addons__grid{grid-template-columns:repeat(2,1fr)}
-  .addons__grid>.addon:last-child{grid-column:1/-1}
   .quotes__grid{grid-template-columns:1fr}
   .step{grid-template-columns:64px 1fr; }
   .step__out{grid-column:2; border-left:0; padding-left:0; border-top:1px solid var(--line-soft); padding-top:14px; margin-top:6px}
