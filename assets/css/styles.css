@@ -175,7 +175,7 @@ input,textarea{font:inherit; color:inherit}
 .hero>.wrap{position:relative; z-index:1}
 
 .hero__title{
-  font-size:clamp(46px, 9.4vw, 128px); line-height:.9; letter-spacing:-.05em; font-weight:700;
+  font-size:clamp(44px, 11vw, 144px); line-height:.9; letter-spacing:-.05em; font-weight:700;
 }
 .hero__title .line{display:block; overflow:hidden}
 .hero__title .line>span{display:block; transform:translateY(105%); transition:transform 1s var(--ease)}
