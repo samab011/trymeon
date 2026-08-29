@@ -537,7 +537,7 @@ input,textarea{font:inherit; color:inherit}
   margin:auto;
   width:min(1120px, calc(100vw - 32px)); max-height:min(880px, calc(100vh - 32px));
   padding:0; border:1px solid var(--line); border-radius:calc(var(--r) + 6px);
-  background:var(--ink-2); color:var(--fg); overflow:hidden;
+  background:#0D0D0D; color:var(--fg); overflow:hidden;
 }
 .showcase::backdrop{background:rgba(6,6,7,.82); backdrop-filter:blur(6px)}
 .showcase__inner{display:flex; flex-direction:column; max-height:inherit; height:100%}
@@ -576,7 +576,7 @@ input,textarea{font:inherit; color:inherit}
 .showcase__foot{
   display:flex; gap:10px; flex-wrap:wrap;
   padding:clamp(18px,2.4vw,24px) clamp(22px,3vw,34px);
-  border-top:1px solid var(--line); background:var(--ink);
+  border-top:1px solid var(--line); background:#0A0A0A;
 }
 
 /* design-direction previews — abstract, built from divs, no third-party assets */

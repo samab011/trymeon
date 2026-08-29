@@ -56,7 +56,7 @@
 .viewer__inner{display:flex; flex-direction:column; height:100%}
 .viewer__bar{
   display:flex; align-items:center; gap:14px; padding:12px 16px;
-  border-bottom:1px solid var(--line); background:var(--ink); flex:0 0 auto;
+  border-bottom:1px solid var(--line); background:#0D0D0D; flex:0 0 auto;
 }
 .viewer__dots{display:flex; gap:6px}
 .viewer__dots i{width:10px; height:10px; border-radius:99px; background:rgba(255,255,255,.14)}
@@ -72,7 +72,7 @@
   transition:background var(--fast), color var(--fast), border-color var(--fast);
 }
 .viewer__nav button:hover{background:var(--fg); color:var(--ink); border-color:var(--fg)}
-.viewer__stage{flex:1; overflow-y:auto; overflow-x:hidden; background:#0B0B0C; overscroll-behavior:contain}
+.viewer__stage{flex:1; overflow-y:auto; overflow-x:hidden; background:#0D0D0D; overscroll-behavior:contain}
 .viewer__fit{width:1080px; transform-origin:top left; transform:scale(var(--vs,1))}
 
 /* ══════════════════════════════════════════════════════════
@@ -416,7 +416,10 @@
 .t-book .endcta h2{max-width:16ch}
 .t-book .endcta p{opacity:.72; margin-top:10px; font-size:15px}
 .t-book .stickybar{position:sticky; bottom:0; background:#2A2620; color:#F4EFE7; display:flex; justify-content:space-between; align-items:center; padding:15px 64px; z-index:5}
-.t-book .stickybar b{font-size:15px} .t-book .stickybar span{font-size:13px; opacity:.65; margin-left:10px}
+.t-book .stickybar{gap:20px; padding-block:14px}
+.t-book .stickybar .sb{flex:1; max-width:230px}
+.t-book .stickybar label{display:block; font-family:var(--mono); font-size:9px; letter-spacing:.13em; opacity:.5; text-transform:uppercase; margin-bottom:3px}
+.t-book .stickybar b{font-size:14.5px; font-weight:600}
 
 /* ══ 05 LISTINGS — DRIVEHUB · automotive marketplace ═════════
    Light, high-trust, dense filters, electric blue accent. */
@@ -441,6 +444,11 @@
 .t-list .filters label{display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; color:#8695A6; text-transform:uppercase; margin-bottom:4px}
 .t-list .filters b{font-size:14.5px; font-weight:600}
 .t-list .filters .go{background:var(--blu); color:#fff; display:grid; place-items:center; font-size:14.5px; font-weight:600}
+.t-list .tri{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:22px}
+.t-list .tri div{background:#fff; border:1px solid rgba(15,23,33,.07); border-radius:12px; padding:18px 20px; display:flex; align-items:center; gap:14px}
+.t-list .tri i{width:34px; height:34px; border-radius:10px; background:rgba(27,77,228,.1); border:1px solid rgba(27,77,228,.22); flex:0 0 auto}
+.t-list .tri b{display:block; font-size:14.5px; font-weight:600}
+.t-list .tri span{font-size:12.5px; color:#8695A6}
 .t-list .chips{display:flex; gap:8px; margin-top:22px; flex-wrap:wrap}
 .t-list .chips u{text-decoration:none; padding:8px 15px; border-radius:8px; border:1px solid rgba(15,23,33,.14); font-size:12.5px; background:#fff; color:#4A5768; font-weight:500}
 .t-list .chips u.on{background:#0F1721; color:#fff; border-color:#0F1721}
