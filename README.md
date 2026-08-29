@@ -47,6 +47,7 @@ DESIGN.md               the design system: colour, type, spacing, motion
 | 01 | Services | The three pillars, one inverted accent card |
 | 02 | Process | Four-week timeline with per-step deliverables |
 | 03 | Work | Horizontal scroll-snap case rail, colour-coded per case |
+| — | Showcase | "See the work" opens a modal with three tabs — design directions, an agent transcript, motion tiles |
 | 04 | Pricing | Service package + add-on upsells + billing toggle, live PKR total |
 | 05 | FAQ | Native `<details>` accordion |
 | 06 | Contact | Client-validated form, pre-filled with the built plan |
@@ -124,6 +125,32 @@ port, beyond the palette:
 The canvas is masked with a CSS gradient — horizontally on desktop so it's
 faintest behind the copy, vertically on narrow screens where the copy is full
 width.
+
+## The work showcase
+
+The hero's "See the work" button opens a `<dialog>` with three tabbed panels
+instead of jumping down the page: design directions, an AI agent transcript,
+and motion tiles.
+
+Everything in it is built from markup and CSS — no images, iframes or
+third-party embeds. The six design previews are abstract wireframes assembled
+from divs, representing directions the studio designs in. They are deliberately
+**not** other people's templates: showing a third-party gallery here would
+present someone else's work as the studio's own to the exact prospects it is
+meant to win.
+
+Two things worth knowing if you touch it:
+
+- The project's `*{margin:0}` reset overrides the UA stylesheet's `margin:auto`
+  on `dialog`, which is what centres a modal. `.showcase` restores it — without
+  that the panel pins to the top-left corner.
+- Backdrop dismissal compares the click against the dialog's bounding box
+  rather than testing `e.target === dialog`, because the inner wrapper covers
+  the dialog's own box and would otherwise swallow every click.
+
+Keyboard: Escape closes, left/right arrows move between tabs, focus returns to
+the button on close, and with JavaScript off the button still navigates to the
+case-study section.
 
 ## Notes
 

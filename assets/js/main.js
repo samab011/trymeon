@@ -359,6 +359,66 @@
     }
   })();
 
+  /* ── Work showcase ────────────────────────────────────── */
+  (function showcase() {
+    var dlg = $('#showcase');
+    var open = $('#workBtn');
+    if (!dlg || !open || typeof dlg.showModal !== 'function') return;  /* link fallback */
+
+    var tabs  = $$('[role="tab"]', dlg);
+    var panes = tabs.map(function (t) { return $('#' + t.getAttribute('aria-controls')); });
+
+    function select(i) {
+      tabs.forEach(function (t, n) {
+        var on = n === i;
+        t.classList.toggle('is-on', on);
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        panes[n].hidden = !on;
+      });
+      $('.showcase__body', dlg).scrollTop = 0;
+    }
+
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(i); });
+      /* left/right arrows move between tabs, as a tablist should */
+      t.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        var n = (i + d + tabs.length) % tabs.length;
+        select(n);
+        tabs[n].focus();
+      });
+    });
+    select(0);
+
+    open.addEventListener('click', function (e) {
+      e.preventDefault();
+      dlg.showModal();
+      document.body.style.overflow = 'hidden';
+      tabs[0].focus();
+    });
+
+    function close() {
+      if (dlg.open) dlg.close();
+    }
+    $('#showcaseClose').addEventListener('click', close);
+    $$('[data-close]', dlg).forEach(function (a) { a.addEventListener('click', close); });
+
+    /* click the backdrop to dismiss — compare against the box rather than the
+       event target, since the inner wrapper covers the dialog's own padding */
+    dlg.addEventListener('click', function (e) {
+      var r = dlg.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right ||
+          e.clientY < r.top  || e.clientY > r.bottom) close();
+    });
+    dlg.addEventListener('close', function () {
+      document.body.style.overflow = '';
+      open.focus();
+    });
+  })();
+
   /* ── Year ─────────────────────────────────────────────── */
   var year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());

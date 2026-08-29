@@ -86,7 +86,7 @@
       </div>
       <div class="hero__cta reveal">
         <a class="btn btn--solid" href="#build">See pricing in PKR <span aria-hidden="true">→</span></a>
-        <a class="btn btn--line" href="#work">See the work</a>
+        <a class="btn btn--line" href="#work" id="workBtn" aria-haspopup="dialog">See the work</a>
       </div>
     </div>
 
@@ -479,6 +479,85 @@
     </div>
   </div>
 </footer>
+
+<!-- ══ WORK SHOWCASE ══ -->
+<dialog class="showcase" id="showcase" aria-labelledby="showcaseTitle">
+  <div class="showcase__inner">
+    <header class="showcase__top">
+      <div>
+        <p class="kicker">Our work</p>
+        <h2 id="showcaseTitle">What would you like to see?</h2>
+      </div>
+      <button class="showcase__close" id="showcaseClose" aria-label="Close">&times;</button>
+    </header>
+
+    <div class="showcase__tabs" role="tablist" aria-label="Work categories">
+      <button role="tab" id="tab-web" aria-controls="pane-web" aria-selected="true" class="is-on">Website designs</button>
+      <button role="tab" id="tab-agents" aria-controls="pane-agents" aria-selected="false">AI agents</button>
+      <button role="tab" id="tab-motion" aria-controls="pane-motion" aria-selected="false">Motion video</button>
+    </div>
+
+    <div class="showcase__body">
+      <section role="tabpanel" id="pane-web" aria-labelledby="tab-web" tabindex="0">
+        <p class="showcase__lede">Six directions we design in. Tell us which feels like your business and we'll build the real thing around your content.</p>
+        <div class="dzs">
+        <figure class="dz">
+          <div class="dz__frame dz--minimal" aria-hidden="true"><span class="dz__nav"><i></i><i></i><i></i></span><span class="dz__h dz__h--sm"></span><span class="dz__p"></span><span class="dz__p dz__p--short"></span><span class="dz__cta"></span></div>
+          <figcaption><b>Quiet</b><em>Clinics, consultancies, professional services</em></figcaption>
+        </figure>
+        <figure class="dz">
+          <div class="dz__frame dz--editorial" aria-hidden="true"><span class="dz__nav"><i></i><i></i></span><span class="dz__h dz__h--xl"></span><span class="dz__h dz__h--xl dz__h--half"></span><span class="dz__meta"><i></i><i></i></span></div>
+          <figcaption><b>Editorial</b><em>Studios, agencies, personal brands</em></figcaption>
+        </figure>
+        <figure class="dz">
+          <div class="dz__frame dz--shop" aria-hidden="true"><span class="dz__nav"><i></i><i></i><i></i><i></i></span><span class="dz__grid"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+          <figcaption><b>Storefront</b><em>Retail, D2C, consumer products</em></figcaption>
+        </figure>
+        <figure class="dz">
+          <div class="dz__frame dz--booking" aria-hidden="true"><span class="dz__nav"><i></i><i></i></span><span class="dz__split"><span class="dz__col"><b></b><b class="s"></b></span><span class="dz__form"><i></i><i></i><i></i><u></u></span></span></div>
+          <figcaption><b>Booking-first</b><em>Restaurants, salons, clinics</em></figcaption>
+        </figure>
+        <figure class="dz">
+          <div class="dz__frame dz--listing" aria-hidden="true"><span class="dz__nav"><i></i><i></i><i></i></span><span class="dz__filters"><i></i><i></i><i></i></span><span class="dz__rows"><i></i><i></i><i></i></span></div>
+          <figcaption><b>Listings</b><em>Property, motors, marketplaces</em></figcaption>
+        </figure>
+        <figure class="dz">
+          <div class="dz__frame dz--dark" aria-hidden="true"><span class="dz__nav dz__nav--dk"><i></i><i></i><i></i></span><span class="dz__h dz__h--lg"></span><span class="dz__p"></span><span class="dz__panel"><i></i><i></i></span></div>
+          <figcaption><b>Dark product</b><em>SaaS, apps, technical products</em></figcaption>
+        </figure>
+        </div>
+      </section>
+
+      <section role="tabpanel" id="pane-agents" aria-labelledby="tab-agents" tabindex="0" hidden>
+        <p class="showcase__lede">A booking agent, mid-conversation. It answers in the language the customer used, and stops where it should.</p>
+        <div class="chat">
+          <div class="chat__msg chat__msg--in"><span>Salam, aap ka timing kya hai aaj?</span><em>Customer · 11:48pm</em></div>
+          <div class="chat__msg chat__msg--out"><span>Walaikum salam! Aaj hum 9pm tak khule hain. Kal subah 10am se available hain — appointment book karun?</span><em>AI agent · 11:48pm</em></div>
+          <div class="chat__msg chat__msg--in"><span>Haan kal 11 baje</span><em>Customer · 11:49pm</em></div>
+          <div class="chat__msg chat__msg--out"><span>Done — kal 11:00am book ho gaya. Naam confirm kar dein?</span><em>AI agent · 11:49pm</em></div>
+          <div class="chat__msg chat__msg--in"><span>Mujhe pehle wali dawai ka dose barhana hai, kitna lun?</span><em>Customer · 11:51pm</em></div>
+          <div class="chat__hand">Handed to a human — dosage is outside what the agent may answer</div>
+        </div>
+      </section>
+
+      <section role="tabpanel" id="pane-motion" aria-labelledby="tab-motion" tabindex="0" hidden>
+        <p class="showcase__lede">Product films, property walkthroughs and explainers, cut for Reels, TikTok and your own pages.</p>
+        <div class="reels">
+          <div class="reel"><span class="reel__play" aria-hidden="true"></span><b>Product film</b><em>0:18 · 9:16</em></div>
+          <div class="reel"><span class="reel__play" aria-hidden="true"></span><b>Property walkthrough</b><em>0:42 · 16:9</em></div>
+          <div class="reel"><span class="reel__play" aria-hidden="true"></span><b>Service explainer</b><em>0:30 · 1:1</em></div>
+          <div class="reel"><span class="reel__play" aria-hidden="true"></span><b>Launch reel</b><em>0:15 · 9:16</em></div>
+        </div>
+        <p class="showcase__note">Showreel goes here — drop your MP4s in and these tiles become players.</p>
+      </section>
+    </div>
+
+    <footer class="showcase__foot">
+      <a class="btn btn--solid" href="#contact" data-close>Start a project <span aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn--line" href="#work" data-close>See case studies</a>
+    </footer>
+  </div>
+</dialog>
 
 <script src="assets/js/main.js" defer></script>
 </body>
