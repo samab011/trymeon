@@ -1,0 +1,475 @@
+/* ============================================================
+   SparkUP AI — six miniature websites shown in the work showcase.
+   Each is authored at a fixed 1080px design width and scaled to fit
+   its container, so a layout can never break at any viewport.
+   Photo surfaces are CSS compositions: swap .ph--* background-image
+   for a real photograph and nothing else changes.
+   ============================================================ */
+
+/* ── preview card ─────────────────────────────────────────── */
+/* grid items default to min-width:auto, so the 1080px preview inside would
+   blow the column out to 1080px — pin them to zero so they track the grid */
+.dz{margin:0; min-width:0}
+.dz__btn,.dz__shot{min-width:0; max-width:100%}
+.dz__btn{
+  display:block; width:100%; text-align:left; padding:0; position:relative;
+  border-radius:12px; overflow:hidden; border:1px solid var(--line);
+  transition:border-color var(--fast), transform var(--fast), box-shadow var(--fast);
+}
+.dz__btn:hover{border-color:var(--acid); transform:translateY(-4px); box-shadow:0 18px 40px -24px rgba(0,0,0,.9)}
+.dz__shot{display:block; aspect-ratio:16/10; overflow:hidden; position:relative; background:#fff}
+.dz__scale{
+  display:block; width:1080px; transform-origin:top left;
+  transform:scale(var(--s,.3)); transition:transform .5s var(--ease);
+}
+.dz__btn:hover .dz__scale{transform:scale(calc(var(--s,.3) * 1.06))}
+.dz__veil{
+  position:absolute; inset:0; display:grid; place-items:center; opacity:0;
+  background:linear-gradient(to top, rgba(6,6,7,.86), rgba(6,6,7,.18));
+  transition:opacity var(--fast);
+}
+.dz__btn:hover .dz__veil,.dz__btn:focus-visible .dz__veil{opacity:1}
+.dz__veil span{
+  padding:11px 22px; border-radius:99px; background:var(--acid); color:var(--ink);
+  font-weight:600; font-size:14px; transform:translateY(8px); transition:transform var(--fast);
+}
+.dz__btn:hover .dz__veil span{transform:none}
+.dz figcaption{display:flex; flex-direction:column; gap:3px; margin-top:12px}
+.dz figcaption b{font-size:15px; font-weight:600; letter-spacing:-.02em}
+.dz figcaption em{font-style:normal; font-family:var(--mono); font-size:10.5px; letter-spacing:.05em; color:var(--fg-faint)}
+
+/* ── full viewer ──────────────────────────────────────────── */
+.viewer{
+  margin:auto; padding:0; width:min(1180px, calc(100vw - 24px));
+  max-width:100vw; max-height:calc(100vh - 24px); height:calc(100vh - 24px);
+  border:1px solid var(--line); border-radius:16px; overflow:hidden;
+  background:var(--ink-2); color:var(--fg);
+}
+.viewer::backdrop{background:rgba(4,4,5,.9); backdrop-filter:blur(8px)}
+.viewer__inner{display:flex; flex-direction:column; height:100%}
+.viewer__bar{
+  display:flex; align-items:center; gap:14px; padding:12px 16px;
+  border-bottom:1px solid var(--line); background:var(--ink); flex:0 0 auto;
+}
+.viewer__dots{display:flex; gap:6px}
+.viewer__dots i{width:10px; height:10px; border-radius:99px; background:rgba(255,255,255,.14)}
+.viewer__url{
+  flex:1; font-family:var(--mono); font-size:12px; color:var(--fg-faint);
+  background:var(--ink-3); border:1px solid var(--line-soft); border-radius:99px;
+  padding:7px 14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.viewer__nav{display:flex; gap:6px}
+.viewer__nav button{
+  width:34px; height:34px; border-radius:99px; border:1px solid var(--line);
+  display:grid; place-items:center; color:var(--fg-mute); font-size:15px;
+  transition:background var(--fast), color var(--fast), border-color var(--fast);
+}
+.viewer__nav button:hover{background:var(--fg); color:var(--ink); border-color:var(--fg)}
+.viewer__stage{flex:1; overflow-y:auto; overflow-x:hidden; background:#fff; overscroll-behavior:contain}
+.viewer__fit{width:1080px; transform-origin:top left; transform:scale(var(--vs,1))}
+
+/* ══════════════════════════════════════════════════════════
+   SHARED MINI-SITE PRIMITIVES  (scoped under .site)
+   ══════════════════════════════════════════════════════════ */
+.site{width:1080px; font-family:var(--sans); text-align:left; letter-spacing:-.01em; line-height:1.5}
+.site *{box-sizing:border-box}
+.site img{display:block}
+.site .wrapx{padding-inline:64px}
+.site .sec{padding-block:72px}
+.site .eyed{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase}
+.site .btn2{
+  display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:99px;
+  font-size:14px; font-weight:600; cursor:pointer; transition:transform .2s var(--ease), background .2s var(--ease), color .2s var(--ease);
+}
+.site .btn2:hover{transform:translateY(-2px)}
+.site .navx{display:flex; align-items:center; justify-content:space-between; padding-block:26px}
+.site .navx nav{display:flex; gap:26px; font-size:13.5px}
+.site .brandx{font-weight:700; letter-spacing:-.04em}
+
+/* photo surfaces — replace background-image with a real photograph */
+.ph{position:relative; overflow:hidden; background-size:cover; background-position:center}
+.ph::after{content:""; position:absolute; inset:0; background:radial-gradient(120% 90% at 70% 10%, rgba(255,255,255,.22), transparent 60%)}
+.ph--arch{
+  background-color:#B9AE9E;
+  background-image:
+    linear-gradient(174deg, rgba(255,252,245,.92) 0 22%, transparent 22.4%),
+    linear-gradient(96deg, rgba(60,54,46,.55) 0 26%, transparent 26.4%),
+    linear-gradient(268deg, rgba(38,34,29,.42) 0 18%, transparent 18.4%),
+    linear-gradient(180deg, #D8CFC2, #8C8072);
+}
+.ph--arch2{
+  background-color:#A99C8B;
+  background-image:
+    linear-gradient(80deg, rgba(24,22,19,.5) 0 34%, transparent 34.3%),
+    linear-gradient(200deg, rgba(255,251,242,.85) 0 30%, transparent 30.4%),
+    linear-gradient(160deg, #C9BFB0, #6E6357);
+}
+.ph--interior{
+  background-color:#C7B49E;
+  background-image:
+    radial-gradient(60% 80% at 78% 8%, rgba(255,244,222,.95), transparent 62%),
+    linear-gradient(102deg, rgba(45,38,30,.42) 0 20%, transparent 20.4%),
+    linear-gradient(180deg, #E3D5C0, #8A7A66);
+}
+.ph--cloth{
+  background-color:#9E8B7C;
+  background-image:
+    linear-gradient(112deg, rgba(255,255,255,.3) 0 8%, transparent 8.3%, transparent 16%, rgba(0,0,0,.14) 16.3% 24%, transparent 24.3%),
+    radial-gradient(70% 100% at 50% 0%, rgba(255,246,235,.7), transparent 70%),
+    linear-gradient(168deg, #CBB9A6, #6B5B4E);
+}
+.ph--cloth2{
+  background-color:#7E7466;
+  background-image:
+    linear-gradient(72deg, rgba(255,255,255,.24) 0 12%, transparent 12.4%, transparent 22%, rgba(0,0,0,.16) 22.3% 30%, transparent 30.3%),
+    linear-gradient(200deg, #A9A08F, #4E4840);
+}
+.ph--skin{
+  background-color:#E8C9BB;
+  background-image:
+    radial-gradient(55% 70% at 62% 22%, rgba(255,248,243,.96), transparent 65%),
+    radial-gradient(60% 80% at 20% 90%, rgba(196,132,110,.5), transparent 60%),
+    linear-gradient(150deg, #F3DCD1, #C08D7B);
+}
+.ph--city{
+  background-color:#5E6B72;
+  background-image:
+    linear-gradient(90deg, rgba(20,28,33,.55) 0 10%, transparent 10.3% 17%, rgba(20,28,33,.45) 17.3% 24%, transparent 24.3% 34%, rgba(20,28,33,.6) 34.3% 39%, transparent 39.3%),
+    linear-gradient(180deg, #A9C0CC 0 44%, #4C5A62 44%);
+}
+.ph--home{
+  background-color:#8C9A93;
+  background-image:
+    linear-gradient(158deg, rgba(255,255,255,.55) 0 26%, transparent 26.4%),
+    linear-gradient(20deg, rgba(24,32,28,.5) 0 22%, transparent 22.4%),
+    linear-gradient(180deg, #C3D2CB, #5F6E66);
+}
+.ph--home2{
+  background-color:#93887C;
+  background-image:
+    linear-gradient(120deg, rgba(255,250,240,.6) 0 30%, transparent 30.4%),
+    linear-gradient(180deg, #BDB2A4, #6A6055);
+}
+
+/* ══ 01 QUIET — FORM / Studio · architecture, Lahore ══════════
+   Warm paper, thin architectural type, huge whitespace, no accent colour. */
+.t-quiet{background:#F5F3EE; color:#16150F}
+.t-quiet .navx nav a{color:#5A564C}
+.t-quiet .brandx{font-size:18px; letter-spacing:.14em; font-weight:500; text-transform:uppercase}
+.t-quiet .hero{display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:end; padding-block:52px 84px}
+.t-quiet h1{font-family:var(--serif); font-size:70px; line-height:1.02; letter-spacing:-.02em; font-weight:400}
+.t-quiet .lede{margin-top:26px; max-width:38ch; color:#5A564C; font-size:16.5px}
+.t-quiet .acts{display:flex; gap:12px; margin-top:34px}
+.t-quiet .btn2{background:#16150F; color:#F5F3EE}
+.t-quiet .btn2.ghost{background:transparent; color:#16150F; border:1px solid rgba(22,21,15,.24)}
+.t-quiet .heroimg{height:430px; border-radius:2px}
+.t-quiet .metaline{display:flex; gap:40px; border-top:1px solid rgba(22,21,15,.14); padding-top:20px; color:#6B665A}
+.t-quiet .metaline span{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase}
+.t-quiet .prj{display:grid; grid-template-columns:56px 1fr 200px 130px; gap:24px; align-items:center;
+  padding-block:24px; border-bottom:1px solid rgba(22,21,15,.12); transition:padding-left .35s var(--ease), background .35s var(--ease)}
+.t-quiet .prj:hover{padding-left:14px; background:rgba(22,21,15,.03)}
+.t-quiet .prj b{font-size:26px; font-weight:400; letter-spacing:-.02em}
+.t-quiet .prj i,.t-quiet .prj u{font-style:normal; text-decoration:none; font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:#6B665A; text-transform:uppercase}
+.t-quiet .prj em{font-style:normal; font-family:var(--mono); font-size:11px; color:#9A9488}
+.t-quiet .feat{display:grid; grid-template-columns:1.3fr 1fr; gap:44px; align-items:center}
+.t-quiet .feat .ph{height:360px}
+.t-quiet h2{font-family:var(--serif); font-size:40px; font-weight:400; letter-spacing:-.02em; line-height:1.12}
+.t-quiet .cols3{display:grid; grid-template-columns:repeat(3,1fr); gap:36px; margin-top:40px}
+.t-quiet .cols3 h4{font-size:17px; font-weight:600; margin-bottom:10px}
+.t-quiet .cols3 p{color:#6B665A; font-size:14.5px}
+.t-quiet blockquote{font-family:var(--serif); font-size:30px; line-height:1.3; max-width:24ch}
+.t-quiet .locs{display:flex; gap:56px; border-top:1px solid rgba(22,21,15,.14); padding-top:28px; margin-top:56px}
+.t-quiet .locs div b{display:block; font-size:15px; margin-bottom:4px}
+.t-quiet .locs div span{font-family:var(--mono); font-size:11.5px; color:#6B665A}
+.t-quiet .endcta{background:#16150F; color:#F5F3EE; padding:74px 64px; display:flex; justify-content:space-between; align-items:center; gap:30px}
+.t-quiet .endcta h2{color:#F5F3EE}
+.t-quiet .endcta .btn2{background:#F5F3EE; color:#16150F}
+
+/* ══ 02 EDITORIAL — NOOR & CO. · branding, Karachi ═══════════
+   Newsprint white, oversized tight display, one hot accent, numbered sections. */
+.t-edit{background:#FAF9F6; color:#0D0D0C; --hot:#FF4A1C}
+.t-edit .brandx{font-size:17px; letter-spacing:-.03em}
+.t-edit .navx{border-bottom:1px solid #0D0D0C}
+.t-edit .navx nav a{color:#0D0D0C}
+.t-edit .navx nav a:last-child{color:var(--hot)}
+.t-edit h1{font-size:104px; line-height:.9; letter-spacing:-.055em; font-weight:800; margin-top:52px}
+.t-edit h1 em{font-family:var(--serif); font-style:italic; font-weight:400; color:var(--hot)}
+.t-edit .subrow{display:grid; grid-template-columns:1fr 380px; gap:56px; align-items:end; margin-top:36px; padding-bottom:44px; border-bottom:1px solid #0D0D0C}
+.t-edit .subrow p{font-size:18px; max-width:40ch; color:#3A3A37}
+.t-edit .btn2{background:#0D0D0C; color:#FAF9F6}
+.t-edit .btn2.hot{background:var(--hot); color:#fff}
+.t-edit .bigimg{height:400px; margin-top:44px}
+.t-edit .numsec{display:grid; grid-template-columns:110px 1fr; gap:36px; padding-block:52px; border-bottom:1px solid rgba(13,13,12,.16)}
+.t-edit .num{font-size:52px; font-weight:800; letter-spacing:-.05em; color:var(--hot); line-height:1}
+.t-edit h2{font-size:42px; line-height:1.05; letter-spacing:-.045em; font-weight:700; max-width:20ch}
+.t-edit .numsec p{margin-top:16px; max-width:56ch; color:#3A3A37; font-size:16px}
+.t-edit .cases{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:34px}
+.t-edit .case2 .ph{height:210px; margin-bottom:16px}
+.t-edit .case2 b{font-size:19px; font-weight:700; letter-spacing:-.025em; display:block}
+.t-edit .case2 span{font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:#7A7873; text-transform:uppercase}
+.t-edit .pull{font-size:46px; line-height:1.14; letter-spacing:-.04em; font-weight:700; max-width:22ch; margin-inline:auto; text-align:center; padding-block:76px}
+.t-edit .pull em{font-family:var(--serif); font-style:italic; font-weight:400; color:var(--hot)}
+.t-edit .stats{display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid #0D0D0C; border-bottom:1px solid #0D0D0C}
+.t-edit .stats div{padding:38px 26px; border-right:1px solid rgba(13,13,12,.16)}
+.t-edit .stats div:last-child{border-right:0}
+.t-edit .stats b{display:block; font-size:56px; font-weight:800; letter-spacing:-.05em; line-height:1}
+.t-edit .stats span{font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:#7A7873; text-transform:uppercase}
+.t-edit .endcta{padding-block:76px; display:flex; justify-content:space-between; align-items:flex-end; gap:30px}
+.t-edit .endcta h2{font-size:64px; max-width:14ch}
+
+/* ══ 03 STOREFRONT — MAHRO · fashion ════════════════════════
+   Sand and espresso, full-bleed product photography, real commerce UI. */
+.t-shop{background:#EFEAE2; color:#241C16; --clay:#9C5B3C}
+.t-shop .topbar{background:#241C16; color:#EFEAE2; text-align:center; padding:9px; font-family:var(--mono); font-size:11px; letter-spacing:.12em}
+.t-shop .brandx{font-size:22px; letter-spacing:.3em; font-weight:600}
+.t-shop .navx nav{gap:22px}
+.t-shop .navx nav a{color:#5B5047}
+.t-shop .bag{display:flex; align-items:center; gap:7px; font-family:var(--mono); font-size:11.5px; letter-spacing:.08em}
+.t-shop .bag i{width:22px; height:22px; border:1.5px solid #241C16; border-radius:3px; display:inline-block; position:relative}
+.t-shop .bag i::before{content:""; position:absolute; inset:-6px 5px auto; height:9px; border:1.5px solid #241C16; border-bottom:0; border-radius:6px 6px 0 0}
+.t-shop .bag b{background:var(--clay); color:#fff; border-radius:99px; width:18px; height:18px; display:grid; place-items:center; font-size:10px}
+.t-shop .hero{position:relative; height:520px; display:flex; align-items:flex-end; padding:48px 64px; color:#fff}
+.t-shop .hero .inner{position:relative; z-index:2; max-width:600px}
+.t-shop .hero h1{font-size:66px; line-height:1.02; letter-spacing:-.04em; font-weight:600}
+.t-shop .hero p{margin-top:14px; font-size:16.5px; opacity:.92; max-width:34ch}
+.t-shop .btn2{background:#fff; color:#241C16; margin-top:26px}
+.t-shop .rowhead{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:26px}
+.t-shop h2{font-size:30px; letter-spacing:-.03em; font-weight:600}
+.t-shop .rowhead a{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; color:#5B5047; border-bottom:1px solid currentColor; padding-bottom:2px}
+.t-shop .prods{display:grid; grid-template-columns:repeat(4,1fr); gap:20px}
+.t-shop .prod{cursor:pointer}
+.t-shop .prod .ph{height:290px; margin-bottom:13px}
+.t-shop .prod .quick{
+  position:absolute; inset:auto 12px 12px; background:#fff; color:#241C16; border-radius:99px;
+  padding:10px; text-align:center; font-size:12.5px; font-weight:600; opacity:0; transform:translateY(8px);
+  transition:opacity .28s var(--ease), transform .28s var(--ease);
+}
+.t-shop .prod:hover .quick{opacity:1; transform:none}
+.t-shop .tag{position:absolute; top:12px; left:12px; background:#241C16; color:#EFEAE2; font-family:var(--mono); font-size:10px; letter-spacing:.1em; padding:5px 10px; border-radius:99px}
+.t-shop .prod b{display:block; font-size:15px; font-weight:600}
+.t-shop .prod span{font-size:14px; color:#5B5047}
+.t-shop .sizes{display:flex; gap:6px; margin-top:9px}
+.t-shop .sizes u{
+  text-decoration:none; font-size:11px; width:26px; height:24px; display:grid; place-items:center;
+  border:1px solid rgba(36,28,22,.22); border-radius:4px; color:#5B5047;
+}
+.t-shop .sizes u.on{background:#241C16; color:#EFEAE2; border-color:#241C16}
+.t-shop .story{display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:stretch}
+.t-shop .story .ph{min-height:400px}
+.t-shop .story .txt{padding:64px; background:#241C16; color:#EFEAE2}
+.t-shop .story h2{font-size:34px; color:#EFEAE2}
+.t-shop .story p{margin-top:18px; opacity:.78; font-size:15.5px; max-width:40ch}
+.t-shop .revs{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+.t-shop .rev{background:#fff; padding:26px; border-radius:6px}
+.t-shop .rev .stars{color:var(--clay); font-size:14px; letter-spacing:2px}
+.t-shop .rev p{margin:12px 0 14px; font-size:15px}
+.t-shop .rev span{font-family:var(--mono); font-size:11px; color:#7A6E63}
+.t-shop .gram{display:grid; grid-template-columns:repeat(6,1fr); gap:8px}
+.t-shop .gram .ph{aspect-ratio:1}
+.t-shop .news{background:#241C16; color:#EFEAE2; padding:64px; text-align:center}
+.t-shop .news h2{color:#EFEAE2; font-size:32px}
+.t-shop .news form{display:flex; gap:8px; max-width:420px; margin:22px auto 0}
+.t-shop .news input{flex:1; padding:14px 18px; border-radius:99px; border:1px solid rgba(239,234,226,.3); background:transparent; color:#EFEAE2; font-size:14px}
+.t-shop .news .btn2{margin:0}
+
+/* ══ 04 BOOKING-FIRST — THE GLOW ROOM · clinic, Islamabad ════
+   Blush warmth, everything funnels to one booking action. */
+.t-book{background:#FFF7F3; color:#2B1D1A; --plum:#7C3A4E; --gold:#C9975B}
+.t-book .promo{background:var(--plum); color:#fff; text-align:center; padding:9px; font-family:var(--mono); font-size:11px; letter-spacing:.1em}
+.t-book .brandx{font-size:19px; letter-spacing:-.02em}
+.t-book .brandx em{font-style:normal; color:var(--plum)}
+.t-book .navx nav a{color:#6B5450}
+.t-book .btn2{background:var(--plum); color:#fff}
+.t-book .btn2.ghost{background:#fff; color:#2B1D1A; border:1px solid rgba(43,29,26,.16)}
+.t-book .hero{display:grid; grid-template-columns:1fr 400px; gap:44px; align-items:center; padding-block:56px 72px}
+.t-book h1{font-size:62px; line-height:1.02; letter-spacing:-.04em; font-weight:700}
+.t-book h1 em{font-style:italic; font-family:var(--serif); font-weight:400; color:var(--plum)}
+.t-book .lede{margin-top:20px; font-size:17px; color:#6B5450; max-width:36ch}
+.t-book .acts{display:flex; gap:12px; margin-top:30px}
+.t-book .trust{display:flex; gap:30px; margin-top:34px; padding-top:24px; border-top:1px solid rgba(43,29,26,.12)}
+.t-book .trust div b{display:block; font-size:26px; font-weight:700; letter-spacing:-.03em}
+.t-book .trust div span{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; color:#8A736E; text-transform:uppercase}
+.t-book .bookcard{background:#fff; border-radius:16px; padding:26px; box-shadow:0 30px 60px -38px rgba(43,29,26,.55)}
+.t-book .bookcard h3{font-size:19px; font-weight:700; margin-bottom:4px}
+.t-book .bookcard>p{font-size:13px; color:#8A736E; margin-bottom:18px}
+.t-book .fld{margin-bottom:12px}
+.t-book .fld label{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:#8A736E; text-transform:uppercase; margin-bottom:6px}
+.t-book .fld .inp{border:1px solid rgba(43,29,26,.18); border-radius:9px; padding:12px 14px; font-size:14px; background:#FFFBF9}
+.t-book .slots{display:grid; grid-template-columns:repeat(3,1fr); gap:7px}
+.t-book .slots u{
+  text-decoration:none; text-align:center; padding:10px 4px; border-radius:8px; font-size:13px;
+  border:1px solid rgba(43,29,26,.18); background:#FFFBF9; cursor:pointer; transition:all .2s var(--ease);
+}
+.t-book .slots u:hover{border-color:var(--plum)}
+.t-book .slots u.on{background:var(--plum); color:#fff; border-color:var(--plum)}
+.t-book .slots u.off{opacity:.38; text-decoration:line-through}
+.t-book .bookcard .btn2{width:100%; justify-content:center; margin-top:14px}
+.t-book .wa{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:12px; font-size:13px; color:#2E7D46; font-weight:600}
+.t-book .treat{display:grid; grid-template-columns:repeat(2,1fr); gap:16px}
+.t-book .tr{display:flex; gap:18px; align-items:center; background:#fff; border-radius:14px; padding:18px; transition:transform .25s var(--ease), box-shadow .25s var(--ease)}
+.t-book .tr:hover{transform:translateY(-3px); box-shadow:0 20px 40px -30px rgba(43,29,26,.6)}
+.t-book .tr .ph{width:88px; height:88px; border-radius:10px; flex:0 0 auto}
+.t-book .tr b{display:block; font-size:17px; font-weight:600}
+.t-book .tr p{font-size:13.5px; color:#8A736E; margin:3px 0 8px}
+.t-book .tr .price{font-family:var(--mono); font-size:13px; color:var(--plum); font-weight:500}
+.t-book h2{font-size:36px; letter-spacing:-.035em; font-weight:700}
+.t-book .ba{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px}
+.t-book .ba figure{margin:0; position:relative}
+.t-book .ba .ph{height:230px; border-radius:12px}
+.t-book .ba figcaption{position:absolute; left:12px; bottom:12px; background:rgba(255,255,255,.94); border-radius:99px; padding:6px 14px; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase}
+.t-book .team{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+.t-book .mem{background:#fff; border-radius:14px; overflow:hidden}
+.t-book .mem .ph{height:180px}
+.t-book .mem div{padding:16px}
+.t-book .mem b{display:block; font-size:16px; font-weight:600}
+.t-book .mem span{font-size:13px; color:#8A736E}
+.t-book .info{display:grid; grid-template-columns:1fr 1fr 1fr; gap:26px; background:#fff; border-radius:16px; padding:34px}
+.t-book .info h4{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:#8A736E; margin-bottom:10px}
+.t-book .info p{font-size:14.5px; line-height:1.65}
+.t-book .faqx{border-top:1px solid rgba(43,29,26,.12)}
+.t-book .faqx div{padding-block:20px; border-bottom:1px solid rgba(43,29,26,.12); display:flex; justify-content:space-between; gap:20px; font-size:17px; font-weight:600}
+.t-book .faqx div span{color:var(--gold); font-weight:400}
+.t-book .stickybar{position:sticky; bottom:0; background:#2B1D1A; color:#fff; display:flex; justify-content:space-between; align-items:center; padding:16px 64px; z-index:5}
+.t-book .stickybar b{font-size:16px}
+.t-book .stickybar span{font-size:13px; opacity:.7; margin-left:10px}
+.t-book .stickybar .btn2{background:var(--gold); color:#2B1D1A}
+
+/* ══ 05 LISTINGS — DAR HOUSE · property, Karachi ═════════════
+   Cool white, deep green, gold accents, dense search UI. */
+.t-list{background:#F7F8F7; color:#12211B; --green:#12402F; --gold:#B08544}
+.t-list .navx{background:#fff; padding-inline:64px; margin-inline:-64px; border-bottom:1px solid rgba(18,33,27,.1)}
+.t-list .brandx{font-size:19px; letter-spacing:-.02em; color:var(--green)}
+.t-list .navx nav a{color:#4C5C55}
+.t-list .btn2{background:var(--green); color:#fff}
+.t-list .btn2.gold{background:var(--gold); color:#fff}
+.t-list .btn2.ghost{background:transparent; border:1px solid rgba(18,33,27,.22); color:#12211B}
+.t-list .hero{position:relative; height:420px; display:flex; align-items:center; padding-inline:64px; color:#fff; margin-inline:-64px}
+.t-list .hero .inner{position:relative; z-index:2; max-width:560px}
+.t-list .hero h1{font-size:56px; line-height:1.04; letter-spacing:-.04em; font-weight:700}
+.t-list .hero p{margin-top:14px; font-size:16px; opacity:.92}
+.t-list .searchbar{background:#fff; border-radius:16px; padding:8px; margin:-46px 0 0; position:relative; z-index:3; box-shadow:0 26px 50px -34px rgba(18,33,27,.6)}
+.t-list .tabs2{display:flex; gap:4px; padding:6px 6px 12px}
+.t-list .tabs2 u{text-decoration:none; padding:8px 18px; border-radius:99px; font-size:13.5px; font-weight:600; color:#4C5C55; cursor:pointer}
+.t-list .tabs2 u.on{background:var(--green); color:#fff}
+.t-list .srow{display:grid; grid-template-columns:1.2fr 1fr 1fr 1fr 150px; gap:1px; background:rgba(18,33,27,.1); border-radius:11px; overflow:hidden}
+.t-list .srow div{background:#fff; padding:13px 16px}
+.t-list .srow label{display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.11em; text-transform:uppercase; color:#8A9691; margin-bottom:3px}
+.t-list .srow b{font-size:14.5px; font-weight:500}
+.t-list .srow .go{background:var(--green); color:#fff; display:grid; place-items:center; font-size:14.5px; font-weight:600}
+.t-list .filters{display:flex; gap:8px; margin-top:22px; flex-wrap:wrap}
+.t-list .filters u{text-decoration:none; padding:8px 15px; border-radius:99px; border:1px solid rgba(18,33,27,.18); font-size:12.5px; background:#fff; color:#4C5C55}
+.t-list .filters u.on{background:#12211B; color:#fff; border-color:#12211B}
+.t-list h2{font-size:30px; letter-spacing:-.03em; font-weight:700}
+.t-list .props{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+.t-list .prop{background:#fff; border-radius:14px; overflow:hidden; transition:transform .28s var(--ease), box-shadow .28s var(--ease)}
+.t-list .prop:hover{transform:translateY(-5px); box-shadow:0 26px 46px -30px rgba(18,33,27,.5)}
+.t-list .prop .ph{height:200px}
+.t-list .prop .badge{position:absolute; top:12px; left:12px; background:var(--gold); color:#fff; font-family:var(--mono); font-size:10px; letter-spacing:.1em; padding:5px 11px; border-radius:99px}
+.t-list .prop .body{padding:18px}
+.t-list .prop .price{font-size:22px; font-weight:700; letter-spacing:-.03em; color:var(--green)}
+.t-list .prop b{display:block; font-size:16px; font-weight:600; margin-top:6px}
+.t-list .prop .loc{font-size:13px; color:#7A8781; margin-top:2px}
+.t-list .prop .specs{display:flex; gap:16px; margin-top:14px; padding-top:14px; border-top:1px solid rgba(18,33,27,.1)}
+.t-list .prop .specs span{font-family:var(--mono); font-size:11.5px; color:#4C5C55}
+.t-list .mapblock{display:grid; grid-template-columns:1fr 340px; gap:0; border-radius:16px; overflow:hidden; background:#fff}
+.t-list .mapface{position:relative; min-height:340px; background:
+  linear-gradient(0deg, rgba(18,64,47,.06) 1px, transparent 1px) 0 0/100% 46px,
+  linear-gradient(90deg, rgba(18,64,47,.06) 1px, transparent 1px) 0 0/46px 100%, #E9EFEB}
+.t-list .pin{position:absolute; background:var(--green); color:#fff; font-family:var(--mono); font-size:11px; padding:6px 12px; border-radius:99px; transform:translate(-50%,-50%)}
+.t-list .pin.gold{background:var(--gold)}
+.t-list .maplist{padding:26px; border-left:1px solid rgba(18,33,27,.1)}
+.t-list .maplist div{padding-block:14px; border-bottom:1px solid rgba(18,33,27,.08)}
+.t-list .maplist b{display:block; font-size:14.5px}
+.t-list .maplist span{font-family:var(--mono); font-size:11.5px; color:#7A8781}
+.t-list .agents{display:grid; grid-template-columns:repeat(4,1fr); gap:16px}
+.t-list .ag{background:#fff; border-radius:14px; padding:20px; text-align:center}
+.t-list .ag .ph{width:64px; height:64px; border-radius:99px; margin:0 auto 12px}
+.t-list .ag b{display:block; font-size:15px}
+.t-list .ag span{font-family:var(--mono); font-size:10.5px; color:#7A8781}
+.t-list .finance{background:var(--green); color:#fff; border-radius:16px; padding:44px; display:flex; justify-content:space-between; align-items:center; gap:30px}
+.t-list .finance h2{color:#fff; font-size:32px; max-width:18ch}
+.t-list .finance p{opacity:.75; margin-top:10px; max-width:44ch; font-size:15px}
+
+/* ══ 06 DARK PRODUCT — FLOWN · AI automation platform ════════
+   Near-black, lime accent tied to the parent brand, live-feeling UI. */
+.t-dark{background:#08090A; color:#E9ECEA; --lime:#CCFF2E; --vio:#8B7BFF; --ln:rgba(233,236,234,.12)}
+.t-dark .navx{border-bottom:1px solid var(--ln)}
+.t-dark .brandx{font-size:18px; letter-spacing:-.03em; display:flex; align-items:center; gap:8px}
+.t-dark .brandx i{width:20px; height:20px; border-radius:6px; background:var(--lime); display:inline-block}
+.t-dark .navx nav a{color:rgba(233,236,234,.6)}
+.t-dark .btn2{background:var(--lime); color:#08090A}
+.t-dark .btn2.ghost{background:transparent; color:#E9ECEA; border:1px solid var(--ln)}
+.t-dark .hero{display:grid; grid-template-columns:1fr 420px; gap:48px; align-items:center; padding-block:64px}
+.t-dark .pill{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--ln); border-radius:99px; padding:6px 14px; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:rgba(233,236,234,.7)}
+.t-dark .pill b{width:6px; height:6px; border-radius:99px; background:var(--lime)}
+.t-dark h1{font-size:64px; line-height:1; letter-spacing:-.045em; font-weight:700; margin-top:22px}
+.t-dark h1 em{font-style:normal; color:var(--lime)}
+.t-dark .lede{margin-top:20px; color:rgba(233,236,234,.62); font-size:16.5px; max-width:40ch}
+.t-dark .acts{display:flex; gap:12px; margin-top:30px}
+.t-dark .logos{display:flex; gap:26px; margin-top:40px; padding-top:24px; border-top:1px solid var(--ln); font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:rgba(233,236,234,.32)}
+.t-dark .chatui{background:#0E1013; border:1px solid var(--ln); border-radius:16px; overflow:hidden}
+.t-dark .chatui .top{display:flex; align-items:center; gap:9px; padding:14px 16px; border-bottom:1px solid var(--ln); font-size:13px}
+.t-dark .chatui .top i{width:8px; height:8px; border-radius:99px; background:var(--lime); box-shadow:0 0 0 3px rgba(204,255,46,.14)}
+.t-dark .chatui .top span{margin-left:auto; font-family:var(--mono); font-size:10px; color:rgba(233,236,234,.4)}
+.t-dark .chatui .body{padding:16px; display:flex; flex-direction:column; gap:11px}
+.t-dark .bub{max-width:82%; padding:11px 14px; border-radius:13px; font-size:13.5px; line-height:1.45}
+.t-dark .bub.u{align-self:flex-start; background:#191C21; border-bottom-left-radius:4px}
+.t-dark .bub.a{align-self:flex-end; background:var(--lime); color:#08090A; border-bottom-right-radius:4px}
+.t-dark .typing{align-self:flex-end; display:flex; gap:4px; padding:11px 14px; background:#191C21; border-radius:13px}
+.t-dark .typing i{width:6px; height:6px; border-radius:99px; background:rgba(233,236,234,.5); animation:tp 1.2s infinite}
+.t-dark .typing i:nth-child(2){animation-delay:.15s} .t-dark .typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{0%,60%,100%{opacity:.25; transform:translateY(0)} 30%{opacity:1; transform:translateY(-3px)}}
+.t-dark .booked{
+  margin:4px 16px 16px; border:1px solid rgba(204,255,46,.34); background:rgba(204,255,46,.07);
+  border-radius:12px; padding:13px 15px; display:flex; align-items:center; gap:11px;
+}
+.t-dark .booked b{width:22px; height:22px; border-radius:99px; background:var(--lime); color:#08090A; display:grid; place-items:center; font-size:12px}
+.t-dark .booked span{font-size:13px} .t-dark .booked em{font-style:normal; display:block; font-family:var(--mono); font-size:10.5px; color:rgba(233,236,234,.5)}
+.t-dark h2{font-size:40px; letter-spacing:-.04em; font-weight:700; line-height:1.08}
+.t-dark .sub{color:rgba(233,236,234,.55); margin-top:12px; max-width:52ch; font-size:15.5px}
+.t-dark .flow{display:flex; align-items:stretch; gap:10px; margin-top:34px}
+.t-dark .step2{
+  flex:1; border:1px solid var(--ln); border-radius:12px; padding:16px; background:#0E1013; position:relative;
+}
+.t-dark .step2:not(:last-child)::after{
+  content:"→"; position:absolute; right:-16px; top:50%; transform:translateY(-50%);
+  color:var(--lime); font-size:13px; z-index:2;
+}
+.t-dark .step2 u{text-decoration:none; font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; color:rgba(233,236,234,.4)}
+.t-dark .step2 b{display:block; font-size:14px; font-weight:600; margin-top:7px; letter-spacing:-.02em}
+.t-dark .step2.hot{border-color:rgba(204,255,46,.4); background:rgba(204,255,46,.06)}
+.t-dark .grid2{display:grid; grid-template-columns:1.15fr .85fr; gap:16px; margin-top:34px}
+.t-dark .panel{background:#0E1013; border:1px solid var(--ln); border-radius:16px; padding:22px}
+.t-dark .panel h4{font-size:15px; font-weight:600; margin-bottom:3px}
+.t-dark .panel .cap{font-family:var(--mono); font-size:10.5px; color:rgba(233,236,234,.4); margin-bottom:18px}
+.t-dark .bars{display:flex; align-items:flex-end; gap:9px; height:130px}
+.t-dark .bars i{flex:1; border-radius:4px 4px 0 0; background:linear-gradient(180deg, var(--lime), rgba(204,255,46,.25))}
+.t-dark .bars i:nth-child(7){background:linear-gradient(180deg,var(--vio),rgba(139,123,255,.25))}
+.t-dark .kpis{display:flex; gap:26px; margin-top:18px; padding-top:16px; border-top:1px solid var(--ln)}
+.t-dark .kpis div b{display:block; font-size:24px; font-weight:700; letter-spacing:-.03em}
+.t-dark .kpis div span{font-family:var(--mono); font-size:10px; color:rgba(233,236,234,.4); letter-spacing:.08em}
+.t-dark .pipe div{display:flex; align-items:center; gap:11px; padding:11px 0; border-bottom:1px solid var(--ln); font-size:13.5px}
+.t-dark .pipe div:last-child{border-bottom:0}
+.t-dark .pipe i{width:7px; height:7px; border-radius:99px; background:var(--lime); flex:0 0 auto}
+.t-dark .pipe i.w{background:var(--vio)} .t-dark .pipe i.g{background:rgba(233,236,234,.28)}
+.t-dark .pipe span{margin-left:auto; font-family:var(--mono); font-size:10.5px; color:rgba(233,236,234,.42)}
+.t-dark .integ{display:grid; grid-template-columns:repeat(6,1fr); gap:10px; margin-top:30px}
+.t-dark .integ div{border:1px solid var(--ln); border-radius:11px; padding:16px 10px; text-align:center; font-family:var(--mono); font-size:10.5px; color:rgba(233,236,234,.62); background:#0E1013}
+.t-dark .prices{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:34px}
+.t-dark .pl{border:1px solid var(--ln); border-radius:16px; padding:26px; background:#0E1013}
+.t-dark .pl.on{border-color:var(--lime); background:rgba(204,255,46,.05)}
+.t-dark .pl u{text-decoration:none; font-family:var(--mono); font-size:10px; letter-spacing:.12em; color:rgba(233,236,234,.45)}
+.t-dark .pl b{display:block; font-size:22px; font-weight:700; margin-top:10px}
+.t-dark .pl .amt{font-size:34px; font-weight:700; letter-spacing:-.04em; margin-top:8px}
+.t-dark .pl .amt small{font-size:13px; font-weight:400; color:rgba(233,236,234,.45)}
+.t-dark .pl ul{list-style:none; padding:0; margin:16px 0 0; display:grid; gap:8px}
+.t-dark .pl li{font-size:13.5px; color:rgba(233,236,234,.62); padding-left:18px; position:relative}
+.t-dark .pl li::before{content:"→"; position:absolute; left:0; color:var(--lime); font-size:11px}
+.t-dark .endcta{border:1px solid var(--ln); border-radius:20px; padding:56px; text-align:center; background:radial-gradient(80% 120% at 50% 0%, rgba(204,255,46,.1), transparent 62%), #0E1013}
+.t-dark .endcta h2{font-size:46px}
+.t-dark .endcta .acts{justify-content:center}
+
+@media (prefers-reduced-motion:reduce){
+  .dz__btn:hover .dz__scale{transform:scale(var(--s,.3))}
+  .t-dark .typing i{animation:none}
+}

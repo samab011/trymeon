@@ -419,6 +419,103 @@
     });
   })();
 
+  /* ── Mini-site previews & viewer ──────────────────────── */
+  /* Each site is authored once in a <template> at a fixed 1080px design
+     width, then cloned into the card preview and into the viewer and
+     scaled to fit. One source, two sizes — and a layout that cannot
+     break at any viewport because the design width never changes. */
+  (function miniSites() {
+    var DESIGN_W = 1080;
+    var meta = window.SITE_META || {};
+    var keys = Object.keys(meta);
+    if (!keys.length) return;
+
+    function clone(key) {
+      var t = document.getElementById('site-' + key);
+      return t && t.content ? t.content.cloneNode(true) : null;
+    }
+
+    /* ── card previews ── */
+    var cards = $$('.dz__btn');
+    cards.forEach(function (btn) {
+      var key = btn.dataset.site;
+      var host = $('#prev-' + key);
+      var node = clone(key);
+      if (host && node) host.appendChild(node);
+    });
+
+    function fitCards() {
+      cards.forEach(function (btn) {
+        var shot = $('.dz__shot', btn);
+        var host = $('.dz__scale', btn);
+        if (!shot || !host) return;
+        host.style.setProperty('--s', shot.clientWidth / DESIGN_W);
+      });
+    }
+
+    /* ── viewer ── */
+    var dlg = $('#viewer');
+    var fit = $('#viewerFit');
+    var stage = $('#viewerStage');
+    var urlOut = $('#viewerUrl');
+    var current = 0;
+
+    function fitViewer() {
+      if (!dlg || !dlg.open) return;
+      var s = Math.min(1, stage.clientWidth / DESIGN_W);
+      fit.style.setProperty('--vs', s);
+      /* the scaled child no longer contributes its real height, so set it */
+      var inner = fit.firstElementChild;
+      fit.style.height = inner ? (inner.offsetHeight * s) + 'px' : '';
+    }
+
+    function show(i) {
+      current = (i + keys.length) % keys.length;
+      var key = keys[current];
+      fit.innerHTML = '';
+      var node = clone(key);
+      if (node) fit.appendChild(node);
+      urlOut.textContent = 'https://' + meta[key].url;
+      stage.scrollTop = 0;
+      fitViewer();
+    }
+
+    if (dlg && typeof dlg.showModal === 'function') {
+      cards.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var i = keys.indexOf(btn.dataset.site);
+          dlg.showModal();
+          document.body.style.overflow = 'hidden';
+          show(i < 0 ? 0 : i);
+        });
+      });
+
+      $('#viewerNext').addEventListener('click', function () { show(current + 1); });
+      $('#viewerPrev').addEventListener('click', function () { show(current - 1); });
+      $('#viewerClose').addEventListener('click', function () { dlg.close(); });
+      dlg.addEventListener('click', function (e) {
+        var r = dlg.getBoundingClientRect();
+        if (e.clientX < r.left || e.clientX > r.right ||
+            e.clientY < r.top  || e.clientY > r.bottom) dlg.close();
+      });
+      dlg.addEventListener('close', function () {
+        document.body.style.overflow = '';
+        fit.innerHTML = '';
+      });
+      dlg.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); show(current - 1); }
+      });
+    }
+
+    function fitAll() { fitCards(); fitViewer(); }
+    fitAll();
+    window.addEventListener('resize', fitAll, { passive: true });
+    /* the showcase dialog has zero width until opened, so re-fit on open */
+    var sc = $('#showcase');
+    if (sc && 'ResizeObserver' in window) new ResizeObserver(fitAll).observe(sc);
+  })();
+
   /* ── Year ─────────────────────────────────────────────── */
   var year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());

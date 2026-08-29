@@ -35,6 +35,7 @@ Deploy by serving the directory as-is (Netlify, Vercel, Pages, S3, nginx).
 index.html              markup — nav, hero, services, process, work,
                         plan builder, testimonials, FAQ, contact, footer
 assets/css/styles.css   design tokens + all styling
+assets/css/templates.css  the six miniature websites + preview/viewer chrome
 assets/js/main.js       reveals, counters, nav, rail, plan builder, form
 DESIGN.md               the design system: colour, type, spacing, motion
 ```
@@ -132,12 +133,26 @@ The hero's "See the work" button opens a `<dialog>` with three tabbed panels
 instead of jumping down the page: design directions, an AI agent transcript,
 and motion tiles.
 
-Everything in it is built from markup and CSS — no images, iframes or
-third-party embeds. The six design previews are abstract wireframes assembled
-from divs, representing directions the studio designs in. They are deliberately
-**not** other people's templates: showing a third-party gallery here would
-present someone else's work as the studio's own to the exact prospects it is
-meant to win.
+The "Website designs" tab holds **six complete miniature websites** for
+fictional Pakistani businesses — FORM / Studio (architecture, Lahore),
+NOOR & CO. (brand strategy, Karachi), MAHRO (fashion), THE GLOW ROOM (skin
+clinic, Islamabad), DAR HOUSE (property, Karachi) and FLOWN (AI automation).
+Each has its own typography, palette, layout logic and UI, with real business
+copy, PKR pricing and Pakistani locations.
+
+They live in `assets/css/templates.css` plus one `<template>` per site in
+`index.html`. Each site is authored at a **fixed 1080px design width** and
+scaled to fit its container, which is why a layout can never break at any
+viewport: the design width never changes, only the scale factor. The same
+markup is cloned twice — into the card preview at ~0.3 scale, and into the
+full-screen viewer at whatever scale fits. One source, two sizes.
+
+Everything is markup and CSS: no images, iframes or third-party embeds. Photo
+areas are layered CSS compositions under `.ph--*` — swap one `background-image`
+for a real photograph and nothing else changes. They are deliberately **not**
+other people's templates: showing a third-party gallery here would present
+someone else's work as the studio's own to the exact prospects it is meant
+to win.
 
 Two things worth knowing if you touch it:
 
@@ -147,6 +162,12 @@ Two things worth knowing if you touch it:
 - Backdrop dismissal compares the click against the dialog's bounding box
   rather than testing `e.target === dialog`, because the inner wrapper covers
   the dialog's own box and would otherwise swallow every click.
+- `.dz` carries `min-width:0`. Grid items default to `min-width:auto`, so the
+  1080px preview inside blows every column out to 1080px without it.
+- Keep container `max-width` in px, not `ch`. A `ch` value on a hero wrapper
+  resolves against *that element's* font-size, not the display heading inside
+  it — `30ch` on a wrapper read as ~255px rather than ~900px and shredded two
+  headlines into five lines each.
 
 Keyboard: Escape closes, left/right arrows move between tabs, focus returns to
 the button on close, and with JavaScript off the button still navigates to the

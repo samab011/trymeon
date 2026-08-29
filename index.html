@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="stylesheet" href="assets/css/templates.css" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230B0B0C'/><path d='M50 16 Q54.5 45.5 84 50 Q54.5 54.5 50 84 Q45.5 54.5 16 50 Q45.5 45.5 50 16Z' fill='%23CCFF2E'/></svg>" />
 </head>
 <body>
@@ -499,32 +500,50 @@
 
     <div class="showcase__body">
       <section role="tabpanel" id="pane-web" aria-labelledby="tab-web" tabindex="0">
-        <p class="showcase__lede">Six directions we design in. Tell us which feels like your business and we'll build the real thing around your content.</p>
+        <p class="showcase__lede">Six complete websites we have designed for Pakistani businesses. Open any one and scroll it like the real thing.</p>
         <div class="dzs">
-        <figure class="dz">
-          <div class="dz__frame dz--minimal" aria-hidden="true"><span class="dz__nav"><i></i><i></i><i></i></span><span class="dz__h dz__h--sm"></span><span class="dz__p"></span><span class="dz__p dz__p--short"></span><span class="dz__cta"></span></div>
-          <figcaption><b>Quiet</b><em>Clinics, consultancies, professional services</em></figcaption>
-        </figure>
-        <figure class="dz">
-          <div class="dz__frame dz--editorial" aria-hidden="true"><span class="dz__nav"><i></i><i></i></span><span class="dz__h dz__h--xl"></span><span class="dz__h dz__h--xl dz__h--half"></span><span class="dz__meta"><i></i><i></i></span></div>
-          <figcaption><b>Editorial</b><em>Studios, agencies, personal brands</em></figcaption>
-        </figure>
-        <figure class="dz">
-          <div class="dz__frame dz--shop" aria-hidden="true"><span class="dz__nav"><i></i><i></i><i></i><i></i></span><span class="dz__grid"><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-          <figcaption><b>Storefront</b><em>Retail, D2C, consumer products</em></figcaption>
-        </figure>
-        <figure class="dz">
-          <div class="dz__frame dz--booking" aria-hidden="true"><span class="dz__nav"><i></i><i></i></span><span class="dz__split"><span class="dz__col"><b></b><b class="s"></b></span><span class="dz__form"><i></i><i></i><i></i><u></u></span></span></div>
-          <figcaption><b>Booking-first</b><em>Restaurants, salons, clinics</em></figcaption>
-        </figure>
-        <figure class="dz">
-          <div class="dz__frame dz--listing" aria-hidden="true"><span class="dz__nav"><i></i><i></i><i></i></span><span class="dz__filters"><i></i><i></i><i></i></span><span class="dz__rows"><i></i><i></i><i></i></span></div>
-          <figcaption><b>Listings</b><em>Property, motors, marketplaces</em></figcaption>
-        </figure>
-        <figure class="dz">
-          <div class="dz__frame dz--dark" aria-hidden="true"><span class="dz__nav dz__nav--dk"><i></i><i></i><i></i></span><span class="dz__h dz__h--lg"></span><span class="dz__p"></span><span class="dz__panel"><i></i><i></i></span></div>
-          <figcaption><b>Dark product</b><em>SaaS, apps, technical products</em></figcaption>
-        </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="quiet" aria-label="View the Quiet website preview">
+              <span class="dz__shot"><span class="dz__scale" id="prev-quiet"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Quiet</b><em>FORM / Studio — Architecture, Lahore</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="edit" aria-label="View the Editorial website preview">
+              <span class="dz__shot"><span class="dz__scale" id="prev-edit"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Editorial</b><em>NOOR &amp; CO. — Brand strategy, Karachi</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="shop" aria-label="View the Storefront website preview">
+              <span class="dz__shot"><span class="dz__scale" id="prev-shop"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Storefront</b><em>MAHRO — Fashion &amp; lifestyle</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="book" aria-label="View the Booking-first website preview">
+              <span class="dz__shot"><span class="dz__scale" id="prev-book"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Booking-first</b><em>THE GLOW ROOM — Skin clinic, Islamabad</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="list" aria-label="View the Listings website preview">
+              <span class="dz__shot"><span class="dz__scale" id="prev-list"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Listings</b><em>DAR HOUSE — Property, Karachi</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="dark" aria-label="View the Dark product website preview">
+              <span class="dz__shot"><span class="dz__scale" id="prev-dark"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Dark product</b><em>FLOWN — AI automation platform</em></figcaption>
+          </figure>
         </div>
       </section>
 
@@ -558,6 +577,492 @@
     </footer>
   </div>
 </dialog>
+
+<!-- ══ MINI-SITE SOURCES ══ -->
+<template id="site-quiet"><div class="site t-quiet">
+  <div class="wrapx">
+    <div class="navx">
+      <span class="brandx">FORM / Studio</span>
+      <nav><a>Work</a><a>Studio</a><a>Approach</a><a>Journal</a><a>Contact</a></nav>
+      <span class="eyed">Lahore · +92 42 3577 1140</span>
+    </div>
+    <div class="hero">
+      <div>
+        <h1>Spaces that feel<br />like they belong.</h1>
+        <p class="lede">Architecture and interiors designed around how people actually live, work and gather.</p>
+        <div class="acts"><span class="btn2">View selected work</span><span class="btn2 ghost">Start a project</span></div>
+      </div>
+      <div class="ph ph--arch heroimg"></div>
+    </div>
+    <div class="metaline"><span>Est. 2014</span><span>Architecture</span><span>Interiors</span><span>Commercial</span><span>28 completed projects</span></div>
+  </div>
+
+  <div class="wrapx sec">
+    <span class="eyed" style="color:#6B665A">Selected work</span>
+    <div style="margin-top:26px">
+      <div class="prj"><i>01</i><b>House No. 17</b><u>Residential · Lahore</u><em>2025</em></div>
+      <div class="prj"><i>02</i><b>Courtyard House</b><u>Residential · Islamabad</u><em>2025</em></div>
+      <div class="prj"><i>03</i><b>Ridge Residence</b><u>Retreat · Murree</u><em>2024</em></div>
+      <div class="prj"><i>04</i><b>Studio 04</b><u>Commercial · Karachi</u><em>2024</em></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div class="feat">
+      <div class="ph ph--interior"></div>
+      <div>
+        <span class="eyed" style="color:#6B665A">Featured</span>
+        <h2 style="margin-top:14px">Courtyard House,<br />Islamabad</h2>
+        <p style="margin-top:18px; color:#6B665A; max-width:38ch">A family home built around a shaded central court, so every room borrows light and air from the middle rather than the street.</p>
+        <div class="metaline" style="margin-top:26px"><span>4,200 sq ft</span><span>Completed 2025</span><span>F-7/2</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapx sec" style="border-top:1px solid rgba(22,21,15,.14)">
+    <h2>We design slowly,<br />and build once.</h2>
+    <div class="cols3">
+      <div><h4>Architecture</h4><p>New builds and additions, from first sketch through to site supervision with your contractor.</p></div>
+      <div><h4>Interiors</h4><p>Joinery, lighting and materials specified in full — drawings a Lahore fabricator can actually work from.</p></div>
+      <div><h4>Commercial</h4><p>Offices, studios and retail where the plan has to earn its rent as well as look considered.</p></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec" style="background:#EDEAE3">
+    <blockquote>They asked how we live before they drew a single wall. Two years in, the house still makes sense.</blockquote>
+    <p style="margin-top:22px; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; color:#6B665A">SANA MAHMOOD · HOUSE NO. 17, LAHORE</p>
+    <div class="locs">
+      <div><b>Lahore</b><span>12-C Gulberg III</span></div>
+      <div><b>Islamabad</b><span>Beverly Centre, Blue Area</span></div>
+      <div><b>Karachi</b><span>By appointment</span></div>
+    </div>
+  </div>
+
+  <div class="endcta">
+    <h2>Have a site,<br />or just an idea?</h2>
+    <span class="btn2">Start a project</span>
+  </div>
+</div></template>
+<template id="site-edit"><div class="site t-edit">
+  <div class="wrapx">
+    <div class="navx">
+      <span class="brandx">NOOR &amp; CO.</span>
+      <nav><a>Work</a><a>Studio</a><a>Services</a><a>Journal</a><a>Talk to us</a></nav>
+    </div>
+    <h1>Good brands don't<br />need to <em>shout</em>.</h1>
+    <div class="subrow">
+      <p>We help ambitious businesses find their voice, sharpen their story and show up like they mean it.</p>
+      <div style="display:flex; gap:10px; justify-content:flex-end">
+        <span class="btn2">See our work</span><span class="btn2 hot">Talk to us</span>
+      </div>
+    </div>
+    <div class="ph ph--city bigimg"></div>
+  </div>
+
+  <div class="wrapx">
+    <div class="numsec">
+      <div class="num">01</div>
+      <div>
+        <h2>Strategy before the logo.</h2>
+        <p>Half the branding work in Karachi starts with a colour palette. We start with who buys from you, why they chose you last time, and what your competitors can't credibly say.</p>
+      </div>
+    </div>
+    <div class="numsec">
+      <div class="num">02</div>
+      <div>
+        <h2>Identity that survives contact with reality.</h2>
+        <p>A wordmark that works on a shop shutter, a delivery box and a phone screen. Built and documented so your printer in Shahalam Market gets the same result as your developer.</p>
+      </div>
+    </div>
+    <div class="numsec">
+      <div class="num">03</div>
+      <div>
+        <h2>Campaigns that people repeat.</h2>
+        <p>Launches, films and social work that get shared without a media budget behind them.</p>
+        <div class="cases">
+          <div class="case2"><div class="ph ph--interior"></div><b>Reimagining a Karachi café</b><span>Brand · Interiors · Menu</span></div>
+          <div class="case2"><div class="ph ph--home"></div><b>Building a modern property brand</b><span>Naming · Identity · Web</span></div>
+          <div class="case2"><div class="ph ph--cloth"></div><b>From family business to national brand</b><span>Strategy · Packaging</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapx">
+    <p class="pull">The work isn't the logo. It's the <em>hundred small decisions</em> after it.</p>
+  </div>
+
+  <div class="wrapx">
+    <div class="stats">
+      <div><b>+42%</b><span>Enquiries, first quarter</span></div>
+      <div><b>3.2&times;</b><span>Campaign engagement</span></div>
+      <div><b>18</b><span>Cities reached</span></div>
+    </div>
+    <div class="endcta">
+      <h2>Let's make yours impossible to ignore.</h2>
+      <span class="btn2 hot">Talk to us</span>
+    </div>
+  </div>
+</div></template>
+<template id="site-shop"><div class="site t-shop">
+  <div class="topbar">FREE DELIVERY ACROSS PAKISTAN ON ORDERS OVER PKR 10,000</div>
+  <div class="wrapx">
+    <div class="navx">
+      <nav><a>New in</a><a>Women</a><a>Men</a><a>Collections</a></nav>
+      <span class="brandx">MAHRO</span>
+      <span class="bag"><i></i> BAG <b>2</b></span>
+    </div>
+  </div>
+  <div class="hero ph ph--cloth">
+    <div class="inner">
+      <h1>Made here.<br />Worn everywhere.</h1>
+      <p>Contemporary pieces rooted in Pakistani craft, cut for modern life.</p>
+      <span class="btn2">Shop the collection</span>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div class="rowhead"><h2>New arrivals</h2><a>View all 24</a></div>
+    <div class="prods">
+      <div class="prod"><div class="ph ph--cloth"><span class="tag">NEW</span><span class="quick">Quick view</span></div><b>Linen Co-Ord</b><span>PKR 12,500</span><div class="sizes"><u>XS</u><u class="on">S</u><u>M</u><u>L</u></div></div>
+      <div class="prod"><div class="ph ph--cloth2"><span class="quick">Quick view</span></div><b>Signature Kurta</b><span>PKR 8,900</span><div class="sizes"><u>S</u><u class="on">M</u><u>L</u><u>XL</u></div></div>
+      <div class="prod"><div class="ph ph--interior"><span class="tag">LIMITED</span><span class="quick">Quick view</span></div><b>Raw Silk Set</b><span>PKR 18,500</span><div class="sizes"><u>S</u><u>M</u><u class="on">L</u></div></div>
+      <div class="prod"><div class="ph ph--arch2"><span class="quick">Quick view</span></div><b>Everyday Tote</b><span>PKR 6,500</span><div class="sizes"><u class="on">ONE SIZE</u></div></div>
+    </div>
+  </div>
+
+  <div class="story">
+    <div class="ph ph--cloth2"></div>
+    <div class="txt">
+      <h2>Cut in Karachi.<br />Woven in Faisalabad.</h2>
+      <p>We work with four family-run mills and a stitching unit we have used since 2019. Everything is made in runs of two hundred or fewer, which is why pieces sell out and why we would rather they did.</p>
+      <p style="margin-top:14px; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; opacity:.6">READ THE FULL STORY →</p>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div class="rowhead"><h2>Best sellers</h2><a>Shop all</a></div>
+    <div class="prods">
+      <div class="prod"><div class="ph ph--interior"><span class="quick">Quick view</span></div><b>Cotton Shalwar Set</b><span>PKR 9,800</span></div>
+      <div class="prod"><div class="ph ph--cloth"><span class="quick">Quick view</span></div><b>Khaddar Overshirt</b><span>PKR 11,200</span></div>
+      <div class="prod"><div class="ph ph--home2"><span class="quick">Quick view</span></div><b>Block-Print Scarf</b><span>PKR 4,200</span></div>
+      <div class="prod"><div class="ph ph--cloth2"><span class="tag">BACK IN</span><span class="quick">Quick view</span></div><b>Wide-Leg Trouser</b><span>PKR 7,400</span></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div class="rowhead"><h2>What customers say</h2><a>1,284 reviews</a></div>
+    <div class="revs">
+      <div class="rev"><div class="stars">★★★★★</div><p>The linen is heavier than I expected in the best way. Wore it through a Karachi summer and it held up.</p><span>ZAINAB A. · KARACHI</span></div>
+      <div class="rev"><div class="stars">★★★★★</div><p>Ordered Tuesday, arrived Thursday in Lahore. Sizing guide was accurate for once.</p><span>HAMZA R. · LAHORE</span></div>
+      <div class="rev"><div class="stars">★★★★☆</div><p>Beautiful kurta. Would like more colours in the raw silk.</p><span>AYESHA K. · ISLAMABAD</span></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div class="rowhead"><h2>@mahro.pk</h2><a>Follow</a></div>
+    <div class="gram">
+      <div class="ph ph--cloth"></div><div class="ph ph--cloth2"></div><div class="ph ph--interior"></div>
+      <div class="ph ph--home2"></div><div class="ph ph--arch2"></div><div class="ph ph--cloth"></div>
+    </div>
+  </div>
+
+  <div class="news">
+    <h2>Ten percent off your first order</h2>
+    <p style="opacity:.7; margin-top:10px; font-size:15px">New arrivals and restocks, twice a month. No spam.</p>
+    <form><input placeholder="your@email.com" /><span class="btn2">Subscribe</span></form>
+  </div>
+</div></template>
+<template id="site-book"><div class="site t-book">
+  <div class="promo">NOW OPEN IN F-7 · SAME-WEEK APPOINTMENTS AVAILABLE</div>
+  <div class="wrapx">
+    <div class="navx">
+      <span class="brandx">THE GLOW<em> ROOM</em></span>
+      <nav><a>Treatments</a><a>Results</a><a>Team</a><a>Pricing</a><a>Contact</a></nav>
+      <span class="btn2">Book an appointment</span>
+    </div>
+    <div class="hero">
+      <div>
+        <h1>Your skin,<br />but <em>better</em>.</h1>
+        <p class="lede">Personalised treatments, thoughtful care and results you can actually see.</p>
+        <div class="acts"><span class="btn2">Book an appointment</span><span class="btn2 ghost">Explore treatments</span></div>
+        <div class="trust">
+          <div><b>4.9★</b><span>612 Google reviews</span></div>
+          <div><b>8,400+</b><span>Treatments done</span></div>
+          <div><b>6</b><span>Certified therapists</span></div>
+        </div>
+      </div>
+      <div class="bookcard">
+        <h3>Book in under a minute</h3>
+        <p>No deposit. Free to reschedule.</p>
+        <div class="fld"><label>Treatment</label><div class="inp">HydraGlow — 60 min</div></div>
+        <div class="fld"><label>Date</label><div class="inp">Thursday, 12 March</div></div>
+        <div class="fld"><label>Available times</label>
+          <div class="slots"><u class="off">10:00</u><u class="on">11:30</u><u>13:00</u><u>15:00</u><u>16:30</u><u class="off">18:00</u></div>
+        </div>
+        <span class="btn2">Confirm booking — PKR 11,000</span>
+        <div class="wa">Or book on WhatsApp · +92 51 234 5678</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2>Popular treatments</h2>
+    <p style="color:#6B5450; margin:10px 0 28px">Every treatment starts with a consultation. If something isn't right for your skin, we will tell you.</p>
+    <div class="treat">
+      <div class="tr"><div class="ph ph--skin"></div><div><b>Signature Facial</b><p>Deep cleanse, extraction and mask. 60 minutes.</p><span class="price">PKR 7,500</span></div></div>
+      <div class="tr"><div class="ph ph--skin"></div><div><b>HydraGlow</b><p>Hydration and resurfacing for dull, tired skin.</p><span class="price">PKR 11,000</span></div></div>
+      <div class="tr"><div class="ph ph--skin"></div><div><b>Skin Consultation</b><p>Full analysis and a plan. Redeemable against treatment.</p><span class="price">PKR 3,000</span></div></div>
+      <div class="tr"><div class="ph ph--skin"></div><div><b>Laser Hair Reduction</b><p>Per session, priced by area. Patch test included.</p><span class="price">From PKR 8,000</span></div></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2>Real results, six sessions apart</h2>
+    <div class="ba">
+      <figure><div class="ph ph--skin"></div><figcaption>Before · Week 1</figcaption></figure>
+      <figure><div class="ph ph--skin"></div><figcaption>After · Week 12</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2>Who you'll see</h2>
+    <div class="team" style="margin-top:26px">
+      <div class="mem"><div class="ph ph--skin"></div><div><b>Dr. Hina Qureshi</b><span>Consultant Dermatologist</span></div></div>
+      <div class="mem"><div class="ph ph--skin"></div><div><b>Mahnoor Abbas</b><span>Senior Aesthetician</span></div></div>
+      <div class="mem"><div class="ph ph--skin"></div><div><b>Sara Yousaf</b><span>Laser Specialist</span></div></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div class="info">
+      <div><h4>Find us</h4><p>Street 12, F-7/3<br />Islamabad 44000</p></div>
+      <div><h4>Opening hours</h4><p>Mon–Sat · 11:00 – 20:00<br />Sunday · Closed</p></div>
+      <div><h4>Get in touch</h4><p>+92 51 234 5678<br />hello@theglowroom.pk</p></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2>Before you book</h2>
+    <div class="faqx" style="margin-top:22px">
+      <div>Do I need a consultation first?<span>+</span></div>
+      <div>Is there parking?<span>+</span></div>
+      <div>Can I reschedule?<span>+</span></div>
+      <div>Do you treat acne scarring?<span>+</span></div>
+    </div>
+  </div>
+
+  <div class="stickybar">
+    <div><b>Next available: Thursday 11:30</b><span>F-7/3, Islamabad</span></div>
+    <span class="btn2">Book an appointment</span>
+  </div>
+</div></template>
+<template id="site-list"><div class="site t-list">
+  <div class="wrapx">
+    <div class="navx">
+      <span class="brandx">DAR HOUSE</span>
+      <nav><a>Buy</a><a>Rent</a><a>Commercial</a><a>Agents</a><a>Financing</a></nav>
+      <span class="btn2 ghost">List your property</span>
+    </div>
+    <div class="hero ph ph--home">
+      <div class="inner">
+        <h1>Find a place worth coming home to.</h1>
+        <p>Curated homes, apartments and commercial spaces across Karachi and Islamabad.</p>
+      </div>
+    </div>
+    <div class="searchbar">
+      <div class="tabs2"><u class="on">Buy</u><u>Rent</u><u>Commercial</u><u>New projects</u></div>
+      <div class="srow">
+        <div><label>Location</label><b>DHA Phase 8, Karachi</b></div>
+        <div><label>Property type</label><b>House</b></div>
+        <div><label>Budget</label><b>Up to 6 Crore</b></div>
+        <div><label>Beds</label><b>4+</b></div>
+        <div class="go">Explore properties</div>
+      </div>
+    </div>
+    <div class="filters">
+      <u class="on">All</u><u>Ready to move</u><u>Under construction</u><u>Corner plot</u><u>Sea facing</u><u>Gated</u><u>With basement</u>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:24px">
+      <h2>Featured listings</h2>
+      <span style="font-family:var(--mono); font-size:11.5px; color:#7A8781">248 PROPERTIES · KARACHI</span>
+    </div>
+    <div class="props">
+      <div class="prop"><div class="ph ph--home"><span class="badge">FEATURED</span></div><div class="body">
+        <div class="price">PKR 8.75 Crore</div><b>Sea View Residence</b><div class="loc">DHA Phase 8, Karachi</div>
+        <div class="specs"><span>5 Beds</span><span>6 Baths</span><span>1 Kanal</span></div></div></div>
+      <div class="prop"><div class="ph ph--city"></div><div class="body">
+        <div class="price">PKR 4.20 Crore</div><b>Garden Heights</b><div class="loc">Clifton Block 5, Karachi</div>
+        <div class="specs"><span>3 Beds</span><span>3 Baths</span><span>2,400 sq ft</span></div></div></div>
+      <div class="prop"><div class="ph ph--home2"><span class="badge">NEW</span></div><div class="body">
+        <div class="price">PKR 6.90 Crore</div><b>The Courtyard</b><div class="loc">F-7/2, Islamabad</div>
+        <div class="specs"><span>4 Beds</span><span>5 Baths</span><span>10 Marla</span></div></div></div>
+    </div>
+    <div class="props" style="margin-top:20px">
+      <div class="prop"><div class="ph ph--arch"></div><div class="body">
+        <div class="price">PKR 3.15 Crore</div><b>Park Avenue</b><div class="loc">Gulberg III, Lahore</div>
+        <div class="specs"><span>3 Beds</span><span>4 Baths</span><span>1,900 sq ft</span></div></div></div>
+      <div class="prop"><div class="ph ph--interior"></div><div class="body">
+        <div class="price">PKR 1.85 Lakh <small style="font-size:13px; font-weight:400; color:#7A8781">/ month</small></div><b>Creek Vista Apartment</b><div class="loc">DHA Phase 8, Karachi</div>
+        <div class="specs"><span>2 Beds</span><span>2 Baths</span><span>1,450 sq ft</span></div></div></div>
+      <div class="prop"><div class="ph ph--arch2"></div><div class="body">
+        <div class="price">PKR 12.50 Crore</div><b>Bahria Icon Office Floor</b><div class="loc">Clifton, Karachi</div>
+        <div class="specs"><span>Commercial</span><span>Floor 22</span><span>5,600 sq ft</span></div></div></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2 style="margin-bottom:22px">Explore by area</h2>
+    <div class="mapblock">
+      <div class="mapface">
+        <span class="pin" style="left:28%; top:34%">8.7 Cr</span>
+        <span class="pin gold" style="left:52%; top:56%">4.2 Cr</span>
+        <span class="pin" style="left:70%; top:28%">6.9 Cr</span>
+        <span class="pin" style="left:44%; top:74%">3.1 Cr</span>
+      </div>
+      <div class="maplist">
+        <span class="eyed" style="color:#7A8781">Recently added</span>
+        <div><b>Sea View Residence</b><span>DHA PHASE 8 · 2 HOURS AGO</span></div>
+        <div><b>Creek Vista Apartment</b><span>DHA PHASE 8 · YESTERDAY</span></div>
+        <div><b>The Courtyard</b><span>F-7/2 ISLAMABAD · 2 DAYS AGO</span></div>
+        <div><b>Garden Heights</b><span>CLIFTON · 3 DAYS AGO</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2 style="margin-bottom:22px">Agents who know the area</h2>
+    <div class="agents">
+      <div class="ag"><div class="ph ph--skin"></div><b>Bilal Ahmed</b><span>DHA &amp; CLIFTON</span></div>
+      <div class="ag"><div class="ph ph--skin"></div><b>Ayesha Tariq</b><span>ISLAMABAD</span></div>
+      <div class="ag"><div class="ph ph--skin"></div><b>Faisal Nadeem</b><span>COMMERCIAL</span></div>
+      <div class="ag"><div class="ph ph--skin"></div><b>Sana Iqbal</b><span>LAHORE</span></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div class="finance">
+      <div><h2>Work out what you can actually borrow.</h2><p>Compare home finance from six Pakistani banks, with realistic monthly figures before you fall in love with a listing.</p></div>
+      <span class="btn2 gold">Open the calculator</span>
+    </div>
+  </div>
+</div></template>
+<template id="site-dark"><div class="site t-dark">
+  <div class="wrapx">
+    <div class="navx">
+      <span class="brandx"><i></i>FLOWN</span>
+      <nav><a>Product</a><a>Workflows</a><a>Integrations</a><a>Pricing</a><a>Docs</a></nav>
+      <span class="btn2">See how it works</span>
+    </div>
+    <div class="hero">
+      <div>
+        <span class="pill"><b></b> 24/7 · Urdu, Roman Urdu &amp; English</span>
+        <h1>Your business.<br />On <em>autopilot</em>.</h1>
+        <p class="lede">AI agents that answer customers, qualify leads, book appointments and follow up — 24/7.</p>
+        <div class="acts"><span class="btn2">See how it works</span><span class="btn2 ghost">Talk to an expert</span></div>
+        <div class="logos"><span>SEHAT LINE</span><span>CHOWK RETAIL</span><span>DAR HOUSE</span><span>MAHRO</span></div>
+      </div>
+      <div class="chatui">
+        <div class="top"><i></i> Live agent · The Glow Room <span>ONLINE</span></div>
+        <div class="body">
+          <div class="bub u">Hi, do you have appointments available tomorrow?</div>
+          <div class="bub a">Yes — we have 11:30 AM and 3:00 PM available. Which works better for you?</div>
+          <div class="bub u">11:30 works</div>
+          <div class="typing"><i></i><i></i><i></i></div>
+        </div>
+        <div class="booked"><b>✓</b><span>Booking created<em>THU 12 MAR · 11:30 · HYDRAGLOW · PKR 11,000</em></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2>From enquiry to sale,<br />without anyone touching it.</h2>
+    <p class="sub">Every step below runs on its own. Your team only appears when the agent decides a human should.</p>
+    <div class="flow">
+      <div class="step2"><u>01</u><b>New enquiry</b></div>
+      <div class="step2 hot"><u>02</u><b>AI responds</b></div>
+      <div class="step2 hot"><u>03</u><b>Qualifies lead</b></div>
+      <div class="step2 hot"><u>04</u><b>Books call</b></div>
+      <div class="step2 hot"><u>05</u><b>Follow-up</b></div>
+      <div class="step2"><u>06</u><b>Sale</b></div>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <h4>Enquiries handled</h4><div class="cap">LAST 14 DAYS · 2,481 TOTAL</div>
+        <div class="bars"><i style="height:42%"></i><i style="height:58%"></i><i style="height:36%"></i><i style="height:71%"></i><i style="height:64%"></i><i style="height:88%"></i><i style="height:52%"></i><i style="height:76%"></i><i style="height:94%"></i><i style="height:68%"></i></div>
+        <div class="kpis">
+          <div><b>71%</b><span>RESOLVED BY AI</span></div>
+          <div><b>9s</b><span>MEDIAN REPLY</span></div>
+          <div><b>318</b><span>BOOKINGS MADE</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h4>Lead pipeline</h4><div class="cap">UPDATED JUST NOW</div>
+        <div class="pipe">
+          <div><i></i> Ayesha K. — HydraGlow <span>BOOKED</span></div>
+          <div><i></i> Hamza R. — consultation <span>BOOKED</span></div>
+          <div><i class="w"></i> Zainab A. — laser, pricing <span>QUALIFIED</span></div>
+          <div><i class="w"></i> Omar S. — bulk enquiry <span>QUALIFIED</span></div>
+          <div><i class="g"></i> Nida F. — asked for a nurse <span>HANDED OVER</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2>Plugs into what you already use.</h2>
+    <div class="integ">
+      <div>WHATSAPP</div><div>INSTAGRAM</div><div>GOOGLE CAL</div><div>SHOPIFY</div><div>SHEETS</div><div>HUBSPOT</div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <h2>Simple pricing, in rupees.</h2>
+    <div class="prices">
+      <div class="pl"><u>STARTER</u><b>One agent</b><div class="amt">PKR 45,000<small>/mo</small></div>
+        <ul><li>1,000 conversations</li><li>WhatsApp + website</li><li>Calendar booking</li></ul></div>
+      <div class="pl on"><u>GROWTH · MOST PICKED</u><b>Three agents</b><div class="amt">PKR 110,000<small>/mo</small></div>
+        <ul><li>5,000 conversations</li><li>All channels</li><li>Lead qualification</li><li>Automated follow-up</li></ul></div>
+      <div class="pl"><u>SCALE</u><b>Unlimited</b><div class="amt">Custom</div>
+        <ul><li>Unlimited conversations</li><li>Multi-brand routing</li><li>Dedicated support</li></ul></div>
+    </div>
+  </div>
+
+  <div class="wrapx sec">
+    <div class="endcta">
+      <h2>Stop answering the same<br />question forty times a day.</h2>
+      <p class="sub" style="margin:16px auto 0">Set up in a week. Cancel any time.</p>
+      <div class="acts"><span class="btn2">See how it works</span><span class="btn2 ghost">Talk to an expert</span></div>
+    </div>
+  </div>
+</div></template>
+
+<!-- ══ MINI-SITE VIEWER ══ -->
+<dialog class="viewer" id="viewer" aria-label="Website preview">
+  <div class="viewer__inner">
+    <div class="viewer__bar">
+      <span class="viewer__dots"><i></i><i></i><i></i></span>
+      <span class="viewer__url" id="viewerUrl">https://</span>
+      <span class="viewer__nav">
+        <button id="viewerPrev" aria-label="Previous website">&#8592;</button>
+        <button id="viewerNext" aria-label="Next website">&#8594;</button>
+        <button id="viewerClose" aria-label="Close preview">&times;</button>
+      </span>
+    </div>
+    <div class="viewer__stage" id="viewerStage"><div class="viewer__fit" id="viewerFit"></div></div>
+  </div>
+</dialog>
+<script>window.SITE_META = {
+    quiet: { url: "formstudio.pk", name: "Quiet" },
+    edit: { url: "noorandco.pk", name: "Editorial" },
+    shop: { url: "mahro.pk", name: "Storefront" },
+    book: { url: "theglowroom.pk", name: "Booking-first" },
+    list: { url: "darhouse.pk", name: "Listings" },
+    dark: { url: "flown.ai", name: "Dark product" }
+};</script>
 
 <script src="assets/js/main.js" defer></script>
 </body>
