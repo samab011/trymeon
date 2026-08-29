@@ -133,10 +133,18 @@ The hero's "See the work" button opens a `<dialog>` with three tabbed panels
 instead of jumping down the page: design directions, an AI agent transcript,
 and motion tiles.
 
-The "Website designs" tab holds **six complete miniature websites** for
-fictional Pakistani businesses — FORM / Studio (architecture, Lahore),
-NOOR & CO. (brand strategy, Karachi), MAHRO (fashion), THE GLOW ROOM (skin
-clinic, Islamabad), DAR HOUSE (property, Karachi) and FLOWN (AI automation).
+The "Website designs" tab holds **six complete miniature websites**, one per
+kind of business a client might be:
+
+| Card | Site | Sector |
+|---|---|---|
+| Quiet | **Saffron** | Restaurant, Lahore — dark, warm, serif |
+| Editorial | **UrbanNest** | Real estate — dark editorial, property search |
+| Storefront | **ZAHRA** | Fashion — cream, high-contrast serif, ecommerce |
+| Booking-first | **StayNest** | Boutique hotel — warm sand, booking widget |
+| Listings | **DriveHub** | Automotive marketplace — light, high-trust, filters |
+| Dark product | **Nexa AI** | AI platform — charcoal and lime, live dashboard |
+
 Each has its own typography, palette, layout logic and UI, with real business
 copy, PKR pricing and Pakistani locations.
 
@@ -164,6 +172,9 @@ Two things worth knowing if you touch it:
   the dialog's own box and would otherwise swallow every click.
 - `.dz` carries `min-width:0`. Grid items default to `min-width:auto`, so the
   1080px preview inside blows every column out to 1080px without it.
+- The viewer is capped at the 1080px design width plus borders. Wider and the
+  stage shows a gutter beside the site, which reads as a white band next to the
+  dark templates.
 - Keep container `max-width` in px, not `ch`. A `ch` value on a hero wrapper
   resolves against *that element's* font-size, not the display heading inside
   it — `30ch` on a wrapper read as ~255px rather than ~900px and shredded two
