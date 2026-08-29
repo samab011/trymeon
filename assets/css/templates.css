@@ -17,6 +17,11 @@
   transition:border-color var(--fast), transform var(--fast), box-shadow var(--fast);
 }
 .dz__btn:hover{border-color:var(--acid); transform:translateY(-4px); box-shadow:0 18px 40px -24px rgba(0,0,0,.9)}
+.dz__chrome{
+  display:flex; align-items:center; gap:5px; padding:9px 12px; background:#141517;
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.dz__chrome i{width:7px; height:7px; border-radius:99px; background:rgba(255,255,255,.2)}
 .dz__shot{display:block; aspect-ratio:16/10; overflow:hidden; position:relative; background:#fff}
 .dz__scale{
   display:block; width:1080px; transform-origin:top left;
@@ -175,6 +180,20 @@
     linear-gradient(96deg, rgba(50,40,29,.4) 0 22%, transparent 22.4%),
     linear-gradient(172deg, #DDCFBA, #7E6F5C);
 }
+.ph--gym{
+  background-color:#17191B;
+  background-image:
+    radial-gradient(40% 55% at 68% 34%, rgba(204,255,46,.20), transparent 62%),
+    radial-gradient(50% 60% at 18% 12%, rgba(255,255,255,.16), transparent 60%),
+    linear-gradient(158deg, #2E3236, #0D0E10);
+}
+.ph--athlete{
+  background-color:#1C1F22;
+  background-image:
+    radial-gradient(32% 46% at 46% 30%, rgba(255,240,214,.34), transparent 62%),
+    radial-gradient(46% 60% at 82% 74%, rgba(204,255,46,.16), transparent 62%),
+    linear-gradient(172deg, #3A3F44, #0B0C0D);
+}
 .ph--car{
   background-color:#2A2E33;
   background-image:
@@ -188,6 +207,18 @@
     linear-gradient(150deg, rgba(255,255,255,.32) 0 20%, transparent 20.4%),
     linear-gradient(180deg, #8E8578 0 56%, #35322C 56%);
 }
+
+/* ── boundary reset ───────────────────────────────────────
+   The page's own stylesheet defines generic .hero, .stats, .form and .plans,
+   and the mini-sites use those same class names — so the page's layout
+   cascades straight into them (the parent .hero alone was injecting
+   220px/110px of padding and a radial glow). Neutralise at the .site
+   boundary; each template's own rules come later in this file and win. */
+.site .hero{padding:0; margin-block:0}
+.site .hero::after{content:none}
+.site .stats{list-style:none; margin:0; padding:0; border:0; gap:0; grid-template-columns:none}
+.site .form{display:block; margin:0; gap:0; grid-template-columns:none}
+.site .plans{margin:0; gap:0; grid-template-columns:none}
 
 /* ══ 01 QUIET — SAFFRON · restaurant, Lahore ═════════════════
    Dark, warm, candle-lit. Serif display over a deep espresso ground. */
@@ -514,3 +545,74 @@
   .dz__btn:hover .dz__scale{transform:scale(var(--s,.3))}
   .t-dark .typing i{animation:none}
 }
+
+
+/* ══ 06 FITNESS STUDIO — PEAK FITNESS · gym ══════════════════
+   Charcoal and lime, condensed uppercase display, membership-driven. */
+.t-fit{background:#0F1011; color:#F2F4F1; --lime:#CCFF2E; --ln:rgba(242,244,241,.12)}
+.t-fit .navx{border-bottom:1px solid var(--ln)}
+.t-fit .brandx{display:flex; align-items:center; gap:9px; font-size:17px; letter-spacing:.02em; font-weight:800; text-transform:uppercase}
+.t-fit .brandx i{width:0; height:0; border-left:9px solid transparent; border-right:9px solid transparent; border-bottom:16px solid var(--lime)}
+.t-fit .brandx em{font-style:normal; font-weight:400; font-size:10px; letter-spacing:.24em; color:rgba(242,244,241,.5); display:block; margin-top:2px}
+.t-fit .navx nav a{color:rgba(242,244,241,.58)}
+.t-fit .btn2{background:var(--lime); color:#0F1011; font-weight:700}
+.t-fit .btn2.ghost{background:transparent; color:#F2F4F1; border:1px solid var(--ln)}
+.t-fit .hero{display:grid; grid-template-columns:1fr 1fr; align-items:stretch; margin-inline:-64px; min-height:520px}
+.t-fit .hero .txt{padding:76px 64px; display:flex; flex-direction:column; justify-content:center}
+.t-fit h1{font-size:70px; line-height:.94; letter-spacing:-.035em; font-weight:800; text-transform:uppercase}
+.t-fit h1 em{font-style:normal; color:var(--lime); display:block}
+.t-fit .hero p{margin-top:20px; font-size:17px; color:rgba(242,244,241,.6); max-width:32ch}
+.t-fit .acts{display:flex; gap:12px; margin-top:30px; align-items:center}
+.t-fit .play{display:inline-flex; align-items:center; gap:10px; font-size:14px; font-weight:600}
+.t-fit .play i{width:34px; height:34px; border-radius:99px; border:1px solid var(--ln); display:grid; place-items:center}
+.t-fit .play i::after{content:""; border-left:8px solid var(--lime); border-block:5px solid transparent; margin-left:2px}
+.t-fit .stats{display:grid; grid-template-columns:repeat(4,1fr); border-block:1px solid var(--ln); margin-inline:-64px}
+.t-fit .stats div{padding:26px 64px; border-right:1px solid var(--ln)}
+.t-fit .stats div:last-child{border-right:0}
+.t-fit .stats b{display:block; font-size:34px; font-weight:800; letter-spacing:-.04em; color:var(--lime)}
+.t-fit .stats span{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; color:rgba(242,244,241,.45); text-transform:uppercase}
+.t-fit h2{font-size:44px; letter-spacing:-.035em; font-weight:800; text-transform:uppercase; line-height:1}
+.t-fit .lead{color:rgba(242,244,241,.55); margin-top:14px; max-width:48ch; font-size:16px}
+.t-fit .progs{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:32px}
+.t-fit .pg{position:relative; height:300px; border-radius:14px; overflow:hidden; display:flex; align-items:flex-end; padding:22px; transition:transform .3s var(--ease)}
+.t-fit .pg:hover{transform:translateY(-6px)}
+.t-fit .pg::before{content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(15,16,17,.94) 12%, transparent 68%)}
+.t-fit .pg .in{position:relative; z-index:2}
+.t-fit .pg b{display:block; font-size:21px; font-weight:800; text-transform:uppercase; letter-spacing:-.02em}
+.t-fit .pg span{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; color:var(--lime)}
+.t-fit .trainers{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:30px}
+.t-fit .tr{border:1px solid var(--ln); border-radius:14px; overflow:hidden; background:#151719}
+.t-fit .tr .ph{height:230px}
+.t-fit .tr .bd{padding:20px}
+.t-fit .tr b{display:block; font-size:18px; font-weight:700}
+.t-fit .tr span{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; color:var(--lime); text-transform:uppercase}
+.t-fit .tr p{margin-top:9px; font-size:13.5px; color:rgba(242,244,241,.52)}
+.t-fit .sched{border:1px solid var(--ln); border-radius:14px; overflow:hidden; margin-top:28px}
+.t-fit .sched .row{display:grid; grid-template-columns:120px 1fr 160px 130px 120px; align-items:center; padding:16px 22px; border-bottom:1px solid var(--ln)}
+.t-fit .sched .row:last-child{border-bottom:0}
+.t-fit .sched .row.hd{background:#151719; font-family:var(--mono); font-size:10px; letter-spacing:.12em; color:rgba(242,244,241,.42); text-transform:uppercase}
+.t-fit .sched b{font-size:15.5px; font-weight:600}
+.t-fit .sched .t{font-family:var(--mono); font-size:13px; color:var(--lime)}
+.t-fit .sched .sm{font-size:13.5px; color:rgba(242,244,241,.55)}
+.t-fit .sched u{text-decoration:none; justify-self:end; background:var(--lime); color:#0F1011; font-size:12px; font-weight:700; padding:8px 16px; border-radius:99px}
+.t-fit .plans{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px}
+.t-fit .pl{border:1px solid var(--ln); border-radius:16px; padding:30px; background:#151719}
+.t-fit .pl.on{border-color:var(--lime); background:radial-gradient(80% 100% at 50% 0%, rgba(204,255,46,.1), transparent 60%), #151719}
+.t-fit .pl u{text-decoration:none; font-family:var(--mono); font-size:10px; letter-spacing:.14em; color:rgba(242,244,241,.45); text-transform:uppercase}
+.t-fit .pl b{display:block; font-size:22px; font-weight:800; text-transform:uppercase; margin-top:12px}
+.t-fit .pl .amt{font-size:38px; font-weight:800; letter-spacing:-.04em; margin-top:8px; color:var(--lime)}
+.t-fit .pl .amt small{font-size:13px; font-weight:400; color:rgba(242,244,241,.45); letter-spacing:0}
+.t-fit .pl ul{list-style:none; padding:0; margin:18px 0 0; display:grid; gap:9px}
+.t-fit .pl li{font-size:13.5px; color:rgba(242,244,241,.58); padding-left:19px; position:relative}
+.t-fit .pl li::before{content:"✓"; position:absolute; left:0; color:var(--lime); font-size:11px}
+.t-fit .pl .btn2{width:100%; justify-content:center; margin-top:20px}
+.t-fit .revs{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:30px}
+.t-fit .rv{border:1px solid var(--ln); border-radius:14px; padding:26px; background:#151719}
+.t-fit .rv .st{color:var(--lime); letter-spacing:2px; font-size:13px}
+.t-fit .rv p{margin:12px 0 14px; font-size:15px}
+.t-fit .rv span{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; color:rgba(242,244,241,.45)}
+.t-fit .endcta{position:relative; border-radius:18px; overflow:hidden; margin-top:64px; padding:64px; display:flex; justify-content:space-between; align-items:center; gap:30px}
+.t-fit .endcta::before{content:""; position:absolute; inset:0; background:linear-gradient(94deg, rgba(15,16,17,.94) 32%, rgba(15,16,17,.4))}
+.t-fit .endcta>*{position:relative; z-index:2}
+.t-fit .endcta h2{max-width:15ch}
+.t-fit .endcta p{color:rgba(242,244,241,.6); margin-top:12px; max-width:40ch; font-size:15px}

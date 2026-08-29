@@ -143,7 +143,7 @@ kind of business a client might be:
 | Storefront | **ZAHRA** | Fashion — cream, high-contrast serif, ecommerce |
 | Booking-first | **StayNest** | Boutique hotel — warm sand, booking widget |
 | Listings | **DriveHub** | Automotive marketplace — light, high-trust, filters |
-| Dark product | **Nexa AI** | AI platform — charcoal and lime, live dashboard |
+| Fitness studio | **PEAK FITNESS** | Gym — charcoal and lime, membership-driven |
 
 Each has its own typography, palette, layout logic and UI, with real business
 copy, PKR pricing and Pakistani locations.
@@ -175,6 +175,12 @@ Two things worth knowing if you touch it:
 - The viewer is capped at the 1080px design width plus borders. Wider and the
   stage shows a gutter beside the site, which reads as a white band next to the
   dark templates.
+- `templates.css` opens with a boundary reset. The page's own stylesheet
+  defines generic `.hero`, `.stats`, `.form` and `.plans`, and the mini-sites
+  use those same class names — so page layout cascades straight into them. The
+  parent `.hero` alone was injecting 220px/110px of padding and a radial glow
+  into two templates. Anything generic added to `styles.css` needs checking
+  against that list.
 - Keep container `max-width` in px, not `ch`. A `ch` value on a hero wrapper
   resolves against *that element's* font-size, not the display heading inside
   it — `30ch` on a wrapper read as ~255px rather than ~900px and shredded two
