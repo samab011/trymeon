@@ -549,23 +549,34 @@
       var vid = $('.reel__vid', tile);
       if (!vid) return;
 
+      /* Where to park the playhead at rest. Once any frame has decoded the
+         browser paints it INSTEAD of the poster, so parking at 0 shows the
+         film's opening black frame and the thumbnail appears to vanish.
+         Parking on the frame the poster was cut from keeps the two identical. */
+      var still = parseFloat(tile.dataset.still || vid.dataset.still || '0') || 0;
+      function park() {
+        vid.pause();
+        try { vid.currentTime = still; } catch (e) {}
+      }
+      if (still) vid.addEventListener('loadedmetadata', park);
+
       /* hover gives a silent preview; the click is what turns the sound on */
       if (canHover && !motion) {
         tile.addEventListener('pointerenter', function () {
           if (tile.classList.contains('is-playing')) return;
+          vid.currentTime = 0;
           vid.play().catch(function () {});
         });
         tile.addEventListener('pointerleave', function () {
           if (tile.classList.contains('is-playing')) return;
-          vid.pause();
-          vid.currentTime = 0;
+          park();
         });
       }
 
       tile.addEventListener('click', function () {
         if (tile.classList.contains('is-playing')) {
-          vid.pause();
           vid.muted = true;
+          park();
           tile.classList.remove('is-playing');
           return;
         }
@@ -573,10 +584,15 @@
         reels.forEach(function (other) {
           if (other === tile) return;
           var v = $('.reel__vid', other);
-          if (v) { v.pause(); v.muted = true; }
+          if (v) {
+            v.pause(); v.muted = true;
+            var s = parseFloat(other.dataset.still || '0') || 0;
+            if (s) { try { v.currentTime = s; } catch (e) {} }
+          }
           other.classList.remove('is-playing');
         });
         vid.muted = false;
+        vid.currentTime = 0;
         vid.play().then(function () {
           tile.classList.add('is-playing');
         }).catch(function () {
@@ -597,7 +613,11 @@
     if (sc) sc.addEventListener('close', function () {
       reels.forEach(function (tile) {
         var v = $('.reel__vid', tile);
-        if (v) { v.pause(); v.muted = true; v.currentTime = 0; }
+        if (v) {
+          v.pause(); v.muted = true;
+          var s = parseFloat(tile.dataset.still || '0') || 0;
+          try { v.currentTime = s; } catch (e) {}
+        }
         tile.classList.remove('is-playing');
       });
     });
