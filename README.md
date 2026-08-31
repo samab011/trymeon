@@ -127,6 +127,24 @@ The canvas is masked with a CSS gradient — horizontally on desktop so it's
 faintest behind the copy, vertically on narrow screens where the copy is full
 width.
 
+## Template photography
+
+The six mini-site heroes use real photographs, listed in
+`assets/img/SOURCES.md`. They are not committed — fetch them once with
+`bash assets/img/fetch.sh`.
+
+Each `.ph--*` surface stacks three background layers: the local photo, a CDN
+copy of it, then the graded CSS gradient. A layer that fails to load is simply
+not painted, so the page falls back on its own and never shows a broken image.
+
+Two things that bite here:
+
+- `url()` inside a stylesheet resolves relative to **the stylesheet**, not the
+  page, so these are `../img/x.png` and not `assets/img/x.png`.
+- Adding image layers shifts every `background-size` / `background-position`
+  list out of alignment with the layers they describe. The `.ph--*` rules
+  therefore declare no size of their own and inherit `cover` from `.ph`.
+
 ## The work showcase
 
 The hero's "See the work" button opens a `<dialog>` with three tabbed panels

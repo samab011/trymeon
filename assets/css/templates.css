@@ -95,6 +95,10 @@
 
 /* photo surfaces — replace background-image with a real photograph */
 .ph{position:relative; overflow:hidden; background-size:cover; background-position:center; background-repeat:no-repeat}
+/* Each .ph--* stacks: a local photo, the CDN copy of the same photo, then the
+   graded CSS field. A background layer that fails to load simply is not
+   painted, so the chain degrades on its own — drop files into assets/img/ and
+   they take over, and if neither image resolves the gradient still reads. */
 .ph::after{content:""; position:absolute; inset:0; box-shadow:inset 0 0 90px 20px rgba(0,0,0,.28)}
 
 /* Composed scenes: light source, subject plane, ground plane, vignette.
@@ -104,23 +108,27 @@
 .ph--dine{
   background-color:#1B120B;
   background-image:
+    url("../img/dine.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_0a8a208a-0c88-41f8-98d0-012cd64cf7f1.png"),
     radial-gradient(circle closest-side at 24% 20%, rgba(255,196,105,.85), rgba(255,170,70,.16) 60%, transparent),
     radial-gradient(circle closest-side at 52% 15%, rgba(255,196,105,.7), rgba(255,170,70,.12) 60%, transparent),
     radial-gradient(circle closest-side at 78% 23%, rgba(255,196,105,.55), transparent 70%),
     linear-gradient(0deg, rgba(238,224,200,.16) 0 13%, transparent 13.5%),
     radial-gradient(120% 70% at 50% 108%, rgba(255,214,150,.22), transparent 62%),
     linear-gradient(178deg, #4A3221 0 42%, #150E08 100%);
-  background-size:44% 44%, 34% 34%, 30% 30%, cover, cover, cover;
+  background-position:center;
 }
 /* plated food, warm top light */
 .ph--food{
   background-color:#2E1D10;
   background-image:
+    url("../img/dine.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_0a8a208a-0c88-41f8-98d0-012cd64cf7f1.png"),
     radial-gradient(circle closest-side at 50% 54%, rgba(246,224,196,.95) 0 38%, rgba(214,146,74,.9) 39% 58%, rgba(120,62,26,.85) 59% 72%, transparent 74%),
     radial-gradient(circle closest-side at 62% 44%, rgba(196,58,34,.75), transparent 70%),
     radial-gradient(90% 70% at 40% 0%, rgba(255,232,190,.3), transparent 62%),
     linear-gradient(168deg, #4B3320, #170F08);
-  background-size:78% 78%, 30% 30%, cover, cover;
+  background-position:60% 70%;
 }
 /* Architecture, interiors, fashion, vehicles and figures cannot be drawn
    convincingly in CSS — literal shapes read as blobs and slabs. These are
@@ -129,107 +137,147 @@
 .ph--arch{
   background-color:#7C8794;
   background-image:
+    url("../img/arch.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_9729ef96-308e-4478-8617-d5deed2cdc7c.png"),
     linear-gradient(146deg, rgba(255,252,246,.9) 0 26%, transparent 26.5%),
     linear-gradient(72deg, rgba(22,30,38,.5) 0 30%, transparent 30.5%),
     radial-gradient(90% 70% at 76% 12%, rgba(255,238,208,.5), transparent 62%),
     linear-gradient(184deg, #35516E 0 38%, #9C8D7C 72%, #3B4038 100%);
+  background-position:center;
 }
 .ph--arch2{
   background-color:#6E7680;
   background-image:
+    url("../img/arch.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_9729ef96-308e-4478-8617-d5deed2cdc7c.png"),
     linear-gradient(112deg, rgba(246,242,233,.82) 0 32%, transparent 32.5%),
     linear-gradient(196deg, rgba(24,28,34,.45) 0 24%, transparent 24.5%),
     linear-gradient(172deg, #3D5570, #4A463E);
+  background-position:30% 60%;
 }
 .ph--interior{
   background-color:#B49F84;
   background-image:
+    url("../img/hotel.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_1e33f88a-cdf3-44a8-bcd8-d67b14568a0d.png"),
     radial-gradient(70% 80% at 80% 16%, rgba(255,247,226,.92), transparent 64%),
     linear-gradient(104deg, rgba(58,44,30,.42) 0 24%, transparent 24.5%),
     linear-gradient(168deg, #E4D5BC, #6E5C46);
+  background-position:25% 50%;
 }
 .ph--hotel{
   background-color:#AC9A82;
   background-image:
+    url("../img/hotel.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_1e33f88a-cdf3-44a8-bcd8-d67b14568a0d.png"),
     radial-gradient(64% 74% at 76% 14%, rgba(255,250,234,.95), transparent 62%),
     linear-gradient(158deg, rgba(255,248,232,.5) 0 30%, transparent 30.5%),
     linear-gradient(20deg, rgba(66,52,38,.42) 0 26%, transparent 26.5%),
     linear-gradient(174deg, #DACAAE, #6B5A44);
+  background-position:center;
 }
 .ph--cloth{
   background-color:#C6B6A2;
   background-image:
+    url("../img/cloth.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175308_ab0a0f49-c8e3-4a56-84c1-4d9afa5ac137.png"),
     radial-gradient(110% 88% at 46% 4%, rgba(255,251,244,.94), transparent 66%),
     linear-gradient(104deg, rgba(255,255,255,.34) 0 14%, transparent 14.5%, transparent 26%, rgba(58,44,34,.16) 26.5% 38%, transparent 38.5%),
     linear-gradient(168deg, #F0E6D9, #94806C);
+  background-position:center;
 }
 .ph--cloth2{
   background-color:#8B8072;
   background-image:
+    url("../img/cloth.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175308_ab0a0f49-c8e3-4a56-84c1-4d9afa5ac137.png"),
     radial-gradient(100% 80% at 66% 6%, rgba(255,248,238,.62), transparent 64%),
     linear-gradient(76deg, rgba(255,255,255,.26) 0 16%, transparent 16.5%, transparent 30%, rgba(0,0,0,.18) 30.5% 42%, transparent 42.5%),
     linear-gradient(176deg, #C3B4A1, #4E463D);
+  background-position:40% 35%;
 }
 .ph--car{
   background-color:#C9D2DA;
   background-image:
+    url("../img/car.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_896d5793-9618-448f-b5c8-a017b6dd315e.png"),
     radial-gradient(64% 34% at 50% 62%, rgba(24,30,38,.55), transparent 72%),
     linear-gradient(160deg, rgba(255,255,255,.55) 0 20%, transparent 20.5%),
     linear-gradient(180deg, #EEF2F5 0 52%, #A9B5BF 100%);
+  background-position:center;
 }
 .ph--carb{
   background-color:#BCC5CD;
   background-image:
+    url("../img/car.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_896d5793-9618-448f-b5c8-a017b6dd315e.png"),
     radial-gradient(58% 30% at 52% 64%, rgba(28,34,42,.45), transparent 72%),
     linear-gradient(146deg, rgba(255,255,255,.42) 0 24%, transparent 24.5%),
     linear-gradient(180deg, #E4E9ED 0 54%, #9DA9B3 100%);
+  background-position:65% 55%;
 }
 .ph--city{
   background-color:#4E5B66;
   background-image:
+    url("../img/arch.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_9729ef96-308e-4478-8617-d5deed2cdc7c.png"),
     linear-gradient(90deg, rgba(18,26,32,.85) 0 9%, transparent 9.4% 15%, rgba(18,26,32,.72) 15.4% 21%, transparent 21.4% 30%, rgba(18,26,32,.88) 30.4% 37%, transparent 37.4% 44%, rgba(18,26,32,.66) 44.4% 52%, transparent 52.4% 62%, rgba(18,26,32,.8) 62.4% 70%, transparent 70.4% 79%, rgba(18,26,32,.72) 79.4% 88%, transparent 88.4%),
     radial-gradient(90% 60% at 50% 98%, rgba(255,196,120,.26), transparent 60%),
     linear-gradient(182deg, #2B4763 0 44%, #8A7461 74%, #2A2A28 100%);
-  background-size:100% 56%, cover, cover;
-  background-position:bottom, center, center;
+  background-position:50% 30%;
 }
 .ph--home{
   background-color:#7E8C82;
   background-image:
+    url("../img/arch.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_9729ef96-308e-4478-8617-d5deed2cdc7c.png"),
     linear-gradient(152deg, rgba(250,248,240,.86) 0 28%, transparent 28.5%),
     linear-gradient(28deg, rgba(30,44,36,.5) 0 24%, transparent 24.5%),
     radial-gradient(80% 66% at 72% 10%, rgba(255,240,210,.44), transparent 62%),
     linear-gradient(184deg, #3F607C 0 34%, #A3947C 68%, #35402F 100%);
+  background-position:70% 55%;
 }
 .ph--home2{
   background-color:#8B8375;
   background-image:
+    url("../img/arch.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_9729ef96-308e-4478-8617-d5deed2cdc7c.png"),
     linear-gradient(126deg, rgba(240,234,222,.78) 0 32%, transparent 32.5%),
     linear-gradient(200deg, rgba(40,36,30,.42) 0 22%, transparent 22.5%),
     linear-gradient(178deg, #43566B, #4A463C);
+  background-position:20% 40%;
 }
 .ph--skin{
   background-color:#D7B4A2;
   background-image:
+    url("../img/athlete.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_f8095f30-50dc-4505-b072-fcad155391b9.png"),
     radial-gradient(70% 80% at 64% 10%, rgba(255,247,239,.9), transparent 62%),
     radial-gradient(60% 70% at 22% 92%, rgba(168,110,88,.45), transparent 62%),
     linear-gradient(158deg, #F1DBCE, #A87E6C);
+  background-position:50% 20%;
 }
 .ph--gym{
   background-color:#14171A;
   background-image:
+    url("../img/athlete.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_f8095f30-50dc-4505-b072-fcad155391b9.png"),
     radial-gradient(60% 56% at 86% 20%, rgba(204,255,46,.26), transparent 62%),
     radial-gradient(70% 62% at 14% 8%, rgba(226,232,238,.2), transparent 62%),
     linear-gradient(120deg, rgba(255,255,255,.08) 0 18%, transparent 18.5%),
     linear-gradient(166deg, #343A3F, #0A0C0E);
+  background-position:35% 40%;
 }
 .ph--athlete{
   background-color:#15181B;
   background-image:
+    url("../img/athlete.png"),
+    url("https://d8j0ntlcm91z4.cloudfront.net/user_3H6Wd5QJDbzKJXYxaM6xPlNxK18/hf_20260829_175230_f8095f30-50dc-4505-b072-fcad155391b9.png"),
     radial-gradient(56% 52% at 88% 66%, rgba(204,255,46,.22), transparent 62%),
     radial-gradient(64% 58% at 10% 12%, rgba(228,234,240,.22), transparent 62%),
     linear-gradient(148deg, rgba(255,255,255,.07) 0 22%, transparent 22.5%),
     linear-gradient(172deg, #3A4046, #090B0D);
+  background-position:center;
 }
 
 /* ── boundary reset ───────────────────────────────────────
