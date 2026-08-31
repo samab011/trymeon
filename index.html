@@ -562,12 +562,17 @@
       <section role="tabpanel" id="pane-motion" aria-labelledby="tab-motion" tabindex="0" hidden>
         <p class="showcase__lede">Product films, property walkthroughs and explainers, cut for Reels, TikTok and your own pages.</p>
         <div class="reels">
-          <div class="reel"><span class="reel__play" aria-hidden="true"></span><b>Product film</b><em>0:18 · 9:16</em></div>
+          <button class="reel reel--live" type="button" data-video aria-label="Play the Fezzy product film">
+            <video class="reel__vid" src="assets/video/product-film.mp4" preload="none"
+                   muted loop playsinline disablepictureinpicture></video>
+            <span class="reel__play" aria-hidden="true"></span>
+            <span class="reel__meta"><b>Product film</b><em>0:15 · 16:9 · Fezzy</em></span>
+          </button>
           <div class="reel"><span class="reel__play" aria-hidden="true"></span><b>Property walkthrough</b><em>0:42 · 16:9</em></div>
           <div class="reel"><span class="reel__play" aria-hidden="true"></span><b>Service explainer</b><em>0:30 · 1:1</em></div>
           <div class="reel"><span class="reel__play" aria-hidden="true"></span><b>Launch reel</b><em>0:15 · 9:16</em></div>
         </div>
-        <p class="showcase__note">Showreel goes here — drop your MP4s in and these tiles become players.</p>
+        <p class="showcase__note">One live cut below. The remaining tiles become players as each film lands.</p>
       </section>
     </div>
 

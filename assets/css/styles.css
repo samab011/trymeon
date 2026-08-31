@@ -670,6 +670,31 @@ input,textarea{font:inherit; color:inherit}
   display:grid; place-items:center; margin-bottom:auto; background:rgba(255,255,255,.04);
 }
 .reel__play::after{content:""; border-left:8px solid var(--acid); border-block:5px solid transparent; margin-left:2px}
+
+/* A tile holding a real film. The video sits behind the label, so the meta
+   block gets its own scrim rather than relying on the tile gradient. */
+.reel--live{position:relative; overflow:hidden; padding:16px; text-align:left; cursor:pointer}
+.reel__vid{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  opacity:0; transition:opacity .45s var(--ease), transform .6s var(--ease);
+}
+/* nothing is fetched until hover or click, so the tile shows its gradient
+   until the first frame actually exists, then fades the film in */
+.reel--live.is-ready .reel__vid{opacity:.62}
+.reel--live.is-ready:hover .reel__vid,
+.reel--live.is-playing .reel__vid{opacity:1; transform:scale(1.03)}
+.reel--live .reel__play,
+.reel--live .reel__meta{position:relative; z-index:2}
+.reel--live .reel__play{background:rgba(11,11,12,.62); backdrop-filter:blur(3px); transition:opacity var(--fast)}
+.reel--live.is-playing .reel__play{opacity:0}
+.reel__meta{
+  display:flex; flex-direction:column; gap:3px; margin-top:auto;
+  text-shadow:0 1px 12px rgba(0,0,0,.85);
+}
+.reel--live::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(to top, rgba(8,8,9,.9) 6%, rgba(8,8,9,.15) 52%, transparent);
+}
 .reel b{font-size:14.5px; font-weight:600; letter-spacing:-.02em}
 .reel em{font-style:normal; font-family:var(--mono); font-size:10.5px; color:var(--fg-faint)}
 

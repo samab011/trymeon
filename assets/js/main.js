@@ -538,6 +538,75 @@
     });
   })();
 
+  /* ── Showreel tiles that hold a real film ─────────────── */
+  (function reelPlayers() {
+    var reels = $$('.reel--live');
+    if (!reels.length) return;
+    var motion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var canHover = window.matchMedia('(hover: hover)').matches;
+
+    reels.forEach(function (tile) {
+      var vid = $('.reel__vid', tile);
+      if (!vid) return;
+
+      /* hover gives a silent preview; the click is what turns the sound on */
+      if (canHover && !motion) {
+        tile.addEventListener('pointerenter', function () {
+          if (tile.classList.contains('is-playing')) return;
+          vid.play().catch(function () {});
+        });
+        tile.addEventListener('pointerleave', function () {
+          if (tile.classList.contains('is-playing')) return;
+          vid.pause();
+          vid.currentTime = 0;
+        });
+      }
+
+      tile.addEventListener('click', function () {
+        if (tile.classList.contains('is-playing')) {
+          vid.pause();
+          vid.muted = true;
+          tile.classList.remove('is-playing');
+          return;
+        }
+        /* only one film audible at a time */
+        reels.forEach(function (other) {
+          if (other === tile) return;
+          var v = $('.reel__vid', other);
+          if (v) { v.pause(); v.muted = true; }
+          other.classList.remove('is-playing');
+        });
+        vid.muted = false;
+        vid.play().then(function () {
+          tile.classList.add('is-playing');
+        }).catch(function () {
+          /* autoplay with sound refused — fall back to a muted play */
+          vid.muted = true;
+          vid.play().catch(function () {});
+          tile.classList.add('is-playing');
+        });
+      });
+
+      vid.addEventListener('loadeddata', function () {
+        tile.classList.add('is-ready');
+      });
+
+      vid.addEventListener('pause', function () {
+        if (vid.ended) tile.classList.remove('is-playing');
+      });
+    });
+
+    /* closing the showcase must not leave a film running behind it */
+    var sc = $('#showcase');
+    if (sc) sc.addEventListener('close', function () {
+      reels.forEach(function (tile) {
+        var v = $('.reel__vid', tile);
+        if (v) { v.pause(); v.muted = true; v.currentTime = 0; }
+        tile.classList.remove('is-playing');
+      });
+    });
+  })();
+
   /* ── Year ─────────────────────────────────────────────── */
   var year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());
