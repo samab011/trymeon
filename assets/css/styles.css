@@ -218,11 +218,23 @@ input,textarea{font:inherit; color:inherit}
   display:flex; flex-direction:column; min-height:280px;
   transition:border-color var(--fast), background var(--fast), transform var(--fast);
 }
-.card:hover{border-color:rgba(204,255,46,.4); background:var(--ink-3); transform:translateY(-3px)}
+.card:hover{
+  border-color:rgba(204,255,46,.72); background:var(--ink-3); transform:translateY(-3px);
+  box-shadow:0 0 0 1px rgba(204,255,46,.12), 0 26px 50px -34px rgba(204,255,46,.3);
+}
 .card--accent{background:var(--acid); border-color:var(--acid); color:var(--ink)}
-.card--accent:hover{background:#dbff5e; border-color:#dbff5e}
-.card__no{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; color:var(--fg-faint)}
+.card--accent:hover{background:#dbff5e; border-color:#dbff5e; box-shadow:0 26px 50px -34px rgba(204,255,46,.5)}
+/* the number drifts a few px toward the cursor — --nx/--ny are set in main.js */
+.card__no{
+  position:relative; display:inline-block; font-family:var(--mono); font-size:11.5px;
+  letter-spacing:.14em; color:var(--fg-faint);
+  transform:translate(calc(var(--nx,0) * 5px), calc(var(--ny,0) * 4px));
+  transition:color var(--fast), transform .45s var(--ease);
+}
+.card:hover .card__no{color:var(--acid); transition:color var(--fast), transform .08s linear}
 .card--accent .card__no{color:rgba(11,11,12,.5)}
+.card--accent:hover .card__no{color:rgba(11,11,12,.9)}
+@media (prefers-reduced-motion:reduce){ .card__no{transform:none} }
 .card h3{padding-top:52px; font-size:clamp(21px,2vw,27px); font-weight:600; letter-spacing:-.03em; line-height:1.15}
 .card p{margin-top:12px; color:var(--fg-mute); font-size:15.5px; max-width:48ch}
 .card--accent p{color:rgba(11,11,12,.72)}

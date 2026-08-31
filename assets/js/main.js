@@ -516,6 +516,28 @@
     if (sc && 'ResizeObserver' in window) new ResizeObserver(fitAll).observe(sc);
   })();
 
+  /* ── Service card: number drifts toward the cursor ────── */
+  (function cardPointer() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.matchMedia('(hover: hover)').matches) return;
+
+    $$('.services .card').forEach(function (card) {
+      var no = $('.card__no', card);
+      if (!no) return;
+
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        /* -1..1 across the card, so the number leans the way the cursor sits */
+        no.style.setProperty('--nx', ((e.clientX - r.left) / r.width * 2 - 1).toFixed(3));
+        no.style.setProperty('--ny', ((e.clientY - r.top) / r.height * 2 - 1).toFixed(3));
+      });
+      card.addEventListener('pointerleave', function () {
+        no.style.setProperty('--nx', 0);
+        no.style.setProperty('--ny', 0);
+      });
+    });
+  })();
+
   /* ── Year ─────────────────────────────────────────────── */
   var year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());
