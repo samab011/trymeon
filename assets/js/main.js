@@ -587,10 +587,6 @@
         });
       });
 
-      vid.addEventListener('loadeddata', function () {
-        tile.classList.add('is-ready');
-      });
-
       vid.addEventListener('pause', function () {
         if (vid.ended) tile.classList.remove('is-playing');
       });

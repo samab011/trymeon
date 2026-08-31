@@ -674,14 +674,13 @@ input,textarea{font:inherit; color:inherit}
 /* A tile holding a real film. The video sits behind the label, so the meta
    block gets its own scrim rather than relying on the tile gradient. */
 .reel--live{position:relative; overflow:hidden; padding:16px; text-align:left; cursor:pointer}
+/* The poster carries the tile at rest — it renders without fetching the film,
+   which stays on preload="none" until a visitor hovers or clicks. */
 .reel__vid{
   position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-  opacity:0; transition:opacity .45s var(--ease), transform .6s var(--ease);
+  opacity:.66; transition:opacity .45s var(--ease), transform .6s var(--ease);
 }
-/* nothing is fetched until hover or click, so the tile shows its gradient
-   until the first frame actually exists, then fades the film in */
-.reel--live.is-ready .reel__vid{opacity:.62}
-.reel--live.is-ready:hover .reel__vid,
+.reel--live:hover .reel__vid,
 .reel--live.is-playing .reel__vid{opacity:1; transform:scale(1.03)}
 .reel--live .reel__play,
 .reel--live .reel__meta{position:relative; z-index:2}
