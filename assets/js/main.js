@@ -567,9 +567,15 @@
           vid.currentTime = 0;
           vid.play().catch(function () {});
         });
+      }
+      /* the cursor leaving stops the clip whatever started it — a preview or a
+         click — so nothing keeps playing once you have looked away. Bound even
+         under reduced motion, where there is no preview but a click still runs. */
+      if (canHover) {
         tile.addEventListener('pointerleave', function () {
-          if (tile.classList.contains('is-playing')) return;
+          vid.muted = true;
           park();
+          tile.classList.remove('is-playing');
         });
       }
 
