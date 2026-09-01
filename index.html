@@ -575,7 +575,7 @@
           <article class="agent" id="agentSupport">
             <header class="agent__head">
               <p class="agent__no">02 — AI customer support agent</p>
-              <p class="agent__desc">Customers shouldn't have to wait for someone to answer a simple question. Our agents understand the query, find the right information and resolve it instantly — escalating to a human only when necessary.</p>
+              <p class="agent__desc">Customers shouldn't have to wait for someone to answer a simple question. Our agents understand the query, check the facts, weigh up evidence and offer real resolutions — escalating to a human only when the customer wants one.</p>
             </header>
             <div class="agent__win">
               <div class="agent__bar"><i></i> Website chat <span>ONLINE</span></div>
@@ -588,10 +588,21 @@
                 <div class="chat__msg chat__msg--out" data-step="6"><span>Thanks. I've found your order. It's out for delivery and is expected to arrive today before 8pm.</span><em>AI agent · 2:13pm</em></div>
                 <div class="chat__msg chat__msg--in" data-step="7"><span>Okay, thank you. My order arrived damaged though and I need a replacement.</span><em>Customer · 2:14pm</em></div>
                 <div class="chat__type" data-step="8"><i></i><i></i><i></i></div>
-                <div class="chat__msg chat__msg--out" data-step="9"><span>I'm sorry about that. This one needs a member of our support team, so I'm passing your conversation to a human agent now.</span><em>AI agent · 2:14pm</em></div>
+                <div class="chat__msg chat__msg--out" data-step="9"><span>I'm sorry about that. Could you send a photo of the damage? One clear picture of the item is enough.</span><em>AI agent · 2:14pm</em></div>
+                <div class="chat__msg chat__msg--in chat__msg--photo" data-step="10">
+                  <span><i class="chat__shot" aria-hidden="true"></i>IMG_2291.jpg</span><em>Customer · 2:15pm</em>
+                </div>
+                <div class="chat__look" data-step="11">Reviewing photo&hellip;</div>
+                <div class="chat__msg chat__msg--out" data-step="12"><span>Thank you — I can see the casing is cracked along the left edge. That qualifies for a replacement or a full refund. Which would you prefer?</span><em>AI agent · 2:15pm</em></div>
+                <div class="chat__opts" data-step="13">
+                  <u>Send a replacement</u><u>Refund me</u><u data-chosen>Talk to a person</u>
+                </div>
+                <div class="chat__msg chat__msg--in" data-step="14"><span>I'd rather talk to someone about it</span><em>Customer · 2:16pm</em></div>
+                <div class="chat__type" data-step="15"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="16"><span>Of course. Passing you to a colleague now — they will already have the photo and everything we have discussed.</span><em>AI agent · 2:16pm</em></div>
               </div>
 
-              <div class="hand" data-step="10">
+              <div class="hand" data-step="17">
                 <div class="hand__flow">
                   <span class="hand__node" data-n="1">Customer</span>
                   <span class="hand__arr" data-n="2"></span>
@@ -603,7 +614,7 @@
                 </div>
                 <ul class="hand__xfer">
                   <li data-n="8"><b>&check;</b> Conversation history transferred</li>
-                  <li data-n="9"><b>&check;</b> Customer details transferred</li>
+                  <li data-n="9"><b>&check;</b> Customer details and photo transferred</li>
                   <li data-n="10"><b>&check;</b> Issue transferred</li>
                 </ul>
                 <div class="hand__done" data-n="11">Conversation transferred to a human agent &check;</div>

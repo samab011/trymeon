@@ -658,6 +658,9 @@ input,textarea{font:inherit; color:inherit}
 
 /* ── AI agent demonstrations ──────────────────────────────── */
 .agents{display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start}
+/* demo 02 is much the longer of the two, so pin 01 while it scrolls past —
+   otherwise the left column is a large void for most of the scroll */
+@media (min-width:901px){ .agents>.agent:first-child{position:sticky; top:0} }
 .agent{display:flex; flex-direction:column; gap:16px}
 .agent__no{
   font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
@@ -706,6 +709,26 @@ input,textarea{font:inherit; color:inherit}
   display:grid; place-items:center; font-size:11px; flex:0 0 auto;
 }
 .chat__ok em{font-style:normal; font-family:var(--mono); font-size:10px; color:var(--fg-faint); margin-left:2px}
+
+/* a photo the customer sends in */
+.chat__msg--photo span{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:12px; color:var(--fg-mute)}
+.chat__shot{
+  width:42px; height:42px; border-radius:7px; flex:0 0 auto; border:1px solid var(--line);
+  background:
+    linear-gradient(114deg, transparent 0 46%, rgba(255,255,255,.34) 46% 49%, transparent 49%),
+    linear-gradient(72deg, transparent 0 58%, rgba(255,255,255,.22) 58% 60%, transparent 60%),
+    linear-gradient(158deg, #6E6A63, #2E2C29);
+}
+
+/* the resolutions the agent offers, and the one taken */
+.chat__opts{align-self:flex-end; display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-end; max-width:88%}
+.chat__opts u{
+  text-decoration:none; font-size:12.5px; padding:8px 14px; border-radius:99px;
+  border:1px solid rgba(204,255,46,.34); color:var(--acid); background:rgba(204,255,46,.06);
+  transition:background .3s var(--ease), color .3s var(--ease), opacity .3s var(--ease);
+}
+.chat__opts u.is-pick{background:var(--acid); color:var(--ink); border-color:var(--acid)}
+.chat__opts.has-pick u:not(.is-pick){opacity:.32}
 
 /* the handover */
 .hand{border-top:1px solid var(--line); padding:18px 16px 16px; background:var(--ink-2)}

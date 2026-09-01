@@ -669,6 +669,15 @@
           t += 900;
           at(t, function () { el.classList.remove('is-shown'); el.style.display = 'none'; });
           at(t + 20, function () { el.style.display = ''; el.classList.remove('is-shown'); });
+        } else if (el.classList.contains('chat__opts')) {
+          /* the offered resolutions land, then one is taken */
+          var pick = $('[data-chosen]', el);
+          t += 700;
+          at(t, function () {
+            el.classList.add('has-pick');
+            if (pick) pick.classList.add('is-pick');
+          });
+          t += 520;
         } else {
           t += 620;
         }
