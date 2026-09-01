@@ -594,31 +594,76 @@
                 </div>
                 <div class="chat__look" data-step="11">Reviewing photo&hellip;</div>
                 <div class="chat__msg chat__msg--out" data-step="12"><span>Thank you — I can see the casing is cracked along the left edge. That qualifies for a replacement or a full refund. Which would you prefer?</span><em>AI agent · 2:15pm</em></div>
-                <div class="chat__opts" data-step="13">
-                  <u>Send a replacement</u><u>Refund me</u><u data-chosen>Talk to a person</u>
+                <div class="chat__opts" data-step="13" role="group" aria-label="Choose how the agent resolves this">
+                  <button type="button" data-branch="replace">Send a replacement</button>
+                  <button type="button" data-branch="refund">Refund me</button>
+                  <button type="button" data-branch="human" data-chosen>Talk to a person</button>
                 </div>
-                <div class="chat__msg chat__msg--in" data-step="14"><span>I'd rather talk to someone about it</span><em>Customer · 2:16pm</em></div>
-                <div class="chat__type" data-step="15"><i></i><i></i><i></i></div>
-                <div class="chat__msg chat__msg--out" data-step="16"><span>Of course. Passing you to a colleague now — they will already have the photo and everything we have discussed.</span><em>AI agent · 2:16pm</em></div>
+                <p class="chat__hint" data-step="14">Pick one — each is handled differently.</p>
               </div>
 
-              <div class="hand" data-step="17">
-                <div class="hand__flow">
-                  <span class="hand__node" data-n="1">Customer</span>
-                  <span class="hand__arr" data-n="2"></span>
-                  <span class="hand__node" data-n="3">AI agent</span>
-                  <span class="hand__arr" data-n="4"></span>
-                  <span class="hand__node hand__node--stop" data-n="5">Can't resolve</span>
-                  <span class="hand__arr" data-n="6"></span>
-                  <span class="hand__node hand__node--human" data-n="7">Human agent</span>
+              <!-- the agent settles this one on its own -->
+              <div class="branch" data-branch="replace" hidden>
+                <div class="chat" data-seq>
+                  <div class="chat__msg chat__msg--in" data-step="1"><span>Send a replacement please</span><em>Customer · 2:16pm</em></div>
+                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                  <div class="chat__msg chat__msg--out" data-step="3"><span>Done. The photo was enough to approve it, so a replacement ships today and tracking will reach you by SMS. Please keep the damaged one — no return needed.</span><em>AI agent · 2:16pm</em></div>
                 </div>
-                <ul class="hand__xfer">
-                  <li data-n="8"><b>&check;</b> Conversation history transferred</li>
-                  <li data-n="9"><b>&check;</b> Customer details and photo transferred</li>
-                  <li data-n="10"><b>&check;</b> Issue transferred</li>
-                </ul>
-                <div class="hand__done" data-n="11">Conversation transferred to a human agent &check;</div>
-                <p class="hand__note">The customer never repeats themselves. Your colleague opens the chat with the whole story already there.</p>
+                <div class="outcome" data-step="4">
+                  <div class="outcome__head"><b>&check;</b> Replacement issued<span>NO HUMAN NEEDED</span></div>
+                  <ul class="outcome__rows">
+                    <li>Damage assessed from the photo</li>
+                    <li>Replacement raised against order #48291</li>
+                    <li>Dispatch booked for today · tracking sent by SMS</li>
+                  </ul>
+                  <p class="outcome__note">Straightforward and inside policy, so the agent finished it. Nobody on your team touched this.</p>
+                </div>
+              </div>
+
+              <!-- money leaving the business needs a signature -->
+              <div class="branch" data-branch="refund" hidden>
+                <div class="chat" data-seq>
+                  <div class="chat__msg chat__msg--in" data-step="1"><span>I'd prefer a refund</span><em>Customer · 2:16pm</em></div>
+                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                  <div class="chat__msg chat__msg--out" data-step="3"><span>Understood. The photo confirms the damage, so I have raised a full refund of PKR 12,500 to your original payment method. Refunds are released by a colleague, so it will be approved within one working day. You do not need to do anything.</span><em>AI agent · 2:16pm</em></div>
+                </div>
+                <div class="outcome outcome--wait" data-step="4">
+                  <div class="outcome__head"><b>&hellip;</b> Refund raised<span>AWAITING APPROVAL</span></div>
+                  <ul class="outcome__rows">
+                    <li>Damage assessed from the photo</li>
+                    <li>Refund of PKR 12,500 prepared</li>
+                    <li>Queued for a colleague to release</li>
+                  </ul>
+                  <p class="outcome__note">Money leaving the business always gets a human signature. The agent does the work and the customer gets a straight answer — someone just presses the button.</p>
+                </div>
+              </div>
+
+              <!-- the customer would rather have a person -->
+              <div class="branch" data-branch="human" hidden>
+                <div class="chat" data-seq>
+                  <div class="chat__msg chat__msg--in" data-step="1"><span>I'd rather talk to someone about it</span><em>Customer · 2:16pm</em></div>
+                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                  <div class="chat__msg chat__msg--out" data-step="3"><span>Of course. Passing you to a colleague now — they will already have the photo and everything we have discussed.</span><em>AI agent · 2:16pm</em></div>
+                </div>
+
+                <div class="hand" data-step="4">
+                  <div class="hand__flow">
+                    <span class="hand__node" data-n="1">Customer</span>
+                    <span class="hand__arr" data-n="2"></span>
+                    <span class="hand__node" data-n="3">AI agent</span>
+                    <span class="hand__arr" data-n="4"></span>
+                    <span class="hand__node hand__node--stop" data-n="5">Customer asked</span>
+                    <span class="hand__arr" data-n="6"></span>
+                    <span class="hand__node hand__node--human" data-n="7">Human agent</span>
+                  </div>
+                  <ul class="hand__xfer">
+                    <li data-n="8"><b>&check;</b> Conversation history transferred</li>
+                    <li data-n="9"><b>&check;</b> Customer details and photo transferred</li>
+                    <li data-n="10"><b>&check;</b> Issue transferred</li>
+                  </ul>
+                  <div class="hand__done" data-n="11">Conversation transferred to a human agent &check;</div>
+                  <p class="hand__note">The customer never repeats themselves. Your colleague opens the chat with the whole story already there.</p>
+                </div>
               </div>
             </div>
           </article>

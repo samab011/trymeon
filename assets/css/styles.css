@@ -722,13 +722,41 @@ input,textarea{font:inherit; color:inherit}
 
 /* the resolutions the agent offers, and the one taken */
 .chat__opts{align-self:flex-end; display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-end; max-width:88%}
-.chat__opts u{
-  text-decoration:none; font-size:12.5px; padding:8px 14px; border-radius:99px;
+.chat__opts button{
+  font: inherit; font-size:12.5px; padding:8px 14px; border-radius:99px; cursor:pointer;
   border:1px solid rgba(204,255,46,.34); color:var(--acid); background:rgba(204,255,46,.06);
-  transition:background .3s var(--ease), color .3s var(--ease), opacity .3s var(--ease);
+  transition:background .25s var(--ease), color .25s var(--ease), opacity .25s var(--ease), transform .25s var(--ease);
 }
-.chat__opts u.is-pick{background:var(--acid); color:var(--ink); border-color:var(--acid)}
-.chat__opts.has-pick u:not(.is-pick){opacity:.32}
+.chat__opts button:hover{background:rgba(204,255,46,.18); transform:translateY(-1px)}
+.chat__opts button.is-pick{background:var(--acid); color:var(--ink); border-color:var(--acid)}
+.chat__opts.has-pick button:not(.is-pick){opacity:.42}
+.chat__opts.has-pick button:not(.is-pick):hover{opacity:1}
+.chat__hint{
+  align-self:flex-end; font-family:var(--mono); font-size:10.5px; letter-spacing:.06em;
+  color:var(--fg-faint); margin-top:2px;
+}
+
+/* what each option actually resulted in */
+.branch .chat{padding:16px; gap:9px}
+.outcome{margin:0 16px 16px; border:1px solid rgba(204,255,46,.3); background:rgba(204,255,46,.06); border-radius:12px; padding:16px}
+.outcome--wait{border-color:rgba(255,107,74,.34); background:rgba(255,107,74,.06)}
+.outcome__head{display:flex; align-items:center; gap:10px; font-size:14.5px; font-weight:600}
+.outcome__head b{
+  width:20px; height:20px; border-radius:99px; background:var(--acid); color:var(--ink);
+  display:grid; place-items:center; font-size:11px; flex:0 0 auto;
+}
+.outcome--wait .outcome__head b{background:var(--clay); color:#fff}
+.outcome__head span{
+  margin-left:auto; font-family:var(--mono); font-size:9.5px; letter-spacing:.1em;
+  color:var(--fg-faint); text-transform:uppercase;
+}
+.outcome__rows{list-style:none; padding:0; margin:14px 0 0; display:grid; gap:7px}
+.outcome__rows li{
+  font-size:13px; color:var(--fg-mute); padding-left:16px; position:relative;
+}
+.outcome__rows li::before{content:"—"; position:absolute; left:0; color:var(--acid)}
+.outcome--wait .outcome__rows li::before{color:var(--clay)}
+.outcome__note{margin-top:13px; font-size:12.5px; color:var(--fg-faint); line-height:1.55}
 
 /* the handover */
 .hand{border-top:1px solid var(--line); padding:18px 16px 16px; background:var(--ink-2)}

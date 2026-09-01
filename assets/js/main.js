@@ -644,6 +644,12 @@
 
     function reset() {
       clear();
+      var opts = $('.chat__opts', pane);
+      if (opts) {
+        opts.classList.remove('has-pick');
+        $$('button', opts).forEach(function (b) { b.classList.remove('is-pick'); });
+      }
+      $$('.branch', pane).forEach(function (br) { br.hidden = true; });
       $$('[data-step]', pane).forEach(function (el) { el.classList.remove('is-shown'); });
       $$('.hand__node,.hand__arr,.hand__xfer li,.hand__done', pane).forEach(function (el) {
         el.classList.remove('is-lit');
@@ -651,6 +657,7 @@
     }
 
     function showAll() {
+      choose('human', false);
       $$('[data-step]', pane).forEach(function (el) { el.classList.add('is-shown'); });
       $$('.hand__node,.hand__arr,.hand__xfer li,.hand__done', pane).forEach(function (el) {
         el.classList.add('is-lit');
@@ -670,12 +677,12 @@
           at(t, function () { el.classList.remove('is-shown'); el.style.display = 'none'; });
           at(t + 20, function () { el.style.display = ''; el.classList.remove('is-shown'); });
         } else if (el.classList.contains('chat__opts')) {
-          /* the offered resolutions land, then one is taken */
-          var pick = $('[data-chosen]', el);
+          /* the offered resolutions land, then the default one is taken —
+             a visitor can click any of them afterwards to see that path */
           t += 700;
           at(t, function () {
-            el.classList.add('has-pick');
-            if (pick) pick.classList.add('is-pick');
+            var pick = $('[data-chosen]', el);
+            if (pick) choose(pick.dataset.branch, true);
           });
           t += 520;
         } else {
@@ -700,6 +707,50 @@
       });
       at(t + 120, function () { $('.hand__done', hand).classList.add('is-lit'); });
     }
+
+    /* Each option leads somewhere different: a replacement the agent settles
+       alone, a refund it prepares but a colleague releases, or a handover.
+       Clicking a chip switches branch and replays it. */
+    function choose(name, animate) {
+      var opts = $('.chat__opts', pane);
+      if (!opts) return;
+      opts.classList.add('has-pick');
+      $$('button', opts).forEach(function (btn) {
+        btn.classList.toggle('is-pick', btn.dataset.branch === name);
+        btn.setAttribute('aria-pressed', btn.dataset.branch === name);
+      });
+      $$('.branch', pane).forEach(function (br) {
+        var on = br.dataset.branch === name;
+        br.hidden = !on;
+        if (!on) {
+          $$('[data-step]', br).forEach(function (el) { el.classList.remove('is-shown'); });
+          $$('.hand__node,.hand__arr,.hand__xfer li,.hand__done', br).forEach(function (el) {
+            el.classList.remove('is-lit');
+          });
+        }
+      });
+      var branch = $('.branch[data-branch="' + name + '"]', pane);
+      if (!branch) return;
+      if (reduce || !animate) {
+        $$('[data-step]', branch).forEach(function (el) { el.classList.add('is-shown'); });
+        $$('.hand__node,.hand__arr,.hand__xfer li,.hand__done', branch).forEach(function (el) {
+          el.classList.add('is-lit');
+        });
+        return;
+      }
+      var end = runChat($('.chat', branch), 120);
+      var out = $('.outcome', branch);
+      if (out) at(end + 120, function () { out.classList.add('is-shown'); });
+      var hand = $('.hand', branch);
+      if (hand) runHandover(hand, end);
+    }
+
+    $$('.chat__opts button', pane).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        clear();                       /* drop any sequence still running */
+        choose(btn.dataset.branch, true);
+      });
+    });
 
     function play() {
       reset();
