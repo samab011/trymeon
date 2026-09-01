@@ -548,15 +548,80 @@
       </section>
 
       <section role="tabpanel" id="pane-agents" aria-labelledby="tab-agents" tabindex="0" hidden>
-        <p class="showcase__lede">A booking agent, mid-conversation. It answers in the language the customer used, and stops where it should.</p>
-        <div class="chat">
-          <div class="chat__msg chat__msg--in"><span>Salam, aap ka timing kya hai aaj?</span><em>Customer · 11:48pm</em></div>
-          <div class="chat__msg chat__msg--out"><span>Walaikum salam! Aaj hum 9pm tak khule hain. Kal subah 10am se available hain — appointment book karun?</span><em>AI agent · 11:48pm</em></div>
-          <div class="chat__msg chat__msg--in"><span>Haan kal 11 baje</span><em>Customer · 11:49pm</em></div>
-          <div class="chat__msg chat__msg--out"><span>Done — kal 11:00am book ho gaya. Naam confirm kar dein?</span><em>AI agent · 11:49pm</em></div>
-          <div class="chat__msg chat__msg--in"><span>Mujhe pehle wali dawai ka dose barhana hai, kitna lun?</span><em>Customer · 11:51pm</em></div>
-          <div class="chat__hand">Handed to a human — dosage is outside what the agent may answer</div>
+        <p class="showcase__lede">AI agents that talk to your customers, answer their questions, handle routine tasks and know when a human needs to step in.</p>
+
+        <div class="agents">
+          <!-- 01 — booking -->
+          <article class="agent" id="agentBooking">
+            <header class="agent__head">
+              <p class="agent__no">01 — AI booking agent</p>
+              <p class="agent__desc">A 24/7 booking agent that speaks to customers in their preferred language, checks availability and books appointments without your team having to respond manually.</p>
+            </header>
+            <div class="agent__win">
+              <div class="agent__bar"><i></i> WhatsApp Business <span>ONLINE</span></div>
+              <div class="chat" data-seq>
+                <div class="chat__msg chat__msg--in" data-step="1"><span>Salam, aap ka timing kya hai aaj?</span><em>Customer · 11:48pm</em></div>
+                <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="3"><span>Walaikum salam! Aaj hum 9pm tak khule hain. Kal subah 10am se bhi available hain. Aap appointment book karna chahein ge?</span><em>AI agent · 11:48pm</em></div>
+                <div class="chat__msg chat__msg--in" data-step="4"><span>Haan kal 11 baje</span><em>Customer · 11:49pm</em></div>
+                <div class="chat__type" data-step="5"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="6"><span>Done — kal 11:00am book ho gaya. Naam confirm kar dein?</span><em>AI agent · 11:49pm</em></div>
+                <div class="chat__ok" data-step="7"><b>&check;</b> Appointment confirmed<em>TOMORROW · 11:00 AM</em></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 02 — support + handover -->
+          <article class="agent" id="agentSupport">
+            <header class="agent__head">
+              <p class="agent__no">02 — AI customer support agent</p>
+              <p class="agent__desc">Customers shouldn't have to wait for someone to answer a simple question. Our agents understand the query, find the right information and resolve it instantly — escalating to a human only when necessary.</p>
+            </header>
+            <div class="agent__win">
+              <div class="agent__bar"><i></i> Website chat <span>ONLINE</span></div>
+              <div class="chat" data-seq>
+                <div class="chat__msg chat__msg--in" data-step="1"><span>Hi, I ordered a product last week but I haven't received it yet. Can you check my order?</span><em>Customer · 2:12pm</em></div>
+                <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="3"><span>Of course. Please provide your order number and I'll check the status for you.</span><em>AI agent · 2:12pm</em></div>
+                <div class="chat__msg chat__msg--in" data-step="4"><span>Order #48291</span><em>Customer · 2:13pm</em></div>
+                <div class="chat__look" data-step="5">Checking order #48291&hellip;</div>
+                <div class="chat__msg chat__msg--out" data-step="6"><span>Thanks. I've found your order. It's out for delivery and is expected to arrive today before 8pm.</span><em>AI agent · 2:13pm</em></div>
+                <div class="chat__msg chat__msg--in" data-step="7"><span>Okay, thank you. My order arrived damaged though and I need a replacement.</span><em>Customer · 2:14pm</em></div>
+                <div class="chat__type" data-step="8"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="9"><span>I'm sorry about that. This one needs a member of our support team, so I'm passing your conversation to a human agent now.</span><em>AI agent · 2:14pm</em></div>
+              </div>
+
+              <div class="hand" data-step="10">
+                <div class="hand__flow">
+                  <span class="hand__node" data-n="1">Customer</span>
+                  <span class="hand__arr" data-n="2"></span>
+                  <span class="hand__node" data-n="3">AI agent</span>
+                  <span class="hand__arr" data-n="4"></span>
+                  <span class="hand__node hand__node--stop" data-n="5">Can't resolve</span>
+                  <span class="hand__arr" data-n="6"></span>
+                  <span class="hand__node hand__node--human" data-n="7">Human agent</span>
+                </div>
+                <ul class="hand__xfer">
+                  <li data-n="8"><b>&check;</b> Conversation history transferred</li>
+                  <li data-n="9"><b>&check;</b> Customer details transferred</li>
+                  <li data-n="10"><b>&check;</b> Issue transferred</li>
+                </ul>
+                <div class="hand__done" data-n="11">Conversation transferred to a human agent &check;</div>
+                <p class="hand__note">The customer never repeats themselves. Your colleague opens the chat with the whole story already there.</p>
+              </div>
+            </div>
+          </article>
         </div>
+
+        <div class="agents__say">
+          <h3>Let AI handle the conversation.<br /><em>Let your team handle what matters.</em></h3>
+          <p>From answering everyday questions to booking appointments and qualifying enquiries, AI can take the repetitive work. When something needs a human, the conversation is handed over with its full context.</p>
+          <ul class="agents__uses">
+            <li>Customer support</li><li>Bookings</li><li>Lead generation</li><li>FAQs</li>
+            <li>Sales enquiries</li><li>WhatsApp</li><li>Website chat</li><li>Appointment scheduling</li>
+          </ul>
+        </div>
+        <p class="showcase__note">AI handles the routine. Humans handle the exceptional. Have a business problem? We can show you where AI can help.</p>
       </section>
 
       <section role="tabpanel" id="pane-motion" aria-labelledby="tab-motion" tabindex="0" hidden>

@@ -629,6 +629,118 @@
     });
   })();
 
+  /* ── AI agent demos: message-by-message reveal ────────── */
+  (function agentDemos() {
+    var pane = $('#pane-agents');
+    if (!pane) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var timers = [];
+
+    function clear() {
+      timers.forEach(clearTimeout);
+      timers = [];
+    }
+    function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+
+    function reset() {
+      clear();
+      $$('[data-step]', pane).forEach(function (el) { el.classList.remove('is-shown'); });
+      $$('.hand__node,.hand__arr,.hand__xfer li,.hand__done', pane).forEach(function (el) {
+        el.classList.remove('is-lit');
+      });
+    }
+
+    function showAll() {
+      $$('[data-step]', pane).forEach(function (el) { el.classList.add('is-shown'); });
+      $$('.hand__node,.hand__arr,.hand__xfer li,.hand__done', pane).forEach(function (el) {
+        el.classList.add('is-lit');
+      });
+    }
+
+    /* A typing bubble is a pause, not a message: it appears, then is replaced
+       by the reply it was standing in for, so the wait reads as thinking. */
+    function runChat(chat, startAt) {
+      var steps = $$('[data-step]', chat);
+      var t = startAt;
+      steps.forEach(function (el) {
+        var typing = el.classList.contains('chat__type') || el.classList.contains('chat__look');
+        at(t, function () { el.classList.add('is-shown'); });
+        if (typing) {
+          t += 900;
+          at(t, function () { el.classList.remove('is-shown'); el.style.display = 'none'; });
+          at(t + 20, function () { el.style.display = ''; el.classList.remove('is-shown'); });
+        } else {
+          t += 620;
+        }
+      });
+      return t;
+    }
+
+    function runHandover(hand, startAt) {
+      var t = startAt;
+      at(t, function () { hand.classList.add('is-shown'); });
+      t += 300;
+      $$('.hand__node,.hand__arr', hand).forEach(function (el) {
+        at(t, function () { el.classList.add('is-lit'); });
+        t += 220;
+      });
+      t += 150;
+      $$('.hand__xfer li', hand).forEach(function (el) {
+        at(t, function () { el.classList.add('is-lit'); });
+        t += 260;
+      });
+      at(t + 120, function () { $('.hand__done', hand).classList.add('is-lit'); });
+    }
+
+    function play() {
+      reset();
+      if (reduce) { showAll(); return; }
+      var chats = $$('.chat[data-seq]', pane);
+      var end = 0;
+      chats.forEach(function (chat) {
+        /* both demos start together so the pair reads as one comparison */
+        var t = runChat(chat, 260);
+        if (t > end) end = t;
+      });
+      var hand = $('.hand', pane);
+      if (hand) runHandover(hand, end - 900);
+    }
+
+    pane.__play = play;
+    var tab = $('#tab-agents');
+    if (tab) tab.addEventListener('click', function () { setTimeout(play, 60); });
+    /* if the pane opens already selected, play once it is actually visible */
+    if (!pane.hidden) play();
+  })();
+
+  /* ── Showcase heading + CTA follow the active tab ─────── */
+  (function showcaseVoice() {
+    var title = $('#showcaseTitle');
+    var cta = $('.showcase__foot .btn--line');
+    if (!title || !cta) return;
+    var DEFAULT_TITLE = title.textContent;
+    var DEFAULT_CTA = cta.innerHTML;
+
+    var perTab = {
+      'tab-agents': {
+        title: 'What could an AI agent do for your business?',
+        cta: 'See how it works'
+      }
+    };
+
+    function apply(id) {
+      var v = perTab[id];
+      title.textContent = v ? v.title : DEFAULT_TITLE;
+      cta.innerHTML = v ? v.cta : DEFAULT_CTA;
+    }
+
+    $$('[role="tab"]').forEach(function (t) {
+      t.addEventListener('click', function () { apply(t.id); });
+    });
+    var on = $('[role="tab"].is-on');
+    if (on) apply(on.id);
+  })();
+
   /* ── Year ─────────────────────────────────────────────── */
   var year = $('#year');
   if (year) year.textContent = String(new Date().getFullYear());

@@ -656,6 +656,118 @@ input,textarea{font:inherit; color:inherit}
   color:var(--clay); border:1px dashed rgba(255,107,74,.45); border-radius:99px; padding:8px 16px;
 }
 
+/* ── AI agent demonstrations ──────────────────────────────── */
+.agents{display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start}
+.agent{display:flex; flex-direction:column; gap:16px}
+.agent__no{
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--acid);
+}
+.agent__desc{margin-top:8px; color:var(--fg-mute); font-size:14.5px; line-height:1.55; max-width:48ch}
+.agent__win{border:1px solid var(--line); border-radius:14px; background:var(--ink); overflow:hidden}
+.agent__bar{
+  display:flex; align-items:center; gap:9px; padding:12px 16px; font-size:13px;
+  border-bottom:1px solid var(--line); color:var(--fg-mute);
+}
+.agent__bar i{width:8px; height:8px; border-radius:99px; background:var(--acid); box-shadow:0 0 0 3px rgba(204,255,46,.14)}
+.agent__bar span{margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.1em; color:var(--fg-faint)}
+.agent .chat{max-width:none; padding:16px; gap:9px}
+
+/* every sequenced element starts hidden and is revealed by main.js */
+.agent [data-step]{opacity:0; transform:translateY(8px); transition:opacity .34s var(--ease), transform .34s var(--ease)}
+.agent [data-step].is-shown{opacity:1; transform:none}
+
+.chat__type{
+  align-self:flex-end; display:flex; gap:4px; padding:12px 15px;
+  background:var(--ink-3); border:1px solid var(--line); border-radius:14px; border-bottom-right-radius:4px;
+}
+.chat__type i{width:6px; height:6px; border-radius:99px; background:var(--fg-faint); animation:chatdot 1.2s infinite}
+.chat__type i:nth-child(2){animation-delay:.15s}
+.chat__type i:nth-child(3){animation-delay:.3s}
+@keyframes chatdot{0%,60%,100%{opacity:.3; transform:translateY(0)} 30%{opacity:1; transform:translateY(-3px)}}
+
+.chat__look{
+  align-self:flex-end; font-family:var(--mono); font-size:11px; letter-spacing:.04em; color:var(--fg-faint);
+  border:1px solid var(--line); border-radius:99px; padding:7px 14px; display:flex; align-items:center; gap:8px;
+}
+.chat__look::before{
+  content:""; width:11px; height:11px; border-radius:99px;
+  border:1.5px solid rgba(204,255,46,.35); border-top-color:var(--acid); animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.chat__ok{
+  align-self:flex-end; display:flex; align-items:center; gap:10px; margin-top:4px;
+  border:1px solid rgba(204,255,46,.34); background:rgba(204,255,46,.07);
+  border-radius:12px; padding:11px 14px; font-size:13.5px;
+}
+.chat__ok b{
+  width:20px; height:20px; border-radius:99px; background:var(--acid); color:var(--ink);
+  display:grid; place-items:center; font-size:11px; flex:0 0 auto;
+}
+.chat__ok em{font-style:normal; font-family:var(--mono); font-size:10px; color:var(--fg-faint); margin-left:2px}
+
+/* the handover */
+.hand{border-top:1px solid var(--line); padding:18px 16px 16px; background:var(--ink-2)}
+.hand__flow{display:flex; align-items:center; gap:6px; flex-wrap:wrap}
+.hand__node{
+  font-family:var(--mono); font-size:10px; letter-spacing:.07em; text-transform:uppercase;
+  border:1px solid var(--line); border-radius:99px; padding:6px 11px; color:var(--fg-faint);
+  opacity:.3; transition:opacity .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease);
+}
+.hand__node.is-lit{opacity:1; color:var(--fg); border-color:rgba(255,255,255,.28)}
+.hand__node--stop.is-lit{color:var(--clay); border-color:rgba(255,107,74,.5); background:rgba(255,107,74,.08)}
+.hand__node--human.is-lit{color:var(--ink); background:var(--acid); border-color:var(--acid)}
+.hand__arr{
+  flex:0 0 18px; height:1px; background:var(--line); position:relative; opacity:.3;
+  transition:opacity .3s var(--ease), background .3s var(--ease);
+}
+.hand__arr.is-lit{opacity:1; background:rgba(204,255,46,.5)}
+.hand__arr::after{
+  content:""; position:absolute; right:-1px; top:-2.5px;
+  border-left:5px solid currentColor; border-block:3px solid transparent; color:inherit; opacity:.5;
+}
+.hand__arr.is-lit::after{color:var(--acid); opacity:1}
+.hand__xfer{list-style:none; padding:0; margin:16px 0 0; display:grid; gap:7px}
+.hand__xfer li{
+  display:flex; align-items:center; gap:9px; font-size:13px; color:var(--fg-mute);
+  opacity:0; transform:translateX(-6px); transition:opacity .3s var(--ease), transform .3s var(--ease);
+}
+.hand__xfer li.is-lit{opacity:1; transform:none}
+.hand__xfer b{
+  width:17px; height:17px; border-radius:99px; background:rgba(204,255,46,.16); color:var(--acid);
+  display:grid; place-items:center; font-size:10px; flex:0 0 auto;
+}
+.hand__done{
+  margin-top:14px; border:1px solid rgba(204,255,46,.34); background:rgba(204,255,46,.07);
+  border-radius:10px; padding:11px 14px; font-size:13px; color:var(--fg);
+  opacity:0; transform:translateY(6px); transition:opacity .34s var(--ease), transform .34s var(--ease);
+}
+.hand__done.is-lit{opacity:1; transform:none}
+.hand__note{margin-top:12px; font-size:12.5px; color:var(--fg-faint); line-height:1.5}
+
+/* the closing statement */
+.agents__say{margin-top:30px; padding-top:28px; border-top:1px solid var(--line)}
+.agents__say h3{
+  font-size:clamp(26px,3.4vw,42px); font-weight:700; letter-spacing:-.035em; line-height:1.06;
+  text-transform:uppercase;
+}
+.agents__say h3 em{font-style:normal; color:var(--acid)}
+.agents__say p{margin-top:16px; color:var(--fg-mute); font-size:15.5px; max-width:70ch}
+.agents__uses{list-style:none; padding:0; margin:22px 0 0; display:flex; flex-wrap:wrap; gap:7px}
+.agents__uses li{
+  font-family:var(--mono); font-size:11px; letter-spacing:.05em; padding:6px 12px;
+  border:1px solid var(--line); border-radius:99px; color:var(--fg-mute);
+}
+
+@media (max-width:900px){ .agents{grid-template-columns:1fr} }
+@media (prefers-reduced-motion:reduce){
+  .agent [data-step]{opacity:1; transform:none}
+  .chat__type i,.chat__look::before{animation:none}
+  .hand__node,.hand__arr{opacity:1}
+  .hand__xfer li,.hand__done{opacity:1; transform:none}
+}
+
 /* motion tiles */
 .reels{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
 .reel{
