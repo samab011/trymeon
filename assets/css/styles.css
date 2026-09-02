@@ -182,13 +182,9 @@ input,textarea{font:inherit; color:inherit}
 .hero__title .line.in>span{transform:none}
 .hero__title .dot{color:var(--acid)}
 
-.hero__foot{
-  display:flex; gap:clamp(28px,5vw,72px); flex-wrap:wrap; align-items:flex-end;
-  justify-content:space-between; margin-top:clamp(40px,5.5vw,72px);
-}
+.hero__foot{margin-top:clamp(40px,5.5vw,72px)}
 .hero__lede{max-width:46ch; color:var(--fg-mute); font-size:clamp(16px,1.35vw,19px)}
 .hero__lede p+p{margin-top:.85em}
-.hero__cta{display:flex; gap:12px; flex-wrap:wrap}
 
 .stats{
   list-style:none; padding:0; margin-top:clamp(56px,8vw,110px);
