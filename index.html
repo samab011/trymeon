@@ -192,53 +192,42 @@
 <!-- ══ WORK ══ -->
 <section class="section work" id="work">
   <div class="wrap">
-    <header class="head head--row">
-      <div>
-        <p class="kicker reveal">[ 03 ] Selected work</p>
-        <h2 class="h2 reveal">Cases we can <em>show</em>.</h2>
-        <p class="head__note reveal">Illustrative engagements — names and figures are examples of the work we do, not a client list.</p>
-      </div>
-      <div class="rail__nav reveal">
-        <button class="rail__btn" data-rail="prev" aria-label="Previous case">←</button>
-        <button class="rail__btn" data-rail="next" aria-label="Next case">→</button>
-      </div>
+    <header class="head">
+      <p class="kicker reveal">[ 03 ] See the work</p>
+      <h2 class="h2 reveal">See the <em>work</em>.</h2>
+      <p class="head__note reveal">Six websites you can scroll, two agents you can talk through, and four films you can watch. Open whichever matters to you.</p>
     </header>
-  </div>
 
-  <div class="rail" id="rail" tabindex="0" aria-label="Case studies, scrollable">
-    <article class="case" style="--case:#CCFF2E">
-      <div class="case__top"><span>01 — Retail, Karachi</span><span>2026</span></div>
-      <h3>Chowk Retail</h3>
-      <p>Rebuilt the site around one question — what makes someone enquire — and put an agent on the enquiries it generated.</p>
-      <div class="case__metrics"><div><b>+42%</b><span>enquiries</span></div><div><b>−1.9s</b><span>page load</span></div></div>
-      <div class="case__bar" aria-hidden="true"></div>
-    </article>
-    <article class="case" style="--case:#FF6B4A">
-      <div class="case__top"><span>02 — Consumer products, Faisalabad</span><span>2026</span></div>
-      <h3>Rahat Textiles</h3>
-      <p>Product films for a catalogue that had only ever been photographed flat. Same products, same prices, very different response.</p>
-      <div class="case__metrics"><div><b>2.8×</b><span>add-to-cart</span></div><div><b>34</b><span>films delivered</span></div></div>
-      <div class="case__bar" aria-hidden="true"></div>
-    </article>
-    <article class="case" style="--case:#8FB8FF">
-      <div class="case__top"><span>03 — Clinics, Islamabad</span><span>2025</span></div>
-      <h3>Sehat Line</h3>
-      <p>An agent that books appointments in Urdu and English around the clock, and never answers a medical question on its own.</p>
-      <div class="case__metrics"><div><b>+31%</b><span>bookings</span></div><div><b>0</b><span>missed enquiries</span></div></div>
-      <div class="case__bar" aria-hidden="true"></div>
-    </article>
-    <article class="case" style="--case:#E9D5FF">
-      <div class="case__top"><span>04 — Real estate, Lahore</span><span>2025</span></div>
-      <h3>Gulmohar Developments</h3>
-      <p>All three at once: a new sales site, walkthrough films of every unit type, and an agent qualifying buyers before the sales team calls.</p>
-      <div class="case__metrics"><div><b>2.4×</b><span>booked viewings</span></div><div><b>18 hrs</b><span>saved weekly</span></div></div>
-      <div class="case__bar" aria-hidden="true"></div>
-    </article>
-    <article class="case case--cta">
-      <h3>Your business<br />next.</h3>
-      <p>Tell us what's broken. We'll send a plan in plain language, not a pitch deck.</p>
-      <a class="btn btn--solid" href="#contact">Start here <span aria-hidden="true">→</span></a>
-    </article>
+    <div class="showreel">
+      <button class="showreel__card reveal" type="button" data-open-showcase="tab-web">
+        <span class="showreel__top"><span class="showreel__no">01</span><span class="showreel__count">6 designs</span></span>
+        <h3>Website designs</h3>
+        <p>A restaurant, a property portfolio, a fashion label, a boutique hotel, a car marketplace and a movement studio. Each one opens full size and scrolls like the real site.</p>
+        <span class="showreel__go">Open <i aria-hidden="true">&rarr;</i></span>
+        <span class="showreel__art showreel__art--web" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      </button>
+
+      <button class="showreel__card reveal" type="button" data-open-showcase="tab-agents">
+        <span class="showreel__top"><span class="showreel__no">02</span><span class="showreel__count">2 agents</span></span>
+        <h3>AI agents</h3>
+        <p>A booking agent working in Roman Urdu, and a support agent that assesses a damage claim then offers a replacement, a refund or a person. Play them through.</p>
+        <span class="showreel__go">Open <i aria-hidden="true">&rarr;</i></span>
+        <span class="showreel__art showreel__art--chat" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+
+      <button class="showreel__card reveal" type="button" data-open-showcase="tab-motion">
+        <span class="showreel__top"><span class="showreel__no">03</span><span class="showreel__count">4 films</span></span>
+        <h3>Motion video</h3>
+        <p>A product film, a property walkthrough, a service explainer and a launch reel. Hover to preview, click for sound.</p>
+        <span class="showreel__go">Open <i aria-hidden="true">&rarr;</i></span>
+        <span class="showreel__art showreel__art--wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      </button>
+    </div>
+
+    <div class="showreel__foot reveal">
+      <p>Everything here was made by us. Tell us what your business needs and we will show you the nearest thing we have built.</p>
+      <a class="btn btn--solid" href="#contact">Start a project <span aria-hidden="true">&rarr;</span></a>
+    </div>
   </div>
 </section>
 
@@ -718,7 +707,7 @@
 
     <footer class="showcase__foot">
       <a class="btn btn--solid" href="#contact" data-close>Start a project <span aria-hidden="true">&rarr;</span></a>
-      <a class="btn btn--line" href="#work" data-close>See case studies</a>
+      <a class="btn btn--line" href="#process" data-close>How we work</a>
     </footer>
   </div>
 </dialog>

@@ -81,16 +81,6 @@
   $$('a', menu).forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
 
-  /* ── Work rail ────────────────────────────────────────── */
-  var rail = $('#rail');
-  $$('[data-rail]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var card = $('.case', rail);
-      var step = card ? card.offsetWidth + 14 : 400;
-      rail.scrollBy({ left: btn.dataset.rail === 'next' ? step : -step, behavior: reduced ? 'auto' : 'smooth' });
-    });
-  });
-
   /* ── Plan builder (base + upsell add-ons) ─────────────── */
   /* PKR: en-PK groups in plain thousands (145,000) and uses the Rs symbol. */
   var fmt = function (n) { return n.toLocaleString('en-PK'); };
@@ -393,11 +383,23 @@
     });
     select(0);
 
-    open.addEventListener('click', function (e) {
-      e.preventDefault();
+    function openAt(i) {
       dlg.showModal();
       document.body.style.overflow = 'hidden';
-      tabs[0].focus();
+      select(i);
+      tabs[i].focus();
+    }
+
+    open.addEventListener('click', function (e) {
+      e.preventDefault();
+      openAt(0);
+    });
+
+    /* the See the work section opens the showcase straight onto its category */
+    $$('[data-open-showcase]').forEach(function (card) {
+      var i = tabs.findIndex(function (t) { return t.id === card.dataset.openShowcase; });
+      if (i < 0) return;
+      card.addEventListener('click', function () { openAt(i); });
     });
 
     function close() {
