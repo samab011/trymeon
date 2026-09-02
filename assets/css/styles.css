@@ -504,29 +504,13 @@ input,textarea{font:inherit; color:inherit}
   .hero__tree{transition:none}
 }
 
-/* ── Work showcase dialog ─────────────────────────────────── */
-.showcase{
-  /* the global *{margin:0} reset kills the UA stylesheet's margin:auto,
+/* ── Work showcase dialog ─────────────────────────────────── */ reset kills the UA stylesheet's margin:auto,
      which is what centres a modal dialog — put it back */
   margin:auto;
   width:min(1120px, calc(100vw - 32px)); max-height:min(880px, calc(100vh - 32px));
   padding:0; border:1px solid var(--line); border-radius:calc(var(--r) + 6px);
   background:#0D0D0D; color:var(--fg); overflow:hidden;
 }
-.showcase::backdrop{background:rgba(6,6,7,.82); backdrop-filter:blur(6px)}
-.showcase__inner{display:flex; flex-direction:column; max-height:inherit; height:100%}
-.showcase__top{
-  display:flex; align-items:flex-start; justify-content:space-between; gap:20px;
-  padding:clamp(22px,3vw,34px) clamp(22px,3vw,34px) 0;
-}
-.showcase__top .kicker{display:block; margin-bottom:10px}
-.showcase__top h2{font-size:clamp(24px,3vw,36px); font-weight:700; letter-spacing:-.035em; line-height:1.05}
-.showcase__close{
-  flex:0 0 auto; width:42px; height:42px; border-radius:99px; border:1px solid var(--line);
-  font-size:22px; line-height:1; display:grid; place-items:center; color:var(--fg-mute);
-  transition:background var(--fast), color var(--fast), border-color var(--fast);
-}
-.showcase__close:hover{background:var(--fg); color:var(--ink); border-color:var(--fg)}
 
 .showcase__tabs{
   display:flex; gap:6px; flex-wrap:wrap;
@@ -539,18 +523,9 @@ input,textarea{font:inherit; color:inherit}
 .showcase__tabs button:hover{color:var(--fg); border-color:rgba(255,255,255,.3)}
 .showcase__tabs button.is-on{background:var(--acid); color:var(--ink); border-color:var(--acid); font-weight:600}
 
-.showcase__body{
-  flex:1; overflow-y:auto; padding:clamp(18px,2.4vw,26px) clamp(22px,3vw,34px);
-  overscroll-behavior:contain;
-}
 .showcase__lede{color:var(--fg-mute); max-width:62ch; margin-bottom:22px; font-size:15.5px}
 .showcase__note{
   margin-top:18px; font-family:var(--mono); font-size:11.5px; letter-spacing:.05em; color:var(--fg-faint);
-}
-.showcase__foot{
-  display:flex; gap:10px; flex-wrap:wrap;
-  padding:clamp(18px,2.4vw,24px) clamp(22px,3vw,34px);
-  border-top:1px solid var(--line); background:#0A0A0A;
 }
 
 /* design-direction previews — abstract, built from divs, no third-party assets */
@@ -894,3 +869,14 @@ input,textarea{font:inherit; color:inherit}
 @media (max-width:980px){ .showreel{grid-template-columns:1fr 1fr} .showreel>.showreel__card:last-child{grid-column:1/-1} }
 @media (max-width:620px){ .showreel{grid-template-columns:1fr} .showreel>.showreel__card:last-child{grid-column:auto} }
 @media (prefers-reduced-motion:reduce){ .showreel__card:hover{transform:none} .showreel__card:hover .showreel__go i{transform:none} }
+
+/* ── Work tabs on the page ────────────────────────────────── */
+.workpanes{margin-top:clamp(24px,2.8vw,36px)}
+.work .showcase__tabs{margin-top:clamp(24px,2.8vw,36px)}
+.workpanes>[role="tabpanel"]{outline:none}
+/* the panes were built inside a 1120px dialog; on the page they get the full
+   wrap, so hold the reading measure and let the grids use the rest */
+.showcase__lede{color:var(--fg-mute); font-size:clamp(16px,1.5vw,18px); max-width:64ch; margin-bottom:clamp(22px,2.6vw,34px)}
+.showcase__note{margin-top:clamp(20px,2.4vw,30px); font-family:var(--mono); font-size:12px; color:var(--fg-faint); line-height:1.6; max-width:78ch}
+.showreel__acts{display:flex; gap:10px; flex-wrap:wrap}
+@media (max-width:620px){ .showreel__acts{width:100%} .showreel__acts .btn{flex:1} }

@@ -349,13 +349,11 @@
     }
   })();
 
-  /* ── Work showcase ────────────────────────────────────── */
-  (function showcase() {
-    var dlg = $('#showcase');
-    var open = $('#workBtn');
-    if (!dlg || !open || typeof dlg.showModal !== 'function') return;  /* link fallback */
-
-    var tabs  = $$('[role="tab"]', dlg);
+  /* ── Work tabs (on the page, no longer a dialog) ─────── */
+  (function workTabs() {
+    var list = $('[role="tablist"]');
+    if (!list) return;
+    var tabs  = $$('[role="tab"]', list);
     var panes = tabs.map(function (t) { return $('#' + t.getAttribute('aria-controls')); });
 
     function select(i) {
@@ -366,7 +364,6 @@
         t.tabIndex = on ? 0 : -1;
         panes[n].hidden = !on;
       });
-      $('.showcase__body', dlg).scrollTop = 0;
     }
 
     tabs.forEach(function (t, i) {
@@ -382,43 +379,6 @@
       });
     });
     select(0);
-
-    function openAt(i) {
-      dlg.showModal();
-      document.body.style.overflow = 'hidden';
-      select(i);
-      tabs[i].focus();
-    }
-
-    open.addEventListener('click', function (e) {
-      e.preventDefault();
-      openAt(0);
-    });
-
-    /* the See the work section opens the showcase straight onto its category */
-    $$('[data-open-showcase]').forEach(function (card) {
-      var i = tabs.findIndex(function (t) { return t.id === card.dataset.openShowcase; });
-      if (i < 0) return;
-      card.addEventListener('click', function () { openAt(i); });
-    });
-
-    function close() {
-      if (dlg.open) dlg.close();
-    }
-    $('#showcaseClose').addEventListener('click', close);
-    $$('[data-close]', dlg).forEach(function (a) { a.addEventListener('click', close); });
-
-    /* click the backdrop to dismiss — compare against the box rather than the
-       event target, since the inner wrapper covers the dialog's own padding */
-    dlg.addEventListener('click', function (e) {
-      var r = dlg.getBoundingClientRect();
-      if (e.clientX < r.left || e.clientX > r.right ||
-          e.clientY < r.top  || e.clientY > r.bottom) close();
-    });
-    dlg.addEventListener('close', function () {
-      document.body.style.overflow = '';
-      open.focus();
-    });
   })();
 
   /* ── Mini-site previews & viewer ──────────────────────── */
@@ -513,9 +473,12 @@
     function fitAll() { fitCards(); fitViewer(); }
     fitAll();
     window.addEventListener('resize', fitAll, { passive: true });
-    /* the showcase dialog has zero width until opened, so re-fit on open */
-    var sc = $('#showcase');
-    if (sc && 'ResizeObserver' in window) new ResizeObserver(fitAll).observe(sc);
+    /* a hidden pane has zero width, so re-fit when the panes resize and
+       whenever the web tab is shown again */
+    var panes = $('.workpanes');
+    if (panes && 'ResizeObserver' in window) new ResizeObserver(fitAll).observe(panes);
+    var webTab = $('#tab-web');
+    if (webTab) webTab.addEventListener('click', function () { setTimeout(fitAll, 40); });
   })();
 
   /* ── Service card: number drifts toward the cursor ────── */
@@ -616,18 +579,20 @@
       });
     });
 
-    /* closing the showcase must not leave a film running behind it */
-    var sc = $('#showcase');
-    if (sc) sc.addEventListener('close', function () {
+    /* switching away from the motion tab must not leave a film playing */
+    function stopAll() {
       reels.forEach(function (tile) {
         var v = $('.reel__vid', tile);
         if (v) {
           v.pause(); v.muted = true;
-          var s = parseFloat(tile.dataset.still || '0') || 0;
-          try { v.currentTime = s; } catch (e) {}
+          var st = parseFloat(tile.dataset.still || '0') || 0;
+          try { v.currentTime = st; } catch (e) {}
         }
         tile.classList.remove('is-playing');
       });
+    }
+    $$('[role="tab"]').forEach(function (t) {
+      if (t.id !== 'tab-motion') t.addEventListener('click', stopAll);
     });
   })();
 
@@ -768,39 +733,24 @@
       if (hand) runHandover(hand, end - 900);
     }
 
-    pane.__play = play;
     var tab = $('#tab-agents');
     if (tab) tab.addEventListener('click', function () { setTimeout(play, 60); });
-    /* if the pane opens already selected, play once it is actually visible */
-    if (!pane.hidden) play();
-  })();
 
-  /* ── Showcase heading + CTA follow the active tab ─────── */
-  (function showcaseVoice() {
-    var title = $('#showcaseTitle');
-    var cta = $('.showcase__foot .btn--line');
-    if (!title || !cta) return;
-    var DEFAULT_TITLE = title.textContent;
-    var DEFAULT_CTA = cta.innerHTML;
-
-    var perTab = {
-      'tab-agents': {
-        title: 'What could an AI agent do for your business?',
-        cta: 'See how it works'
-      }
-    };
-
-    function apply(id) {
-      var v = perTab[id];
-      title.textContent = v ? v.title : DEFAULT_TITLE;
-      cta.innerHTML = v ? v.cta : DEFAULT_CTA;
+    /* the demos live on the page now, so start them when they are reached
+       rather than when a dialog opens */
+    if ('IntersectionObserver' in window) {
+      var seen = false;
+      new IntersectionObserver(function (entries, obs) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting || seen) return;
+          seen = true;
+          obs.disconnect();
+          play();
+        });
+      }, { threshold: 0.25 }).observe(pane);
+    } else {
+      play();
     }
-
-    $$('[role="tab"]').forEach(function (t) {
-      t.addEventListener('click', function () { apply(t.id); });
-    });
-    var on = $('[role="tab"].is-on');
-    if (on) apply(on.id);
   })();
 
   /* ── Year ─────────────────────────────────────────────── */

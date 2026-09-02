@@ -87,7 +87,7 @@
       </div>
       <div class="hero__cta reveal">
         <a class="btn btn--solid" href="#build">See pricing in PKR <span aria-hidden="true">→</span></a>
-        <a class="btn btn--line" href="#work" id="workBtn" aria-haspopup="dialog">See the work</a>
+        <a class="btn btn--line" href="#work">See the work</a>
       </div>
     </div>
 
@@ -195,38 +195,238 @@
     <header class="head">
       <p class="kicker reveal">[ 03 ] See the work</p>
       <h2 class="h2 reveal">See the <em>work</em>.</h2>
-      <p class="head__note reveal">Six websites you can scroll, two agents you can talk through, and four films you can watch. Open whichever matters to you.</p>
     </header>
 
-    <div class="showreel">
-      <button class="showreel__card reveal" type="button" data-open-showcase="tab-web">
-        <span class="showreel__top"><span class="showreel__no">01</span><span class="showreel__count">6 designs</span></span>
-        <h3>Website designs</h3>
-        <p>A restaurant, a property portfolio, a fashion label, a boutique hotel, a car marketplace and a movement studio. Each one opens full size and scrolls like the real site.</p>
-        <span class="showreel__go">Open <i aria-hidden="true">&rarr;</i></span>
-        <span class="showreel__art showreel__art--web" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
-      </button>
-
-      <button class="showreel__card reveal" type="button" data-open-showcase="tab-agents">
-        <span class="showreel__top"><span class="showreel__no">02</span><span class="showreel__count">2 agents</span></span>
-        <h3>AI agents</h3>
-        <p>A booking agent working in Roman Urdu, and a support agent that assesses a damage claim then offers a replacement, a refund or a person. Play them through.</p>
-        <span class="showreel__go">Open <i aria-hidden="true">&rarr;</i></span>
-        <span class="showreel__art showreel__art--chat" aria-hidden="true"><i></i><i></i><i></i></span>
-      </button>
-
-      <button class="showreel__card reveal" type="button" data-open-showcase="tab-motion">
-        <span class="showreel__top"><span class="showreel__no">03</span><span class="showreel__count">4 films</span></span>
-        <h3>Motion video</h3>
-        <p>A product film, a property walkthrough, a service explainer and a launch reel. Hover to preview, click for sound.</p>
-        <span class="showreel__go">Open <i aria-hidden="true">&rarr;</i></span>
-        <span class="showreel__art showreel__art--wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
-      </button>
+    <div class="showcase__tabs" role="tablist" aria-label="Work categories">
+      <button role="tab" id="tab-web" aria-controls="pane-web" aria-selected="true" class="is-on">Website designs</button>
+      <button role="tab" id="tab-agents" aria-controls="pane-agents" aria-selected="false">AI agents</button>
+      <button role="tab" id="tab-motion" aria-controls="pane-motion" aria-selected="false">Motion video</button>
     </div>
 
+    <div class="workpanes">
+      <section role="tabpanel" id="pane-web" aria-labelledby="tab-web" tabindex="0">
+        <p class="showcase__lede">Six directions we design in. Tell us which feels like your business and we'll build the real thing around your content.</p>
+        <div class="dzs">
+          <figure class="dz">
+            <button class="dz__btn" data-site="quiet" aria-label="View the Quiet website preview">
+              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-quiet"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Quiet</b><em>Restaurants, salons, clinics</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="edit" aria-label="View the Editorial website preview">
+              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-edit"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Editorial</b><em>Property, motors, marketplaces</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="shop" aria-label="View the Storefront website preview">
+              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-shop"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Storefront</b><em>SaaS, apps, technical products</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="book" aria-label="View the Booking-first website preview">
+              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-book"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Booking-first</b><em>Hotels, resorts, rentals</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="list" aria-label="View the Listings website preview">
+              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-list"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Listings</b><em>Property, motors, marketplaces</em></figcaption>
+          </figure>
+          <figure class="dz">
+            <button class="dz__btn" data-site="fit" aria-label="View the Fitness studio website preview">
+              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-fit"></span></span>
+              <span class="dz__veil"><span>View website</span></span>
+            </button>
+            <figcaption><b>Fitness studio</b><em>Gyms, studios, wellness brands</em></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section role="tabpanel" id="pane-agents" aria-labelledby="tab-agents" tabindex="0" hidden>
+        <p class="showcase__lede">AI agents that talk to your customers, answer their questions, handle routine tasks and know when a human needs to step in.</p>
+
+        <div class="agents">
+          <!-- 01 — booking -->
+          <article class="agent" id="agentBooking">
+            <header class="agent__head">
+              <p class="agent__no">01 — AI booking agent</p>
+              <p class="agent__desc">A 24/7 booking agent that speaks to customers in their preferred language, checks availability and books appointments without your team having to respond manually.</p>
+            </header>
+            <div class="agent__win">
+              <div class="agent__bar"><i></i> WhatsApp Business <span>ONLINE</span></div>
+              <div class="chat" data-seq>
+                <div class="chat__msg chat__msg--in" data-step="1"><span>Salam, aap ka timing kya hai aaj?</span><em>Customer · 11:48pm</em></div>
+                <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="3"><span>Walaikum salam! Aaj hum 9pm tak khule hain. Kal subah 10am se bhi available hain. Aap appointment book karna chahein ge?</span><em>AI agent · 11:48pm</em></div>
+                <div class="chat__msg chat__msg--in" data-step="4"><span>Haan kal 11 baje</span><em>Customer · 11:49pm</em></div>
+                <div class="chat__type" data-step="5"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="6"><span>Done — kal 11:00am book ho gaya. Naam confirm kar dein?</span><em>AI agent · 11:49pm</em></div>
+                <div class="chat__ok" data-step="7"><b>&check;</b> Appointment confirmed<em>TOMORROW · 11:00 AM</em></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- 02 — support + handover -->
+          <article class="agent" id="agentSupport">
+            <header class="agent__head">
+              <p class="agent__no">02 — AI customer support agent</p>
+              <p class="agent__desc">Customers shouldn't have to wait for someone to answer a simple question. Our agents understand the query, check the facts, weigh up evidence and offer real resolutions — escalating to a human only when the customer wants one.</p>
+            </header>
+            <div class="agent__win">
+              <div class="agent__bar"><i></i> Website chat <span>ONLINE</span></div>
+              <div class="chat" data-seq>
+                <div class="chat__msg chat__msg--in" data-step="1"><span>Hi, I ordered a product last week but I haven't received it yet. Can you check my order?</span><em>Customer · 2:12pm</em></div>
+                <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="3"><span>Of course. Please provide your order number and I'll check the status for you.</span><em>AI agent · 2:12pm</em></div>
+                <div class="chat__msg chat__msg--in" data-step="4"><span>Order #48291</span><em>Customer · 2:13pm</em></div>
+                <div class="chat__look" data-step="5">Checking order #48291&hellip;</div>
+                <div class="chat__msg chat__msg--out" data-step="6"><span>Thanks. I've found your order. It's out for delivery and is expected to arrive today before 8pm.</span><em>AI agent · 2:13pm</em></div>
+                <div class="chat__msg chat__msg--in" data-step="7"><span>Okay, thank you. My order arrived damaged though and I need a replacement.</span><em>Customer · 2:14pm</em></div>
+                <div class="chat__type" data-step="8"><i></i><i></i><i></i></div>
+                <div class="chat__msg chat__msg--out" data-step="9"><span>I'm sorry about that. Could you send a photo of the damage? One clear picture of the item is enough.</span><em>AI agent · 2:14pm</em></div>
+                <div class="chat__msg chat__msg--in chat__msg--photo" data-step="10">
+                  <span><i class="chat__shot" aria-hidden="true"></i>IMG_2291.jpg</span><em>Customer · 2:15pm</em>
+                </div>
+                <div class="chat__look" data-step="11">Reviewing photo&hellip;</div>
+                <div class="chat__msg chat__msg--out" data-step="12"><span>Thank you — I can see the casing is cracked along the left edge. That qualifies for a replacement or a full refund. Which would you prefer?</span><em>AI agent · 2:15pm</em></div>
+                <div class="chat__opts" data-step="13" role="group" aria-label="Choose how the agent resolves this">
+                  <button type="button" data-branch="replace">Send a replacement</button>
+                  <button type="button" data-branch="refund">Refund me</button>
+                  <button type="button" data-branch="human" data-chosen>Talk to a person</button>
+                </div>
+                <p class="chat__hint" data-step="14">Pick one — each is handled differently.</p>
+              </div>
+
+              <!-- the agent settles this one on its own -->
+              <div class="branch" data-branch="replace" hidden>
+                <div class="chat" data-seq>
+                  <div class="chat__msg chat__msg--in" data-step="1"><span>Send a replacement please</span><em>Customer · 2:16pm</em></div>
+                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                  <div class="chat__msg chat__msg--out" data-step="3"><span>Done. The photo was enough to approve it, so a replacement ships today and tracking will reach you by SMS. Please keep the damaged one — no return needed.</span><em>AI agent · 2:16pm</em></div>
+                </div>
+                <div class="outcome" data-step="4">
+                  <div class="outcome__head"><b>&check;</b> Replacement issued<span>NO HUMAN NEEDED</span></div>
+                  <ul class="outcome__rows">
+                    <li>Damage assessed from the photo</li>
+                    <li>Replacement raised against order #48291</li>
+                    <li>Dispatch booked for today · tracking sent by SMS</li>
+                  </ul>
+                  <p class="outcome__note">Straightforward and inside policy, so the agent finished it. Nobody on your team touched this.</p>
+                </div>
+              </div>
+
+              <!-- money leaving the business needs a signature -->
+              <div class="branch" data-branch="refund" hidden>
+                <div class="chat" data-seq>
+                  <div class="chat__msg chat__msg--in" data-step="1"><span>I'd prefer a refund</span><em>Customer · 2:16pm</em></div>
+                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                  <div class="chat__msg chat__msg--out" data-step="3"><span>Understood. The photo confirms the damage, so I have raised a full refund of PKR 12,500 to your original payment method. Refunds are released by a colleague, so it will be approved within one working day. You do not need to do anything.</span><em>AI agent · 2:16pm</em></div>
+                </div>
+                <div class="outcome outcome--wait" data-step="4">
+                  <div class="outcome__head"><b>&hellip;</b> Refund raised<span>AWAITING APPROVAL</span></div>
+                  <ul class="outcome__rows">
+                    <li>Damage assessed from the photo</li>
+                    <li>Refund of PKR 12,500 prepared</li>
+                    <li>Queued for a colleague to release</li>
+                  </ul>
+                  <p class="outcome__note">Money leaving the business always gets a human signature. The agent does the work and the customer gets a straight answer — someone just presses the button.</p>
+                </div>
+              </div>
+
+              <!-- the customer would rather have a person -->
+              <div class="branch" data-branch="human" hidden>
+                <div class="chat" data-seq>
+                  <div class="chat__msg chat__msg--in" data-step="1"><span>I'd rather talk to someone about it</span><em>Customer · 2:16pm</em></div>
+                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
+                  <div class="chat__msg chat__msg--out" data-step="3"><span>Of course. Passing you to a colleague now — they will already have the photo and everything we have discussed.</span><em>AI agent · 2:16pm</em></div>
+                </div>
+
+                <div class="hand" data-step="4">
+                  <div class="hand__flow">
+                    <span class="hand__node" data-n="1">Customer</span>
+                    <span class="hand__arr" data-n="2"></span>
+                    <span class="hand__node" data-n="3">AI agent</span>
+                    <span class="hand__arr" data-n="4"></span>
+                    <span class="hand__node hand__node--stop" data-n="5">Customer asked</span>
+                    <span class="hand__arr" data-n="6"></span>
+                    <span class="hand__node hand__node--human" data-n="7">Human agent</span>
+                  </div>
+                  <ul class="hand__xfer">
+                    <li data-n="8"><b>&check;</b> Conversation history transferred</li>
+                    <li data-n="9"><b>&check;</b> Customer details and photo transferred</li>
+                    <li data-n="10"><b>&check;</b> Issue transferred</li>
+                  </ul>
+                  <div class="hand__done" data-n="11">Conversation transferred to a human agent &check;</div>
+                  <p class="hand__note">The customer never repeats themselves. Your colleague opens the chat with the whole story already there.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="agents__say">
+          <h3>Let AI handle the conversation.<br /><em>Let your team handle what matters.</em></h3>
+          <p>From answering everyday questions to booking appointments and qualifying enquiries, AI can take the repetitive work. When something needs a human, the conversation is handed over with its full context.</p>
+          <ul class="agents__uses">
+            <li>Customer support</li><li>Bookings</li><li>Lead generation</li><li>FAQs</li>
+            <li>Sales enquiries</li><li>WhatsApp</li><li>Website chat</li><li>Appointment scheduling</li>
+          </ul>
+        </div>
+        <p class="showcase__note">AI handles the routine. Humans handle the exceptional. Have a business problem? We can show you where AI can help.</p>
+      </section>
+
+      <section role="tabpanel" id="pane-motion" aria-labelledby="tab-motion" tabindex="0" hidden>
+        <p class="showcase__lede">Product films, property walkthroughs and explainers, cut for Reels, TikTok and your own pages.</p>
+        <div class="reels">
+          <button class="reel reel--live" type="button" data-video data-still="10.54" aria-label="Play the Fezzy product film">
+            <video class="reel__vid" src="assets/video/product-film.mp4"
+                   poster="assets/video/product-film.jpg" preload="none"
+                   muted loop playsinline disablepictureinpicture></video>
+            <span class="reel__play" aria-hidden="true"></span>
+            <span class="reel__meta"><b>Product film</b><em>0:15 · 16:9 · Fezzy</em></span>
+          </button>
+          <button class="reel reel--live" type="button" data-video data-still="10.92" aria-label="Play the property walkthrough">
+            <video class="reel__vid" src="assets/video/property-walkthrough.mp4"
+                   poster="assets/video/property-walkthrough.jpg" preload="none"
+                   muted loop playsinline disablepictureinpicture></video>
+            <span class="reel__play" aria-hidden="true"></span>
+            <span class="reel__meta"><b>Property walkthrough</b><em>0:15 · 16:9</em></span>
+          </button>
+          <button class="reel reel--live" type="button" data-video data-still="2.67" aria-label="Play the service explainer">
+            <video class="reel__vid" src="assets/video/service-explainer.mp4"
+                   poster="assets/video/service-explainer.jpg" preload="none"
+                   muted loop playsinline disablepictureinpicture></video>
+            <span class="reel__play" aria-hidden="true"></span>
+            <span class="reel__meta"><b>Service explainer</b><em>0:15 · 16:9</em></span>
+          </button>
+          <button class="reel reel--live" type="button" data-video data-still="2.33" aria-label="Play the launch reel">
+            <video class="reel__vid" src="assets/video/launch-reel.mp4"
+                   poster="assets/video/launch-reel.jpg" preload="none"
+                   muted loop playsinline disablepictureinpicture></video>
+            <span class="reel__play" aria-hidden="true"></span>
+            <span class="reel__meta"><b>Launch reel</b><em>0:15 · 16:9</em></span>
+          </button>
+        </div>
+        <p class="showcase__note">Four cuts from recent work. Hover to preview, click for sound.</p>
+      </section>
+    </div>
+    </div>
     <div class="showreel__foot reveal">
       <p>Everything here was made by us. Tell us what your business needs and we will show you the nearest thing we have built.</p>
-      <a class="btn btn--solid" href="#contact">Start a project <span aria-hidden="true">&rarr;</span></a>
+      <span class="showreel__acts">
+        <a class="btn btn--solid" href="#contact">Start a project <span aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn--line" href="#process">How we work</a>
+      </span>
     </div>
   </div>
 </section>
@@ -471,246 +671,6 @@
 </footer>
 
 <!-- ══ WORK SHOWCASE ══ -->
-<dialog class="showcase" id="showcase" aria-labelledby="showcaseTitle">
-  <div class="showcase__inner">
-    <header class="showcase__top">
-      <div>
-        <p class="kicker">Our work</p>
-        <h2 id="showcaseTitle">What would you like to see?</h2>
-      </div>
-      <button class="showcase__close" id="showcaseClose" aria-label="Close">&times;</button>
-    </header>
-
-    <div class="showcase__tabs" role="tablist" aria-label="Work categories">
-      <button role="tab" id="tab-web" aria-controls="pane-web" aria-selected="true" class="is-on">Website designs</button>
-      <button role="tab" id="tab-agents" aria-controls="pane-agents" aria-selected="false">AI agents</button>
-      <button role="tab" id="tab-motion" aria-controls="pane-motion" aria-selected="false">Motion video</button>
-    </div>
-
-    <div class="showcase__body">
-      <section role="tabpanel" id="pane-web" aria-labelledby="tab-web" tabindex="0">
-        <p class="showcase__lede">Six directions we design in. Tell us which feels like your business and we'll build the real thing around your content.</p>
-        <div class="dzs">
-          <figure class="dz">
-            <button class="dz__btn" data-site="quiet" aria-label="View the Quiet website preview">
-              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-quiet"></span></span>
-              <span class="dz__veil"><span>View website</span></span>
-            </button>
-            <figcaption><b>Quiet</b><em>Restaurants, salons, clinics</em></figcaption>
-          </figure>
-          <figure class="dz">
-            <button class="dz__btn" data-site="edit" aria-label="View the Editorial website preview">
-              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-edit"></span></span>
-              <span class="dz__veil"><span>View website</span></span>
-            </button>
-            <figcaption><b>Editorial</b><em>Property, motors, marketplaces</em></figcaption>
-          </figure>
-          <figure class="dz">
-            <button class="dz__btn" data-site="shop" aria-label="View the Storefront website preview">
-              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-shop"></span></span>
-              <span class="dz__veil"><span>View website</span></span>
-            </button>
-            <figcaption><b>Storefront</b><em>SaaS, apps, technical products</em></figcaption>
-          </figure>
-          <figure class="dz">
-            <button class="dz__btn" data-site="book" aria-label="View the Booking-first website preview">
-              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-book"></span></span>
-              <span class="dz__veil"><span>View website</span></span>
-            </button>
-            <figcaption><b>Booking-first</b><em>Hotels, resorts, rentals</em></figcaption>
-          </figure>
-          <figure class="dz">
-            <button class="dz__btn" data-site="list" aria-label="View the Listings website preview">
-              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-list"></span></span>
-              <span class="dz__veil"><span>View website</span></span>
-            </button>
-            <figcaption><b>Listings</b><em>Property, motors, marketplaces</em></figcaption>
-          </figure>
-          <figure class="dz">
-            <button class="dz__btn" data-site="fit" aria-label="View the Fitness studio website preview">
-              <span class="dz__chrome" aria-hidden="true"><i></i><i></i><i></i></span><span class="dz__shot"><span class="dz__scale" id="prev-fit"></span></span>
-              <span class="dz__veil"><span>View website</span></span>
-            </button>
-            <figcaption><b>Fitness studio</b><em>Gyms, studios, wellness brands</em></figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section role="tabpanel" id="pane-agents" aria-labelledby="tab-agents" tabindex="0" hidden>
-        <p class="showcase__lede">AI agents that talk to your customers, answer their questions, handle routine tasks and know when a human needs to step in.</p>
-
-        <div class="agents">
-          <!-- 01 — booking -->
-          <article class="agent" id="agentBooking">
-            <header class="agent__head">
-              <p class="agent__no">01 — AI booking agent</p>
-              <p class="agent__desc">A 24/7 booking agent that speaks to customers in their preferred language, checks availability and books appointments without your team having to respond manually.</p>
-            </header>
-            <div class="agent__win">
-              <div class="agent__bar"><i></i> WhatsApp Business <span>ONLINE</span></div>
-              <div class="chat" data-seq>
-                <div class="chat__msg chat__msg--in" data-step="1"><span>Salam, aap ka timing kya hai aaj?</span><em>Customer · 11:48pm</em></div>
-                <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
-                <div class="chat__msg chat__msg--out" data-step="3"><span>Walaikum salam! Aaj hum 9pm tak khule hain. Kal subah 10am se bhi available hain. Aap appointment book karna chahein ge?</span><em>AI agent · 11:48pm</em></div>
-                <div class="chat__msg chat__msg--in" data-step="4"><span>Haan kal 11 baje</span><em>Customer · 11:49pm</em></div>
-                <div class="chat__type" data-step="5"><i></i><i></i><i></i></div>
-                <div class="chat__msg chat__msg--out" data-step="6"><span>Done — kal 11:00am book ho gaya. Naam confirm kar dein?</span><em>AI agent · 11:49pm</em></div>
-                <div class="chat__ok" data-step="7"><b>&check;</b> Appointment confirmed<em>TOMORROW · 11:00 AM</em></div>
-              </div>
-            </div>
-          </article>
-
-          <!-- 02 — support + handover -->
-          <article class="agent" id="agentSupport">
-            <header class="agent__head">
-              <p class="agent__no">02 — AI customer support agent</p>
-              <p class="agent__desc">Customers shouldn't have to wait for someone to answer a simple question. Our agents understand the query, check the facts, weigh up evidence and offer real resolutions — escalating to a human only when the customer wants one.</p>
-            </header>
-            <div class="agent__win">
-              <div class="agent__bar"><i></i> Website chat <span>ONLINE</span></div>
-              <div class="chat" data-seq>
-                <div class="chat__msg chat__msg--in" data-step="1"><span>Hi, I ordered a product last week but I haven't received it yet. Can you check my order?</span><em>Customer · 2:12pm</em></div>
-                <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
-                <div class="chat__msg chat__msg--out" data-step="3"><span>Of course. Please provide your order number and I'll check the status for you.</span><em>AI agent · 2:12pm</em></div>
-                <div class="chat__msg chat__msg--in" data-step="4"><span>Order #48291</span><em>Customer · 2:13pm</em></div>
-                <div class="chat__look" data-step="5">Checking order #48291&hellip;</div>
-                <div class="chat__msg chat__msg--out" data-step="6"><span>Thanks. I've found your order. It's out for delivery and is expected to arrive today before 8pm.</span><em>AI agent · 2:13pm</em></div>
-                <div class="chat__msg chat__msg--in" data-step="7"><span>Okay, thank you. My order arrived damaged though and I need a replacement.</span><em>Customer · 2:14pm</em></div>
-                <div class="chat__type" data-step="8"><i></i><i></i><i></i></div>
-                <div class="chat__msg chat__msg--out" data-step="9"><span>I'm sorry about that. Could you send a photo of the damage? One clear picture of the item is enough.</span><em>AI agent · 2:14pm</em></div>
-                <div class="chat__msg chat__msg--in chat__msg--photo" data-step="10">
-                  <span><i class="chat__shot" aria-hidden="true"></i>IMG_2291.jpg</span><em>Customer · 2:15pm</em>
-                </div>
-                <div class="chat__look" data-step="11">Reviewing photo&hellip;</div>
-                <div class="chat__msg chat__msg--out" data-step="12"><span>Thank you — I can see the casing is cracked along the left edge. That qualifies for a replacement or a full refund. Which would you prefer?</span><em>AI agent · 2:15pm</em></div>
-                <div class="chat__opts" data-step="13" role="group" aria-label="Choose how the agent resolves this">
-                  <button type="button" data-branch="replace">Send a replacement</button>
-                  <button type="button" data-branch="refund">Refund me</button>
-                  <button type="button" data-branch="human" data-chosen>Talk to a person</button>
-                </div>
-                <p class="chat__hint" data-step="14">Pick one — each is handled differently.</p>
-              </div>
-
-              <!-- the agent settles this one on its own -->
-              <div class="branch" data-branch="replace" hidden>
-                <div class="chat" data-seq>
-                  <div class="chat__msg chat__msg--in" data-step="1"><span>Send a replacement please</span><em>Customer · 2:16pm</em></div>
-                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
-                  <div class="chat__msg chat__msg--out" data-step="3"><span>Done. The photo was enough to approve it, so a replacement ships today and tracking will reach you by SMS. Please keep the damaged one — no return needed.</span><em>AI agent · 2:16pm</em></div>
-                </div>
-                <div class="outcome" data-step="4">
-                  <div class="outcome__head"><b>&check;</b> Replacement issued<span>NO HUMAN NEEDED</span></div>
-                  <ul class="outcome__rows">
-                    <li>Damage assessed from the photo</li>
-                    <li>Replacement raised against order #48291</li>
-                    <li>Dispatch booked for today · tracking sent by SMS</li>
-                  </ul>
-                  <p class="outcome__note">Straightforward and inside policy, so the agent finished it. Nobody on your team touched this.</p>
-                </div>
-              </div>
-
-              <!-- money leaving the business needs a signature -->
-              <div class="branch" data-branch="refund" hidden>
-                <div class="chat" data-seq>
-                  <div class="chat__msg chat__msg--in" data-step="1"><span>I'd prefer a refund</span><em>Customer · 2:16pm</em></div>
-                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
-                  <div class="chat__msg chat__msg--out" data-step="3"><span>Understood. The photo confirms the damage, so I have raised a full refund of PKR 12,500 to your original payment method. Refunds are released by a colleague, so it will be approved within one working day. You do not need to do anything.</span><em>AI agent · 2:16pm</em></div>
-                </div>
-                <div class="outcome outcome--wait" data-step="4">
-                  <div class="outcome__head"><b>&hellip;</b> Refund raised<span>AWAITING APPROVAL</span></div>
-                  <ul class="outcome__rows">
-                    <li>Damage assessed from the photo</li>
-                    <li>Refund of PKR 12,500 prepared</li>
-                    <li>Queued for a colleague to release</li>
-                  </ul>
-                  <p class="outcome__note">Money leaving the business always gets a human signature. The agent does the work and the customer gets a straight answer — someone just presses the button.</p>
-                </div>
-              </div>
-
-              <!-- the customer would rather have a person -->
-              <div class="branch" data-branch="human" hidden>
-                <div class="chat" data-seq>
-                  <div class="chat__msg chat__msg--in" data-step="1"><span>I'd rather talk to someone about it</span><em>Customer · 2:16pm</em></div>
-                  <div class="chat__type" data-step="2"><i></i><i></i><i></i></div>
-                  <div class="chat__msg chat__msg--out" data-step="3"><span>Of course. Passing you to a colleague now — they will already have the photo and everything we have discussed.</span><em>AI agent · 2:16pm</em></div>
-                </div>
-
-                <div class="hand" data-step="4">
-                  <div class="hand__flow">
-                    <span class="hand__node" data-n="1">Customer</span>
-                    <span class="hand__arr" data-n="2"></span>
-                    <span class="hand__node" data-n="3">AI agent</span>
-                    <span class="hand__arr" data-n="4"></span>
-                    <span class="hand__node hand__node--stop" data-n="5">Customer asked</span>
-                    <span class="hand__arr" data-n="6"></span>
-                    <span class="hand__node hand__node--human" data-n="7">Human agent</span>
-                  </div>
-                  <ul class="hand__xfer">
-                    <li data-n="8"><b>&check;</b> Conversation history transferred</li>
-                    <li data-n="9"><b>&check;</b> Customer details and photo transferred</li>
-                    <li data-n="10"><b>&check;</b> Issue transferred</li>
-                  </ul>
-                  <div class="hand__done" data-n="11">Conversation transferred to a human agent &check;</div>
-                  <p class="hand__note">The customer never repeats themselves. Your colleague opens the chat with the whole story already there.</p>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <div class="agents__say">
-          <h3>Let AI handle the conversation.<br /><em>Let your team handle what matters.</em></h3>
-          <p>From answering everyday questions to booking appointments and qualifying enquiries, AI can take the repetitive work. When something needs a human, the conversation is handed over with its full context.</p>
-          <ul class="agents__uses">
-            <li>Customer support</li><li>Bookings</li><li>Lead generation</li><li>FAQs</li>
-            <li>Sales enquiries</li><li>WhatsApp</li><li>Website chat</li><li>Appointment scheduling</li>
-          </ul>
-        </div>
-        <p class="showcase__note">AI handles the routine. Humans handle the exceptional. Have a business problem? We can show you where AI can help.</p>
-      </section>
-
-      <section role="tabpanel" id="pane-motion" aria-labelledby="tab-motion" tabindex="0" hidden>
-        <p class="showcase__lede">Product films, property walkthroughs and explainers, cut for Reels, TikTok and your own pages.</p>
-        <div class="reels">
-          <button class="reel reel--live" type="button" data-video data-still="10.54" aria-label="Play the Fezzy product film">
-            <video class="reel__vid" src="assets/video/product-film.mp4"
-                   poster="assets/video/product-film.jpg" preload="none"
-                   muted loop playsinline disablepictureinpicture></video>
-            <span class="reel__play" aria-hidden="true"></span>
-            <span class="reel__meta"><b>Product film</b><em>0:15 · 16:9 · Fezzy</em></span>
-          </button>
-          <button class="reel reel--live" type="button" data-video data-still="10.92" aria-label="Play the property walkthrough">
-            <video class="reel__vid" src="assets/video/property-walkthrough.mp4"
-                   poster="assets/video/property-walkthrough.jpg" preload="none"
-                   muted loop playsinline disablepictureinpicture></video>
-            <span class="reel__play" aria-hidden="true"></span>
-            <span class="reel__meta"><b>Property walkthrough</b><em>0:15 · 16:9</em></span>
-          </button>
-          <button class="reel reel--live" type="button" data-video data-still="2.67" aria-label="Play the service explainer">
-            <video class="reel__vid" src="assets/video/service-explainer.mp4"
-                   poster="assets/video/service-explainer.jpg" preload="none"
-                   muted loop playsinline disablepictureinpicture></video>
-            <span class="reel__play" aria-hidden="true"></span>
-            <span class="reel__meta"><b>Service explainer</b><em>0:15 · 16:9</em></span>
-          </button>
-          <button class="reel reel--live" type="button" data-video data-still="2.33" aria-label="Play the launch reel">
-            <video class="reel__vid" src="assets/video/launch-reel.mp4"
-                   poster="assets/video/launch-reel.jpg" preload="none"
-                   muted loop playsinline disablepictureinpicture></video>
-            <span class="reel__play" aria-hidden="true"></span>
-            <span class="reel__meta"><b>Launch reel</b><em>0:15 · 16:9</em></span>
-          </button>
-        </div>
-        <p class="showcase__note">Four cuts from recent work. Hover to preview, click for sound.</p>
-      </section>
-    </div>
-
-    <footer class="showcase__foot">
-      <a class="btn btn--solid" href="#contact" data-close>Start a project <span aria-hidden="true">&rarr;</span></a>
-      <a class="btn btn--line" href="#process" data-close>How we work</a>
-    </footer>
-  </div>
-</dialog>
 
 <!-- ══ MINI-SITE SOURCES ══ -->
 <template id="site-quiet"><div class="site t-quiet">
