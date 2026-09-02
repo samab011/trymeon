@@ -873,6 +873,4 @@ input,textarea{font:inherit; color:inherit}
 /* the panes were built inside a 1120px dialog; on the page they get the full
    wrap, so hold the reading measure and let the grids use the rest */
 .showcase__lede{color:var(--fg-mute); font-size:clamp(16px,1.5vw,18px); max-width:64ch; margin-bottom:clamp(22px,2.6vw,34px)}
-.showcase__note{margin-top:clamp(20px,2.4vw,30px); font-family:var(--mono); font-size:12px; color:var(--fg-faint); line-height:1.6; max-width:78ch}
-.showreel__acts{display:flex; gap:10px; flex-wrap:wrap}
-@media (max-width:620px){ .showreel__acts{width:100%} .showreel__acts .btn{flex:1} }
+.showcase__note{margin-top:clamp(20px,2.4vw,30px); font-family:var(--mono); font-size:12px; color:var(--fg-faint); line-height:1.6; max-width:78ch} }
