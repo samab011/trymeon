@@ -525,7 +525,9 @@ input,textarea{font:inherit; color:inherit}
 }
 
 /* design-direction previews — abstract, built from divs, no third-party assets */
-.dzs{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+/* 3 x 341px + 2 x 14px gap — the card size these previews had inside the
+   1120px dialog, kept now that the section has the full page width */
+.dzs{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:1052px}
 .dz{margin:0}
 .dz__frame{
   aspect-ratio:16/10; border:1px solid var(--line); border-radius:12px; overflow:hidden;
