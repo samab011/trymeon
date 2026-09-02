@@ -525,6 +525,10 @@ input,textarea{font:inherit; color:inherit}
 }
 
 /* design-direction previews — abstract, built from divs, no third-party assets */
+/* .workpanes caps the container at 1052px, so three columns land on the 341px
+   card the dialog gave them. Below that the columns shrink rather than grow —
+   dropping to two at 900px used to balloon a card to 401px. Each lower
+   breakpoint caps the container so a card can never exceed 341px. */
 .dzs{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
 .dz{margin:0}
 .dz__frame{
@@ -593,7 +597,7 @@ input,textarea{font:inherit; color:inherit}
 .agents{display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start}
 /* demo 02 is much the longer of the two, so pin 01 while it scrolls past —
    otherwise the left column is a large void for most of the scroll */
-@media (min-width:901px){ .agents>.agent:first-child{position:sticky; top:0} }
+@media (min-width:660px){ .agents>.agent:first-child{position:sticky; top:0} }
 .agent{display:flex; flex-direction:column; gap:16px}
 .agent__no{
   font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
@@ -744,7 +748,7 @@ input,textarea{font:inherit; color:inherit}
   border:1px solid var(--line); border-radius:99px; color:var(--fg-mute);
 }
 
-@media (max-width:900px){ .agents{grid-template-columns:1fr} }
+@media (max-width:659px){ .agents{grid-template-columns:1fr} }
 @media (prefers-reduced-motion:reduce){
   .agent [data-step]{opacity:1; transform:none}
   .chat__type i,.chat__look::before{animation:none}
@@ -793,12 +797,16 @@ input,textarea{font:inherit; color:inherit}
 .reel b{font-size:14.5px; font-weight:600; letter-spacing:-.02em}
 .reel em{font-style:normal; font-family:var(--mono); font-size:10.5px; color:var(--fg-faint)}
 
+@media (max-width:760px){
+  .dzs{grid-template-columns:repeat(2,1fr); max-width:696px}
+}
 @media (max-width:900px){
-  .dzs{grid-template-columns:repeat(2,1fr)}
   .reels{grid-template-columns:repeat(2,1fr)}
 }
+@media (max-width:520px){
+  .dzs{grid-template-columns:1fr; max-width:341px}
+}
 @media (max-width:560px){
-  .dzs{grid-template-columns:1fr}
   .reels{grid-template-columns:1fr}
   .chat__msg{max-width:92%}
   .showcase{width:100vw; max-width:100vw; max-height:100vh; height:100vh; margin:0; border-radius:0; border:0}
