@@ -525,9 +525,7 @@ input,textarea{font:inherit; color:inherit}
 }
 
 /* design-direction previews — abstract, built from divs, no third-party assets */
-/* 3 x 341px + 2 x 14px gap — the card size these previews had inside the
-   1120px dialog, kept now that the section has the full page width */
-.dzs{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:1052px}
+.dzs{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
 .dz{margin:0}
 .dz__frame{
   aspect-ratio:16/10; border:1px solid var(--line); border-radius:12px; overflow:hidden;
@@ -869,7 +867,9 @@ input,textarea{font:inherit; color:inherit}
 @media (prefers-reduced-motion:reduce){ .showreel__card:hover{transform:none} .showreel__card:hover .showreel__go i{transform:none} }
 
 /* ── Work tabs on the page ────────────────────────────────── */
-.workpanes{margin-top:clamp(24px,2.8vw,36px)}
+/* the dialog gave these panes 1052px of content width (1120 less padding);
+   hold that now they sit in a 1320px page so nothing stretches */
+.workpanes{margin-top:clamp(24px,2.8vw,36px); max-width:1052px}
 .work .showcase__tabs{margin-top:clamp(24px,2.8vw,36px)}
 .workpanes>[role="tabpanel"]{outline:none}
 /* the panes were built inside a 1120px dialog; on the page they get the full
