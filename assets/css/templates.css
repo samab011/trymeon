@@ -52,7 +52,23 @@
   border:1px solid var(--line); border-radius:16px; overflow:hidden;
   background:var(--ink-2); color:var(--fg);
 }
-.viewer::backdrop{background:rgba(4,4,5,.9); backdrop-filter:blur(8px)}
+/* Open and close with a fade and a small zoom. @starting-style plus
+   allow-discrete animates a <dialog> with no script at all; a browser without
+   them simply snaps open, which is what happened before this existed. */
+.viewer{
+  opacity:0; transform:scale(.965);
+  transition:opacity .3s var(--ease), transform .3s var(--ease),
+             overlay .3s var(--ease) allow-discrete, display .3s var(--ease) allow-discrete;
+}
+.viewer[open]{opacity:1; transform:scale(1)}
+@starting-style{ .viewer[open]{opacity:0; transform:scale(.965)} }
+.viewer::backdrop{
+  background:rgba(4,4,5,.9); backdrop-filter:blur(8px); opacity:0;
+  transition:opacity .3s var(--ease),
+             overlay .3s var(--ease) allow-discrete, display .3s var(--ease) allow-discrete;
+}
+.viewer[open]::backdrop{opacity:1}
+@starting-style{ .viewer[open]::backdrop{opacity:0} }
 .viewer__inner{display:flex; flex-direction:column; height:100%}
 .viewer__bar{
   display:flex; align-items:center; gap:14px; padding:12px 16px;
@@ -541,6 +557,8 @@
 
 @media (prefers-reduced-motion:reduce){
   .dz__btn:hover .dz__scale{transform:scale(var(--s,.3))}
+  .viewer,.viewer[open]{transition:none; transform:none}
+  .viewer::backdrop,.viewer[open]::backdrop{transition:none}
   .t-dark .typing i{animation:none}
 }
 

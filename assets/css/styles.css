@@ -568,7 +568,10 @@ input,textarea{font:inherit; color:inherit}
    card the dialog gave them. Below that the columns shrink rather than grow —
    dropping to two at 900px used to balloon a card to 401px. Each lower
    breakpoint caps the container so a card can never exceed 341px. */
-.dzs{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+/* A gallery, not six big previews: the grid is capped well inside .workpanes
+   so three columns land near 265px, and it holds three columns much further
+   down than it used to — dropping to two early was what made a card grow. */
+.dzs{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; max-width:840px}
 .dz{margin:0}
 .dz__frame{
   aspect-ratio:16/10; border:1px solid var(--line); border-radius:12px; overflow:hidden;
@@ -837,13 +840,16 @@ input,textarea{font:inherit; color:inherit}
 .reel em{font-style:normal; font-family:var(--mono); font-size:10.5px; color:var(--fg-faint)}
 
 @media (max-width:760px){
-  .dzs{grid-template-columns:repeat(2,1fr); max-width:696px}
+  .dzs{gap:14px}
 }
 @media (max-width:900px){
   .reels{grid-template-columns:repeat(2,1fr)}
 }
-@media (max-width:520px){
-  .dzs{grid-template-columns:1fr; max-width:341px}
+@media (max-width:620px){
+  /* Two up rather than one, so the whole set still reads as a collection
+     instead of six full-width previews to scroll past. Capped, because an
+     uncapped drop to two columns is what used to make a card grow here. */
+  .dzs{grid-template-columns:repeat(2,1fr); gap:12px; max-width:548px}
 }
 @media (max-width:560px){
   .reels{grid-template-columns:1fr}
