@@ -539,14 +539,7 @@ input,textarea{font:inherit; color:inherit}
   .hero__tree{transition:none}
 }
 
-/* ── Work showcase dialog ─────────────────────────────────── */ reset kills the UA stylesheet's margin:auto,
-     which is what centres a modal dialog — put it back */
-  margin:auto;
-  width:min(1120px, calc(100vw - 32px)); max-height:min(880px, calc(100vh - 32px));
-  padding:0; border:1px solid var(--line); border-radius:calc(var(--r) + 6px);
-  background:#0D0D0D; color:var(--fg); overflow:hidden;
-}
-
+/* ── Work showcase ────────────────────────────────────────── */
 .showcase__tabs{
   display:flex; gap:6px; flex-wrap:wrap;
   padding:clamp(18px,2.4vw,26px) clamp(22px,3vw,34px) 0;
@@ -854,7 +847,6 @@ input,textarea{font:inherit; color:inherit}
 @media (max-width:560px){
   .reels{grid-template-columns:1fr}
   .chat__msg{max-width:92%}
-  .showcase{width:100vw; max-width:100vw; max-height:100vh; height:100vh; margin:0; border-radius:0; border:0}
 }
 @media (prefers-reduced-motion:reduce){
   .dz:hover .dz__frame,.reel:hover{transform:none}
@@ -928,4 +920,4 @@ input,textarea{font:inherit; color:inherit}
 /* the panes were built inside a 1120px dialog; on the page they get the full
    wrap, so hold the reading measure and let the grids use the rest */
 .showcase__lede{color:var(--fg-mute); font-size:clamp(16px,1.5vw,18px); max-width:64ch; margin-bottom:clamp(22px,2.6vw,34px)}
-.showcase__note{margin-top:clamp(20px,2.4vw,30px); font-family:var(--mono); font-size:12px; color:var(--fg-faint); line-height:1.6; max-width:78ch} }
+.showcase__note{margin-top:clamp(20px,2.4vw,30px); font-family:var(--mono); font-size:12px; color:var(--fg-faint); line-height:1.6; max-width:78ch}
