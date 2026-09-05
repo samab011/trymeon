@@ -283,7 +283,7 @@ input,textarea{font:inherit; color:inherit}
 /* ── Process ──────────────────────────────────────────────── */
 .steps{list-style:none; padding:0; border-top:1px solid var(--line)}
 .step{
-  display:grid; grid-template-columns:120px 1fr 260px; gap:clamp(20px,3vw,48px); align-items:start;
+  display:grid; grid-template-columns:120px 1fr; gap:clamp(20px,3vw,48px); align-items:start;
   padding-block:clamp(28px,3.4vw,44px); border-bottom:1px solid var(--line);
   transition:background var(--fast); position:relative;
 }
