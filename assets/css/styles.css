@@ -301,6 +301,27 @@ input,textarea{font:inherit; color:inherit}
 }
 .step__out span{display:block; color:var(--fg-faint); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:6px}
 
+/* Reassurance panel under the four weeks. Built from pieces already in the
+   system — the card surface, the mono label voice, the acid marker used in
+   the marquee — so it reads as part of this section rather than a new one. */
+.assure{
+  margin-top:clamp(28px,3.4vw,44px);
+  display:grid; grid-template-columns:1fr 1fr; gap:clamp(24px,3vw,48px); align-items:start;
+  padding:clamp(24px,2.6vw,36px);
+  border:1px solid var(--line); border-radius:var(--r); background:var(--ink-2);
+}
+.assure h3{font-size:clamp(23px,2.5vw,34px); font-weight:700; letter-spacing:-.035em; line-height:1.08}
+.assure p{margin-top:14px; color:var(--fg-mute); max-width:52ch}
+.assure__list{list-style:none; padding:0; display:grid; gap:11px}
+.assure__list li{
+  display:flex; gap:12px; align-items:baseline;
+  font-family:var(--mono); font-size:12.5px; letter-spacing:.04em; line-height:1.5;
+  padding-bottom:11px; border-bottom:1px solid var(--line-soft);
+}
+.assure__list li:last-child{border-bottom:0; padding-bottom:0}
+.assure__list li::before{content:"\2726"; color:var(--acid); font-size:11px; flex:none}
+@media (max-width:760px){ .assure{grid-template-columns:1fr} }
+
 /* ── Plan builder ─────────────────────────────────────────── */
 .billing{
   display:inline-flex; gap:4px; padding:4px; border:1px solid var(--line); border-radius:99px;
