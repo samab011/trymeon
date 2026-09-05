@@ -3,24 +3,26 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SparkUP AI — Websites, AI agents and motion video in Pakistan</title>
-<meta name="description" content="SparkUP AI helps businesses in Pakistan build high-converting websites, automate day-to-day work with custom AI agents, and produce motion video for their products, properties and services." />
+<title>SparkUP AI — Websites, AI agents and motion video for businesses in Pakistan</title>
+<meta name="description" content="SparkUP AI helps Pakistani businesses grow with high-converting websites, AI agents that handle customers around the clock, and motion video built for social media." />
 <meta name="theme-color" content="#0B0B0C" />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="SparkUP AI — Karachi &amp; Lahore" />
-<meta property="og:description" content="High-converting websites, custom AI agents for day-to-day work, and motion video for whatever you sell." />
+<meta property="og:title" content="SparkUP AI — Websites. AI Agents. Motion." />
+<meta property="og:description" content="Strategy, design and automation built to help your business look better, respond faster and sell more." />
 <meta property="og:locale" content="en_PK" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/styles.css" />
+<link rel="stylesheet" href="assets/css/scene.css" />
 <link rel="stylesheet" href="assets/css/templates.css" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230B0B0C'/><path d='M50 16 Q54.5 45.5 84 50 Q54.5 54.5 50 84 Q45.5 54.5 16 50 Q45.5 45.5 50 16Z' fill='%23CCFF2E'/></svg>" />
 </head>
 <body>
 <div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
 
 <!-- ══ NAV ══ -->
@@ -35,14 +37,14 @@
 
     <nav class="nav__links" aria-label="Primary">
       <a href="#services">Services</a>
-      <a href="#process">Process</a>
       <a href="#work">Work</a>
-      <a href="#build">Pricing</a>
-      <a href="#faq">FAQ</a>
+      <a href="#process">Process</a>
+      <a href="#industries">Industries</a>
+      <a href="#contact">Contact</a>
     </nav>
 
     <div class="nav__actions">
-      <a class="btn btn--ghost nav__call" href="#contact">Book a call</a>
+      <button class="btn btn--ghost nav__call" data-book type="button">Book a call</button>
       <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span>
       </button>
@@ -53,159 +55,260 @@
 <div class="mobile" id="mobileMenu" hidden>
   <nav class="mobile__links" aria-label="Mobile">
     <a href="#services"><em>01</em> Services</a>
-    <a href="#process"><em>02</em> Process</a>
-    <a href="#work"><em>03</em> Work</a>
-    <a href="#build"><em>04</em> Pricing</a>
-    <a href="#faq"><em>05</em> FAQ</a>
-    <a href="#contact" class="mobile__cta">Book a call →</a>
+    <a href="#work"><em>02</em> Work</a>
+    <a href="#process"><em>03</em> Process</a>
+    <a href="#industries"><em>04</em> Industries</a>
+    <a href="#why"><em>05</em> Why SparkUP</a>
+    <a href="#contact" class="mobile__cta">Book a free consultation →</a>
   </nav>
 </div>
 
 <main id="main">
 <span id="top"></span>
 
-<!-- ══ HERO ══ -->
-<section class="hero">
-  <canvas class="hero__tree" id="heroTree" aria-hidden="true"></canvas>
-  <div class="wrap">
-    <h1 class="hero__title">
-      <span class="line reveal"><span>Helping Pakistani</span></span>
-      <span class="line reveal"><span>Businesses Grow</span></span>
-      <span class="line reveal"><span><i class="join">with</i> <b class="svc">Websites</b>, <b class="svc">AI&nbsp;Agents</b></span></span>
-      <span class="line reveal"><span><i class="join">&amp;</i> <b class="svc">Motion Videos</b><span class="dot">.</span></span></span>
-    </h1>
+<!-- ══ 01 · HERO ══════════════════════════════════════════════
+     The stage holds a glowing core and three orbiting panels — one
+     per service. JS drives the orbit and tilts the whole stage toward
+     the pointer; with reduced motion the orbit is frozen in place. -->
+<section class="hero" id="hero">
+  <canvas class="starfield" id="heroField" aria-hidden="true"></canvas>
+  <div class="hero__grid" aria-hidden="true"></div>
 
-    <!-- Booking CTA. Points at the enquiry form in #contact; swap the href for a
-         Calendly/Cal.com URL later and add target="_blank" rel="noopener". -->
-    <div class="hero__cta reveal">
-      <a class="btn btn--solid btn--hero" href="#contact">Book a Free Consultation <span aria-hidden="true">&rarr;</span></a>
-    </div>
-
-    <div class="hero__foot">
-      <div class="hero__lede reveal">
-        <p>
-          Whether you're running a shop, restaurant, clinic, real estate business
-          or growing brand — you need more customers, not more work.
-        </p>
-        <p>
-          We build websites that bring people in, AI agents that handle customers
-          24/7, and motion videos that get your business noticed.
-        </p>
+  <div class="wrap hero__inner">
+    <div class="hero__copy">
+      <p class="kicker reveal">Karachi · Lahore · Islamabad — working across Pakistan</p>
+      <h1 class="hero__title">
+        <span class="line"><span>Helping Pakistani</span></span>
+        <span class="line"><span>Businesses <em>Grow</em></span></span>
+        <span class="line"><span><i class="join">with</i> Websites, AI&nbsp;Agents</span></span>
+        <span class="line"><span><i class="join">&amp;</i> Motion Videos<span class="dot">.</span></span></span>
+      </h1>
+      <p class="hero__lede reveal">Strategy, design and automation built to help your business look better, respond faster and sell more.</p>
+      <div class="hero__cta reveal">
+        <button class="btn btn--solid btn--hero magnet" data-book type="button">Book a Free Consultation <span aria-hidden="true">&rarr;</span></button>
+        <a class="btn btn--line btn--hero magnet" href="#work">Explore What's Possible <span aria-hidden="true">&darr;</span></a>
       </div>
     </div>
 
-    <ul class="stats reveal">
-      <li><b data-count="140">0</b><span>websites shipped in Pakistan</span></li>
-      <li><b data-count="62">0</b><span>AI agents deployed</span></li>
-      <li><b data-count="610">0</b><span>motion videos produced</span></li>
-      <li><b data-count="70" data-suffix="%">0</b><span>enquiries handled without a human</span></li>
-    </ul>
+    <div class="stage" id="stage" aria-hidden="true">
+      <div class="stage__space" id="stageSpace">
+        <div class="core">
+          <span class="core__ring core__ring--a"></span>
+          <span class="core__ring core__ring--b"></span>
+          <span class="core__orb"></span>
+          <span class="core__word">SparkUP<i>AI</i></span>
+        </div>
+
+        <!-- orbit 1 — a business website -->
+        <div class="orb orb--site" data-orb="0">
+          <div class="panel panel--site">
+            <span class="panel__bar"><i></i><i></i><i></i><b>yourbusiness.pk</b></span>
+            <span class="panel__body">
+              <span class="panel__hero"></span>
+              <span class="panel__row"><i></i><i></i></span>
+              <span class="panel__row"><i></i><i></i><i></i></span>
+              <span class="panel__cta">Get a quote</span>
+            </span>
+            <span class="panel__tag">Website</span>
+          </div>
+        </div>
+
+        <!-- orbit 2 — an AI conversation -->
+        <div class="orb orb--chat" data-orb="1">
+          <div class="panel panel--chat">
+            <span class="panel__bar"><i class="dotlive"></i><b>AI agent · online</b></span>
+            <span class="panel__body">
+              <span class="bub bub--in">Do you deliver to Lahore?</span>
+              <span class="bub bub--out">Yes — next-day. Shall I take the order?</span>
+              <span class="bub bub--in">Please do</span>
+              <span class="bub bub--out bub--ok">Order confirmed &check;</span>
+            </span>
+            <span class="panel__tag">AI agent</span>
+          </div>
+        </div>
+
+        <!-- orbit 3 — a motion campaign -->
+        <div class="orb orb--reel" data-orb="2">
+          <div class="panel panel--reel">
+            <span class="panel__bar"><i></i><b>Reel · 0:15</b></span>
+            <span class="panel__body">
+              <span class="reelart"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <span class="panel__scrub"><i></i></span>
+            </span>
+            <span class="panel__tag">Motion</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <ul class="stats reveal wrap">
+    <li><b data-count="140">0</b><span>websites shipped in Pakistan</span></li>
+    <li><b data-count="62">0</b><span>AI agents deployed</span></li>
+    <li><b data-count="610">0</b><span>motion videos produced</span></li>
+    <li><b data-count="70" data-suffix="%">0</b><span>enquiries handled without a human</span></li>
+  </ul>
 </section>
 
 <!-- ══ MARQUEE ══ -->
 <div class="marquee" aria-hidden="true">
   <div class="marquee__track">
-    <span>High-converting websites</span><i>✦</i><span>Custom AI agents</span><i>✦</i><span>Motion video</span><i>✦</i><span>Product films</span><i>✦</i><span>24/7 support</span><i>✦</i><span>Urdu + English</span><i>✦</i>
-    <span>High-converting websites</span><i>✦</i><span>Custom AI agents</span><i>✦</i><span>Motion video</span><i>✦</i><span>Product films</span><i>✦</i><span>24/7 support</span><i>✦</i><span>Urdu + English</span><i>✦</i>
+    <span>High-converting websites</span><i>✦</i><span>AI agents</span><i>✦</i><span>Motion video</span><i>✦</i><span>Lead handling</span><i>✦</i><span>Bookings</span><i>✦</i><span>Urdu + English</span><i>✦</i>
+    <span>High-converting websites</span><i>✦</i><span>AI agents</span><i>✦</i><span>Motion video</span><i>✦</i><span>Lead handling</span><i>✦</i><span>Bookings</span><i>✦</i><span>Urdu + English</span><i>✦</i>
   </div>
 </div>
 
-<!-- ══ SERVICES ══ -->
-<section class="section services" id="services">
+<!-- ══ 02 · THE PROBLEM → THE SYSTEM ═════════════════════════
+     Each panel holds the problem and its answer stacked in 3D. As the
+     panel enters the viewport it rotates on X and the solution face
+     takes its place. -->
+<section class="section shift" id="problem">
   <div class="wrap">
     <header class="head">
-      <p class="kicker reveal">[ 01 ] What we do</p>
-      <h2 class="h2 reveal">Three ways we <em>grow</em> your business.</h2>
-      <p class="head__note reveal">Take all three or the one you're missing. Everything below plugs into the pricing builder further down.</p>
+      <p class="kicker reveal">[ 01 ] The gap</p>
+      <h2 class="h2 reveal">Most businesses don't need more tools. They need better <em>systems</em>.</h2>
+      <p class="head__note reveal">Three things quietly cost Pakistani businesses customers every week — and what we replace each one with.</p>
     </header>
 
-    <div class="bento">
-      <article class="card reveal">
-        <span class="card__no" aria-hidden="true">01</span>
-        <h3>Fast, modern websites that turn visitors into customers.</h3>
-        <p>Your website should do more than look good. We design and build modern, high-converting websites that help Pakistani businesses attract customers, generate enquiries and turn visitors into sales.</p>
-        <ul class="tags"><li>Web Design</li><li>Landing Pages</li><li>E-commerce</li><li>AI Integration</li></ul>
-        <div class="card__art card__art--grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="shifts">
+      <article class="shift__card reveal" data-shift>
+        <div class="shift__flip">
+          <div class="shift__face shift__face--problem">
+            <span class="shift__no">Problem 01</span>
+            <h3>Your website looks outdated</h3>
+            <p>It loads slowly, it wasn't built for phones, and it makes a serious business look smaller than it is.</p>
+            <div class="shift__art shift__art--old" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="shift__face shift__face--solved">
+            <span class="shift__no">SparkUP AI</span>
+            <h3>A modern website that sells</h3>
+            <p>Fast, responsive and built around one job: turning a visitor into an enquiry.</p>
+            <div class="shift__art shift__art--new" aria-hidden="true"><span></span><span></span><span></span></div>
+          </div>
+        </div>
       </article>
 
-      <article class="card card--accent reveal">
-        <span class="card__no" aria-hidden="true">02</span>
-        <h3>A 24/7 AI assistant that answers customers and saves your team time.</h3>
-        <p>Your team shouldn't spend its day answering the same five questions. AI-powered assistants that answer enquiries, qualify leads, book appointments and handle repetitive tasks — 24/7.</p>
-        <ul class="tags"><li>Enquiries</li><li>Lead Qualification</li><li>Bookings</li><li>24/7 Support</li></ul>
+      <article class="shift__card reveal" data-shift>
+        <div class="shift__flip">
+          <div class="shift__face shift__face--problem">
+            <span class="shift__no">Problem 02</span>
+            <h3>Customers wait too long for replies</h3>
+            <p>Enquiries land at 11pm. Somebody answers at noon. By then the customer has already messaged someone else.</p>
+            <div class="shift__art shift__art--wait" aria-hidden="true"><i></i><i></i><i></i></div>
+          </div>
+          <div class="shift__face shift__face--solved">
+            <span class="shift__no">SparkUP AI</span>
+            <h3>An AI agent that never sleeps</h3>
+            <p>Answers in seconds, qualifies the lead, takes the booking, and passes anything complex to your team.</p>
+            <div class="shift__art shift__art--fast" aria-hidden="true"><span>0:03</span><em>average reply</em></div>
+          </div>
+        </div>
       </article>
 
-      <article class="card reveal">
-        <span class="card__no" aria-hidden="true">03</span>
-        <h3>Scroll-stopping videos and animations that make your brand stand out.</h3>
-        <p>Attention is the one thing you can't buy back. AI-powered product and service videos designed to capture attention and turn your business into a brand people remember.</p>
-        <ul class="tags"><li>Product Films</li><li>Explainers</li><li>Social Reels</li><li>AI Video</li></ul>
-        <div class="card__art card__art--wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <article class="shift__card reveal" data-shift>
+        <div class="shift__flip">
+          <div class="shift__face shift__face--problem">
+            <span class="shift__no">Problem 03</span>
+            <h3>Your content doesn't stop the scroll</h3>
+            <p>Flat photos and reposted stock. Nothing that makes somebody pause long enough to care.</p>
+            <div class="shift__art shift__art--flat" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="shift__face shift__face--solved">
+            <span class="shift__no">SparkUP AI</span>
+            <h3>Motion made for the feed</h3>
+            <p>Product and campaign films cut for Reels and TikTok, in your brand, ready to post.</p>
+            <div class="shift__art shift__art--motion" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ══ PROCESS ══ -->
-<section class="section process" id="process">
+<!-- ══ 03 · SERVICES ════════════════════════════════════════ -->
+<section class="section svcs" id="services">
   <div class="wrap">
     <header class="head">
-      <p class="kicker reveal">Four-Week Journey: Briefing to Live</p>
-      <h2 class="h2 reveal">Four weeks from brief to <em>live</em>.</h2>
+      <p class="kicker reveal">[ 02 ] Services</p>
+      <h2 class="h2 reveal">Three ways we help you <em>grow</em>.</h2>
     </header>
 
-    <ol class="steps">
-      <li class="step reveal">
-        <div class="step__no">WEEK 1</div>
-        <div class="step__body">
-          <h3>Discover</h3>
-          <p>Working session via Microsoft Teams. Understand the business, goals, audience, current problems, and desired outcome.</p>
-        </div>
-      </li>
-      <li class="step reveal">
-        <div class="step__no">WEEK 2</div>
-        <div class="step__body">
-          <h3>Design</h3>
-          <p>Create the direction and gather feedback. Confirm how the website, AI agent, or motion content should look and work.</p>
-        </div>
-      </li>
-      <li class="step reveal">
-        <div class="step__no">WEEK 3</div>
-        <div class="step__body">
-          <h3>Build &amp; Test</h3>
-          <p>Build/train the solution, run tests, find errors, refine details, and make updates based on feedback.</p>
-        </div>
-      </li>
-      <li class="step reveal">
-        <div class="step__no">WEEK 4</div>
-        <div class="step__body">
-          <h3>Launch &amp; Support</h3>
-          <p>Publish or deliver the final work, hand it over, and begin ongoing monitoring and support.</p>
-        </div>
-      </li>
-    </ol>
-
-      <div class="assure reveal">
-        <div class="assure__say">
-          <h3>You'll never be left in the dark.</h3>
-          <p>Weekly Teams check-ins, regular progress updates, monthly monitoring, and ongoing support keep you informed and your solution running smoothly.</p>
-        </div>
-        <ul class="assure__list">
-          <li>Weekly Microsoft Teams check-ins</li>
-          <li>Regular progress updates</li>
-          <li>Monthly monitoring</li>
-          <li>Ongoing support</li>
+    <!-- CARD 1 — websites: the browser tilts toward the pointer -->
+    <article class="svc reveal" id="svc-web">
+      <div class="svc__say">
+        <p class="svc__no">01 — Websites</p>
+        <h3>Websites built to turn attention into business.</h3>
+        <p class="svc__lede">Modern, responsive and conversion-focused websites designed around your brand and customers.</p>
+        <ul class="tags">
+          <li>Business Websites</li><li>Landing Pages</li><li>E-commerce</li>
+          <li>Booking Websites</li><li>Property Websites</li>
         </ul>
       </div>
+      <div class="svc__art" data-tilt aria-hidden="true">
+        <div class="browser">
+          <span class="browser__bar"><i></i><i></i><i></i><b>yourbusiness.pk</b></span>
+          <span class="browser__view">
+            <span class="browser__hero"><b>Built to convert.</b><em>Get a quote &rarr;</em></span>
+            <span class="browser__grid"><i></i><i></i><i></i></span>
+            <span class="browser__row"><i></i><i></i></span>
+          </span>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 2 — AI agents: the transcript plays on loop when in view -->
+    <article class="svc svc--flip reveal" id="svc-agent">
+      <div class="svc__say">
+        <p class="svc__no">02 — AI agents</p>
+        <h3>Your business can respond even when you can't.</h3>
+        <p class="svc__lede">AI agents that answer questions, qualify leads, handle bookings and pass complex queries to your team.</p>
+        <ul class="tags">
+          <li>WhatsApp</li><li>Website chat</li><li>Bookings</li><li>Lead qualification</li><li>24/7</li>
+        </ul>
+      </div>
+      <div class="svc__art">
+        <div class="wa" data-chat>
+          <div class="wa__bar"><i></i> WhatsApp Business <span>ONLINE</span></div>
+          <div class="wa__body">
+            <p class="wa__msg wa__msg--in" data-i="1">Do you have availability tomorrow?<em>Customer · 10:41pm</em></p>
+            <p class="wa__typing" data-i="2" aria-hidden="true"><i></i><i></i><i></i></p>
+            <p class="wa__msg wa__msg--out" data-i="3">Yes. I can help you book. What time works best?<em>AI agent · 10:41pm</em></p>
+            <p class="wa__msg wa__msg--in" data-i="4">Is 4pm possible? And can someone call me about pricing?<em>Customer · 10:42pm</em></p>
+            <p class="wa__typing" data-i="5" aria-hidden="true"><i></i><i></i><i></i></p>
+            <p class="wa__msg wa__msg--out" data-i="6">4pm is held for you. Pricing needs a person — connecting you now.<em>AI agent · 10:42pm</em></p>
+            <p class="wa__esc" data-i="7"><b></b> Escalating to human support&hellip;</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CARD 3 — motion: floating social frames -->
+    <article class="svc reveal" id="svc-motion">
+      <div class="svc__say">
+        <p class="svc__no">03 — Motion videos</p>
+        <h3>Turn your product into content people remember.</h3>
+        <p class="svc__lede">Motion videos designed for social media, product launches, real estate, hospitality, automotive and more.</p>
+        <ul class="tags">
+          <li>Real Estate</li><li>Restaurants</li><li>Automotive</li><li>Fashion</li>
+          <li>E-commerce</li><li>Hospitality</li><li>Technology</li><li>Professional Services</li>
+        </ul>
+      </div>
+      <div class="svc__art" data-tilt aria-hidden="true">
+        <div class="frames">
+          <span class="frame frame--a"><i class="frame__art"></i><b>Product launch</b><em>0:15 · 9:16</em></span>
+          <span class="frame frame--b"><i class="frame__art"></i><b>Property tour</b><em>0:20 · 9:16</em></span>
+          <span class="frame frame--c"><i class="frame__art"></i><b>Menu campaign</b><em>0:12 · 9:16</em></span>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
-<!-- ══ WORK ══ -->
+<!-- ══ 04 · EXPLORE WHAT'S POSSIBLE ═════════════════════════ -->
 <section class="section work" id="work">
   <div class="wrap">
     <header class="head">
-      <p class="kicker reveal">[ 03 ] Explore what's possible</p>
+      <p class="kicker reveal">[ 03 ] The work</p>
       <h2 class="h2 reveal">Explore what's <em>possible</em>.</h2>
     </header>
 
@@ -266,6 +369,14 @@
 
       <section role="tabpanel" id="pane-agents" aria-labelledby="tab-agents" tabindex="0" hidden>
         <p class="showcase__lede">AI agents that talk to your customers, answer their questions, handle routine tasks and know when a human needs to step in.</p>
+
+        <ul class="atypes">
+          <li class="atype"><b>WhatsApp sales agent</b><span>Answers product questions, quotes prices and closes the enquiry inside WhatsApp.</span></li>
+          <li class="atype"><b>Customer service agent</b><span>Order status, returns, policy questions — resolved, or handed over with the full history.</span></li>
+          <li class="atype"><b>Booking assistant</b><span>Checks availability, takes the booking and confirms it back to the customer.</span></li>
+          <li class="atype"><b>Lead qualification agent</b><span>Asks the qualifying questions first, so your team only calls people worth calling.</span></li>
+        </ul>
+
 
         <div class="agents">
           <!-- 01 — booking -->
@@ -429,257 +540,392 @@
             <span class="reel__meta"><b>Launch reel</b><em>0:15 · 16:9</em></span>
           </button>
         </div>
+
+        <ul class="mcats">
+          <li>Product advert</li><li>Property showcase</li><li>Restaurant campaign</li>
+          <li>Automotive promotion</li><li>Fashion launch</li><li>Brand awareness</li>
+        </ul>
         <p class="showcase__note">Four cuts from recent work. Hover to preview, click for sound.</p>
-      </section>
-    </div>
-    </div>
+      </section>    </div>
+
     <div class="showreel__foot reveal">
-      <p>Everything here was made by us. Tell us what your business needs and we will show you the nearest thing we have built.</p>
-      <a class="btn btn--solid" href="#contact">Start a project <span aria-hidden="true">&rarr;</span></a>
+      <p>Everything here was made by us. Tell us what your business needs and we'll show you the nearest thing we've built.</p>
+      <button class="btn btn--solid magnet" data-book type="button">Start a project <span aria-hidden="true">&rarr;</span></button>
     </div>
   </div>
 </section>
 
-<!-- ══ PLAN BUILDER ══ -->
-<section class="section builder" id="build">
+<!-- ══ 05 · FOUR-WEEK JOURNEY ═══════════════════════════════
+     A horizontal rail on desktop, a stack on mobile. The progress
+     line fills from the section's own scroll progress (--p). -->
+<section class="section journey" id="process">
+  <div class="wrap">
+    <header class="head head--row">
+      <div>
+        <p class="kicker reveal">[ 04 ] Process</p>
+        <h2 class="h2 reveal">Four-Week Journey: Briefing to <em>Live</em>.</h2>
+      </div>
+      <p class="journey__hint reveal" aria-hidden="true">Scroll the timeline &rarr;</p>
+    </header>
+  </div>
+
+  <div class="journey__rail" id="journeyRail" tabindex="0" role="group" aria-label="Four-week journey, scrollable">
+    <div class="journey__line" aria-hidden="true"><i></i></div>
+    <ol class="weeks">
+      <li class="week reveal">
+        <span class="week__no">Week 1</span>
+        <h3>Discover</h3>
+        <p class="week__lede">Working session via Microsoft Teams.</p>
+        <p>Understand the business, goals, audience, current problems and desired outcome.</p>
+        <span class="week__dot" aria-hidden="true"></span>
+      </li>
+      <li class="week reveal">
+        <span class="week__no">Week 2</span>
+        <h3>Design</h3>
+        <p class="week__lede">Create the direction and gather feedback.</p>
+        <p>Confirm how the website, AI agent or motion content should look and work.</p>
+        <span class="week__dot" aria-hidden="true"></span>
+      </li>
+      <li class="week reveal">
+        <span class="week__no">Week 3</span>
+        <h3>Build &amp; Test</h3>
+        <p class="week__lede">Build or train the solution.</p>
+        <p>Run tests, find errors, refine details and make updates based on feedback.</p>
+        <span class="week__dot" aria-hidden="true"></span>
+      </li>
+      <li class="week week--last reveal">
+        <span class="week__no">Week 4</span>
+        <h3>Launch &amp; Support</h3>
+        <p class="week__lede">Publish or deliver the final work.</p>
+        <p>Hand everything over and begin monitoring and support.</p>
+        <span class="week__dot" aria-hidden="true"></span>
+      </li>
+    </ol>
+  </div>
+
+  <div class="wrap">
+    <div class="assure reveal">
+      <div class="assure__say">
+        <h3>You'll never be left in the dark.</h3>
+        <p>Weekly Teams check-ins, regular progress updates, monthly monitoring and ongoing support keep you informed from the first briefing to launch and beyond.</p>
+      </div>
+      <ul class="assure__list">
+        <li>Weekly Microsoft Teams check-ins</li>
+        <li>Regular progress updates</li>
+        <li>Monthly monitoring</li>
+        <li>Ongoing support after launch</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 06 · INDUSTRIES ══════════════════════════════════════
+     A 3D wall: the grid tilts toward the pointer, and each tile
+     opens its own use case on hover or keyboard focus. -->
+<section class="section inds" id="industries">
   <div class="wrap">
     <header class="head">
-      <p class="kicker reveal">[ 04 ] Build a plan</p>
-      <h2 class="h2 reveal">Pick a package. <em>Stack</em> what you need.</h2>
-      <p class="head__note reveal">All prices in Pakistani rupees, excluding sales tax. Invoiced monthly in PKR by bank transfer — no dollar billing, no 12-month lock-in.</p>
+      <p class="kicker reveal">[ 05 ] Industries</p>
+      <h2 class="h2 reveal">Built for the businesses shaping <em>Pakistan</em>.</h2>
+      <p class="head__note reveal">Twelve sectors we work in, and how the three services fit together for each one.</p>
     </header>
 
-    <div class="billing reveal" role="group" aria-label="Billing period">
-      <button class="billing__opt is-on" data-bill="monthly" aria-pressed="true">Monthly</button>
-      <button class="billing__opt" data-bill="quarterly" aria-pressed="false">Quarterly <b>−15%</b></button>
-    </div>
-
-    <div class="plans" role="radiogroup" aria-label="Package">
-      <button class="plan reveal is-on" data-plan="agent" data-price="185000" role="radio" aria-checked="true">
-        <span class="plan__no">Package 01</span>
-        <h3>Agent</h3>
-        <p class="plan__price"><b data-price-out>185,000</b><span>/mo</span></p>
-        <p class="plan__note">An AI agent that takes the day-to-day off your team, built and tuned around your business.</p>
-        <ul class="plan__list">
-          <li>Trained on your real answers</li>
-          <li>Website &amp; WhatsApp channels</li>
-          <li>Urdu, Roman Urdu &amp; English</li>
-          <li>Bookings into your calendar</li>
-          <li>Human handover rules</li>
-          <li>Monthly tuning on real chats</li>
-        </ul>
-      </button>
-
-      <button class="plan plan--star reveal" data-plan="website" data-price="245000" role="radio" aria-checked="false">
-        <span class="plan__no">Package 02</span>
-        <span class="plan__flag">Most picked</span>
-        <h3>Website</h3>
-        <p class="plan__price"><b data-price-out>245,000</b><span>/mo</span></p>
-        <p class="plan__note">A website built to bring you customers — planned, designed, built and kept improving.</p>
-        <ul class="plan__list">
-          <li>Site plan &amp; build spec</li>
-          <li>Up to 8 designed pages</li>
-          <li>Front-end build &amp; launch</li>
-          <li>Bilingual, Urdu &amp; English</li>
-          <li>Analytics &amp; enquiry tracking</li>
-          <li>Weekly review call</li>
-        </ul>
-      </button>
-
-      <button class="plan reveal" data-plan="films" data-price="165000" role="radio" aria-checked="false">
-        <span class="plan__no">Package 03</span>
-        <h3>Motion Videos</h3>
-        <p class="plan__price"><b data-price-out>165,000</b><span>/mo</span></p>
-        <p class="plan__note">Motion video for estate agents and developers — every listing worth watching before it is worth visiting.</p>
-        <ul class="plan__list">
-          <li>4 property films a month</li>
-          <li>Walkthroughs &amp; exteriors</li>
-          <li>Cut for Reels, TikTok &amp; listings</li>
-          <li>Listing pages that embed them</li>
-          <li>Captions in Urdu &amp; English</li>
-          <li>48-hour turnaround per unit</li>
-        </ul>
-      </button>
-    </div>
-
-    <div class="addons reveal">
-      <div class="addons__head">
-        <h3>Add-ons</h3>
-        <p>Tap to add. Priced per month, cancel any time.</p>
+    <div class="wall" id="wall">
+      <div class="wall__grid">
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">01</span>
+          <h3 class="ind__name">Real Estate</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Premium property listings</dd></div>
+            <div><dt>AI Agent</dt><dd>Automatically answer property enquiries</dd></div>
+            <div><dt>Motion Video</dt><dd>Cinematic property tours for social media</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">02</span>
+          <h3 class="ind__name">Restaurants</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Online menu and bookings</dd></div>
+            <div><dt>AI Agent</dt><dd>Reservations and customer questions</dd></div>
+            <div><dt>Motion Video</dt><dd>Food promotions and social campaigns</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">03</span>
+          <h3 class="ind__name">Healthcare</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Clinic pages with online appointments</dd></div>
+            <div><dt>AI Agent</dt><dd>Triage questions and appointment reminders</dd></div>
+            <div><dt>Motion Video</dt><dd>Explainers that build patient trust</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">04</span>
+          <h3 class="ind__name">Automotive</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Vehicle listings</dd></div>
+            <div><dt>AI Agent</dt><dd>Handle enquiries and test-drive bookings</dd></div>
+            <div><dt>Motion Video</dt><dd>Premium car launch campaigns</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">05</span>
+          <h3 class="ind__name">Retail</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Store pages with stock and locations</dd></div>
+            <div><dt>AI Agent</dt><dd>Answer stock, size and delivery questions</dd></div>
+            <div><dt>Motion Video</dt><dd>In-store offers cut for Reels</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">06</span>
+          <h3 class="ind__name">E-commerce</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Fast, conversion-focused storefronts</dd></div>
+            <div><dt>AI Agent</dt><dd>Order tracking, returns and upsells</dd></div>
+            <div><dt>Motion Video</dt><dd>Product films that sell the detail</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">07</span>
+          <h3 class="ind__name">Hospitality</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Rooms, rates and direct booking</dd></div>
+            <div><dt>AI Agent</dt><dd>Availability, bookings and guest questions</dd></div>
+            <div><dt>Motion Video</dt><dd>Property and experience films</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">08</span>
+          <h3 class="ind__name">Education</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Programme pages and admissions forms</dd></div>
+            <div><dt>AI Agent</dt><dd>Answer admissions and fee questions</dd></div>
+            <div><dt>Motion Video</dt><dd>Campus and course promo videos</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">09</span>
+          <h3 class="ind__name">Professional Services</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Credible firm sites that win enquiries</dd></div>
+            <div><dt>AI Agent</dt><dd>Qualify leads before the first call</dd></div>
+            <div><dt>Motion Video</dt><dd>Case-study and service explainers</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">10</span>
+          <h3 class="ind__name">Construction</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Project portfolios and tender pages</dd></div>
+            <div><dt>AI Agent</dt><dd>Handle site and quotation enquiries</dd></div>
+            <div><dt>Motion Video</dt><dd>Progress and handover films</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">11</span>
+          <h3 class="ind__name">Beauty &amp; Wellness</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Services, pricing and instant booking</dd></div>
+            <div><dt>AI Agent</dt><dd>Bookings, reschedules and reminders</dd></div>
+            <div><dt>Motion Video</dt><dd>Treatment and transformation reels</dd></div>
+          </dl>
+        </article>
+        <article class="ind reveal" tabindex="0">
+          <span class="ind__no" aria-hidden="true">12</span>
+          <h3 class="ind__name">Technology</h3>
+          <dl class="ind__use">
+            <div><dt>Website</dt><dd>Product sites that explain the value</dd></div>
+            <div><dt>AI Agent</dt><dd>Support, onboarding and demo booking</dd></div>
+            <div><dt>Motion Video</dt><dd>Product launch and feature films</dd></div>
+          </dl>
+        </article>
       </div>
-      <div class="addons__grid" role="group" aria-label="Add-ons">
-        <button class="addon" data-addon="agent2" data-price="65000" aria-pressed="false">
-          <span class="addon__tick" aria-hidden="true"></span>
-          <span class="addon__body"><b>Second AI agent</b><em>Another channel, branch or brand</em></span>
-          <span class="addon__price">+65,000</span>
-        </button>
-        <button class="addon" data-addon="crm" data-price="45000" aria-pressed="false">
-          <span class="addon__tick" aria-hidden="true"></span>
-          <span class="addon__body"><b>CRM &amp; calendar sync</b><em>Leads and bookings land where your team works</em></span>
-          <span class="addon__price">+45,000</span>
-        </button>
-        <button class="addon" data-addon="pages" data-price="55000" aria-pressed="false">
-          <span class="addon__tick" aria-hidden="true"></span>
-          <span class="addon__body"><b>Landing page pack</b><em>4 campaign pages a month, built to convert</em></span>
-          <span class="addon__price">+55,000</span>
-        </button>
-        <button class="addon" data-addon="system" data-price="110000" aria-pressed="false">
-          <span class="addon__tick" aria-hidden="true"></span>
-          <span class="addon__body"><b>Design system</b><em>Bilingual tokens, components &amp; handover</em></span>
-          <span class="addon__price">+110,000</span>
-        </button>
-        <button class="addon" data-addon="motion" data-price="85000" aria-pressed="false">
-          <span class="addon__tick" aria-hidden="true"></span>
-          <span class="addon__body"><b>Product motion pack</b><em>6 product or explainer films monthly</em></span>
-          <span class="addon__price">+85,000</span>
-        </button>
-        <button class="addon" data-addon="drone" data-price="70000" aria-pressed="false">
-          <span class="addon__tick" aria-hidden="true"></span>
-          <span class="addon__body"><b>Drone &amp; exteriors</b><em>Aerial and neighbourhood footage per project</em></span>
-          <span class="addon__price">+70,000</span>
-        </button>
-      </div>
     </div>
-
-    <div class="quote reveal" id="quote">
-      <div class="quote__left">
-        <p class="quote__label">Your plan</p>
-        <p class="quote__mix" id="quoteMix">Agent — no add-ons</p>
-      </div>
-      <div class="quote__right">
-        <p class="quote__total"><span>Rs</span><b id="quoteTotal">185,000</b><em id="quoteUnit">/month</em></p>
-        <p class="quote__save" id="quoteSave" hidden></p>
-        <a class="btn btn--solid" href="#contact">Send this plan <span aria-hidden="true">→</span></a>
-      </div>
-    </div>
-    <p class="quote__fine reveal">Excluding sales tax. Filer and non-filer withholding handled on your invoice.</p>
   </div>
 </section>
 
-<!-- ══ TESTIMONIALS ══ -->
-<section class="section quotes">
+<!-- ══ 07 · WHY SPARKUP AI ══════════════════════════════════ -->
+<section class="section why" id="why">
   <div class="wrap">
-    <div class="quotes__grid">
-      <blockquote class="reveal">
-        <p>“Our products had only ever been shot flat on a table. Seeing them move changed what people were willing to pay.”</p>
-        <footer><b>Bilal Ahmed</b><span>Director, Rahat Textiles</span></footer>
-      </blockquote>
-      <blockquote class="reveal">
-        <p>“The old site looked fine and sold nothing. They rebuilt it around one question and the enquiries doubled.”</p>
-        <footer><b>Ayesha Tariq</b><span>Head of Growth, Chowk Retail</span></footer>
-      </blockquote>
-      <blockquote class="reveal">
-        <p>“The agent handles the boring 70% in Roman Urdu and knows when to get out of the way. That's the whole trick.”</p>
-        <footer><b>Hina Qureshi</b><span>Operations Lead, Sehat Line</span></footer>
-      </blockquote>
-    </div>
-  </div>
-</section>
-
-<!-- ══ FAQ ══ -->
-<section class="section faq" id="faq">
-  <div class="wrap wrap--narrow">
     <header class="head">
-      <p class="kicker reveal">[ 05 ] Questions</p>
-      <h2 class="h2 reveal">The <em>useful</em> answers.</h2>
+      <p class="kicker reveal">[ 06 ] Why us</p>
+      <h2 class="h2 reveal">Not another agency. Your digital growth <em>partner</em>.</h2>
     </header>
 
-    <div class="acc">
-      <details class="reveal"><summary>What exactly can an AI agent handle?</summary><div><p>The questions your team answers twenty times a day — prices, availability, timings, location, order and application status — plus taking bookings straight into your calendar. We agree the scope in week one and set hard rules for what it must never answer on its own; anything outside that goes to a human with the full conversation attached.</p></div></details>
-      <details class="reveal"><summary>Can it actually reply in Urdu?</summary><div><p>Yes — Urdu script, Roman Urdu and English, answering in whichever one the customer used. Most Pakistani customers type Roman Urdu, so that is what we tune for hardest.</p></div></details>
-      <details class="reveal"><summary>What can you make a motion video of?</summary><div><p>Whatever you sell. A product on a table, a property walkthrough, a service explained in thirty seconds, a launch. We work from your product, your premises or footage you already have, and deliver in the aspect ratios you actually post in. Property clients tend to capture once and sell many — one film per unit type rather than per unit.</p></div></details>
-      <details class="reveal"><summary>How do you know the website is actually converting?</summary><div><p>We agree what counts as a win before we build — an enquiry, a booking, a call — and instrument it properly. You get a monthly read on what moved and what we would change next, in plain language rather than a dashboard nobody opens.</p></div></details>
-      <details class="reveal"><summary>How do we pay you?</summary><div><p>A PKR invoice, monthly, by bank transfer or cheque. Sales tax is added where applicable, and withholding is handled on the invoice for both filer and non-filer status. No dollar billing and no foreign card required.</p></div></details>
-      <details class="reveal"><summary>Our customers are on slow connections. Will this be heavy?</summary><div><p>No. Page weight is budgeted before we build, and video is compressed, lazy-loaded and paused off-screen rather than loading all at once — so pages open on 4G outside the big cities too.</p></div></details>
-      <details class="reveal"><summary>Do you replace our developers?</summary><div><p>No. We plan, design and produce — and we build front-end when you want us to. If you have an in-house team, they get a spec and a component library they'll actually enjoy using.</p></div></details>
-      <details class="reveal"><summary>Who owns the output?</summary><div><p>You do. Files, source, video masters, tokens and agent prompts are handed over at the end of every engagement, no exit fee.</p></div></details>
+    <div class="values">
+      <article class="value reveal">
+        <span class="value__no">01</span>
+        <h3>Built around your business</h3>
+        <p>We design around how your business actually works — your customers, your team, your day.</p>
+      </article>
+      <article class="value reveal">
+        <span class="value__no">02</span>
+        <h3>Clear communication</h3>
+        <p>Weekly check-ins and transparent progress. You always know what stage the work is at.</p>
+      </article>
+      <article class="value reveal">
+        <span class="value__no">03</span>
+        <h3>AI with a purpose</h3>
+        <p>Automation should save time and help customers — not just look impressive in a demo.</p>
+      </article>
+      <article class="value reveal">
+        <span class="value__no">04</span>
+        <h3>Support after launch</h3>
+        <p>We continue monitoring, refining and supporting your solution long after it goes live.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ══ CONTACT ══ -->
-<section class="section contact" id="contact">
+<!-- ══ 08 · FROM MANUAL TO MODERN ═══════════════════════════
+     Scroll progress through the section is written to --p, which
+     pulls each item from the left column through the tunnel and
+     lights up its counterpart on the right. -->
+<section class="section tunnel" id="transform">
   <div class="wrap">
-    <div class="contact__box">
-      <p class="kicker reveal">[ 06 ] Start</p>
-      <h2 class="cta__title reveal">Tell us what's <em>broken</em>.</h2>
-      <p class="contact__lede reveal">Send the plan you built above, or just describe the mess. You'll get a written reply from a person within one working day — we work Monday to Saturday, 9am to 9pm PKT.</p>
+    <header class="head head--centre">
+      <p class="kicker reveal">[ 07 ] The shift</p>
+      <h2 class="h2 reveal">From manual to <em>modern</em>.</h2>
+    </header>
 
-      <form class="form reveal" id="form" novalidate>
-        <div class="field">
-          <label for="fName">Name</label>
-          <input id="fName" name="name" type="text" autocomplete="name" required placeholder="Your name" />
-        </div>
-        <div class="field">
-          <label for="fEmail">Email</label>
-          <input id="fEmail" name="email" type="email" autocomplete="email" required placeholder="you@company.com.pk" />
-        </div>
-        <div class="field">
-          <label for="fPhone">WhatsApp number</label>
-          <input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+92 3XX XXXXXXX" />
-        </div>
-        <div class="field">
-          <label for="fCity">City</label>
-          <input id="fCity" name="city" type="text" list="cities" placeholder="Karachi" />
-          <datalist id="cities">
-            <option value="Karachi"></option><option value="Lahore"></option>
-            <option value="Islamabad"></option><option value="Rawalpindi"></option>
-            <option value="Faisalabad"></option><option value="Multan"></option>
-            <option value="Peshawar"></option><option value="Sialkot"></option>
-            <option value="Quetta"></option><option value="Hyderabad"></option>
-          </datalist>
-        </div>
-        <div class="field field--full">
-          <label for="fPlan">Selected plan</label>
-          <input id="fPlan" name="plan" type="text" readonly value="Agent — no add-ons — Rs 185,000/month" />
-        </div>
-        <div class="field field--full">
-          <label for="fMsg">What are you trying to fix?</label>
-          <textarea id="fMsg" name="message" rows="4" required placeholder="Our site gets traffic but nobody enquires, and we can't keep up with WhatsApp…"></textarea>
-        </div>
-        <div class="field field--full form__foot">
-          <button class="btn btn--solid" type="submit">Send it <span aria-hidden="true">→</span></button>
-          <p class="form__note" id="formNote" role="status"></p>
-        </div>
-      </form>
+    <div class="tun" id="tun">
+      <div class="tun__side tun__side--old">
+        <p class="tun__label">Traditional business</p>
+        <ul class="tun__list">
+          <li data-t="0">Outdated website</li>
+          <li data-t="1">Manual WhatsApp replies</li>
+          <li data-t="2">Slow lead response</li>
+          <li data-t="3">Basic social content</li>
+        </ul>
+      </div>
+
+      <div class="tun__pipe" aria-hidden="true">
+        <span class="tun__ring" style="--r:0"></span>
+        <span class="tun__ring" style="--r:1"></span>
+        <span class="tun__ring" style="--r:2"></span>
+        <span class="tun__ring" style="--r:3"></span>
+        <span class="tun__ring" style="--r:4"></span>
+        <span class="tun__ring" style="--r:5"></span>
+        <span class="tun__core">SparkUP<i>AI</i></span>
+      </div>
+
+      <div class="tun__side tun__side--new">
+        <p class="tun__label">Modern business</p>
+        <ul class="tun__list">
+          <li data-t="0">Premium website</li>
+          <li data-t="1">AI customer support</li>
+          <li data-t="2">Automated lead handling</li>
+          <li data-t="3">Professional motion campaigns</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 09 · FINAL CTA ═══════════════════════════════════════ -->
+<section class="section final" id="contact">
+  <canvas class="starfield starfield--final" id="ctaField" aria-hidden="true"></canvas>
+  <div class="wrap wrap--narrow final__inner">
+    <h2 class="cta__title reveal">Ready to build what's <em>next</em>?</h2>
+    <p class="final__lede reveal">Tell us where your business is today. We'll show you what it could become.</p>
+    <div class="final__cta reveal">
+      <button class="btn btn--solid btn--big magnet" data-book type="button">Book a Free Consultation <span aria-hidden="true">&rarr;</span></button>
+      <button class="link-under magnet" data-book type="button">Tell Us About Your Business</button>
     </div>
   </div>
 </section>
 </main>
 
-<!-- ══ FOOTER ══ -->
+<!-- ══ 10 · FOOTER ══════════════════════════════════════════ -->
 <footer class="footer">
   <div class="wrap">
-    <div class="footer__big" aria-hidden="true">SPARKUP AI</div>
-    <p class="footer__urdu">
-      <span lang="ur" dir="rtl">آپ کا کاروبار، آن لائن</span>
-      <span class="footer__gloss">Your business, online.</span>
-    </p>
-    <div class="footer__cols">
-      <div>
-        <h4>Studio</h4>
-        <a href="#services">Services</a><a href="#process">Process</a><a href="#work">Work</a><a href="#build">Pricing</a>
+    <div class="footer__top">
+      <div class="footer__id">
+        <a class="brand" href="#top" aria-label="SparkUP AI home">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 100 100" width="26" height="26"><rect width="100" height="100" rx="26" fill="currentColor"/><path d="M50 16 Q54.5 45.5 84 50 Q54.5 54.5 50 84 Q45.5 54.5 16 50 Q45.5 45.5 50 16Z" fill="#0B0B0C"/></svg>
+          </span>
+          <span class="brand__word">SparkUP<em>AI</em></span>
+        </a>
+        <p class="footer__line">Websites. <em>AI Agents.</em> Motion.</p>
       </div>
-      <div>
-        <h4>Contact</h4>
-        <a href="mailto:hello@sparkup.ai">hello@sparkup.ai</a>
-        <a href="tel:+922135000000">+92 21 3500 0000</a>
-        <a href="#contact">Book a call</a>
-      </div>
-      <div>
-        <h4>Offices</h4>
-        <a href="#contact">Karachi — Clifton</a>
-        <a href="#contact">Lahore — Gulberg</a>
-      </div>
-      <div class="footer__sign">
-        <p>Websites, AI agents and motion video for businesses across Pakistan.</p>
-        <p class="footer__legal">© <span id="year">2026</span> SparkUP AI, Pakistan. All rights reserved.</p>
-      </div>
+
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#industries">Industries</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <nav class="footer__social" aria-label="Social">
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </nav>
+    </div>
+
+    <div class="footer__foot">
+      <p>Helping businesses across Pakistan build smarter digital experiences.</p>
+      <p class="footer__legal">© <span id="year">2026</span> SparkUP AI, Pakistan.</p>
     </div>
   </div>
 </footer>
 
-<!-- ══ WORK SHOWCASE ══ -->
+<!-- ══ CONSULTATION DIALOG ══════════════════════════════════ -->
+<dialog class="book" id="book" aria-labelledby="bookTitle">
+  <div class="book__inner">
+    <button class="book__x" id="bookClose" aria-label="Close">&times;</button>
+    <p class="kicker">Free consultation</p>
+    <h2 id="bookTitle" class="book__title">Tell us about your <em>business</em>.</h2>
+    <p class="book__lede">A 30-minute Microsoft Teams session. We'll look at where you are now and what's worth building first. You'll get a written reply from a person within one working day.</p>
+
+    <form class="form" id="form" novalidate>
+      <div class="field">
+        <label for="fName">Name</label>
+        <input id="fName" name="name" type="text" autocomplete="name" required placeholder="Your name" />
+      </div>
+      <div class="field">
+        <label for="fEmail">Email</label>
+        <input id="fEmail" name="email" type="email" autocomplete="email" required placeholder="you@company.com.pk" />
+      </div>
+      <div class="field">
+        <label for="fPhone">WhatsApp number</label>
+        <input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+92 3XX XXXXXXX" />
+      </div>
+      <div class="field">
+        <label for="fCity">City</label>
+        <input id="fCity" name="city" type="text" list="cities" placeholder="Karachi" />
+        <datalist id="cities">
+          <option value="Karachi"></option><option value="Lahore"></option>
+          <option value="Islamabad"></option><option value="Rawalpindi"></option>
+          <option value="Faisalabad"></option><option value="Multan"></option>
+          <option value="Peshawar"></option><option value="Sialkot"></option>
+          <option value="Quetta"></option><option value="Hyderabad"></option>
+        </datalist>
+      </div>
+      <div class="field field--full">
+        <label for="fWant">What are you interested in?</label>
+        <select id="fWant" name="interest">
+          <option>A website</option>
+          <option>An AI agent</option>
+          <option>Motion videos</option>
+          <option>All three</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="field field--full">
+        <label for="fMsg">Where is your business today?</label>
+        <textarea id="fMsg" name="message" rows="4" required placeholder="We get enquiries on WhatsApp all night and can't keep up, and our website is five years old…"></textarea>
+      </div>
+      <div class="field field--full form__foot">
+        <button class="btn btn--solid" type="submit">Send it <span aria-hidden="true">&rarr;</span></button>
+        <p class="form__note" id="formNote" role="status"></p>
+      </div>
+    </form>
+  </div>
+</dialog>
 
 <!-- ══ MINI-SITE SOURCES ══ -->
 <template id="site-quiet"><div class="site t-quiet">
@@ -1169,5 +1415,6 @@
 };</script>
 
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/scene.js" defer></script>
 </body>
 </html>
