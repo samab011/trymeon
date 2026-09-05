@@ -174,15 +174,33 @@ input,textarea{font:inherit; color:inherit}
 .hero__tree.is-on{opacity:1}
 .hero>.wrap{position:relative; z-index:1}
 
+/* Four lines instead of three, and a 24-character longest line instead of 14 —
+   so the cap comes down from 144px and the tracking loosens a touch to stop the
+   longer line reading as a solid block. The padding/negative-margin pair widens
+   the clip box just enough for the descenders in "Helping" and "Agents", which
+   a .95 line-height would otherwise shave off; translateY is raised to 120% so
+   the slide-up reveal still parks the line fully out of that taller box. */
 .hero__title{
-  font-size:clamp(44px, 11vw, 144px); line-height:.9; letter-spacing:-.05em; font-weight:700;
+  font-size:clamp(25px, 7.8vw, 104px); line-height:.95; letter-spacing:-.04em; font-weight:700;
+  text-wrap:balance;
 }
-.hero__title .line{display:block; overflow:hidden}
-.hero__title .line>span{display:block; transform:translateY(105%); transition:transform 1s var(--ease)}
+.hero__title .line{display:block; overflow:hidden; padding-bottom:.09em; margin-bottom:-.09em}
+.hero__title .line>span{display:block; transform:translateY(120%); transition:transform 1s var(--ease)}
 .hero__title .line.in>span{transform:none}
 .hero__title .dot{color:var(--acid)}
+/* The three services carry the lime accent in the hero's own sans, so they stay
+   as heavy as the rest of the headline; the joining words take the serif italic
+   the rest of the site uses for emphasis, which keeps them from competing. */
+.hero__title .svc{color:var(--acid); font-weight:inherit}
+.hero__title .join{
+  font-family:var(--serif); font-style:italic; font-weight:400;
+  letter-spacing:-.01em; color:var(--fg-mute);
+}
 
-.hero__foot{margin-top:clamp(40px,5.5vw,72px)}
+.hero__cta{margin-top:clamp(30px,3.6vw,46px)}
+.btn--hero{padding:17px 30px; font-size:16px}
+
+.hero__foot{margin-top:clamp(36px,4.6vw,60px)}
 .hero__lede{max-width:46ch; color:var(--fg-mute); font-size:clamp(16px,1.35vw,19px)}
 .hero__lede p+p{margin-top:.85em}
 
