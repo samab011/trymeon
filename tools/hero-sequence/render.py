@@ -49,6 +49,7 @@ def build_page() -> str:
     faces = [
         ("Inter Tight", "normal", "100 900", HERE / "fonts/InterTight.woff2"),
         ("Instrument Serif", "italic", "400", HERE / "fonts/InstrumentSerif-Italic.woff2"),
+        ("JetBrains Mono", "normal", "400", HERE / "fonts/JetBrainsMono.woff2"),
     ]
     css = "\n".join(
         "@font-face{{font-family:'{}';font-style:{};font-weight:{};font-display:block;"
