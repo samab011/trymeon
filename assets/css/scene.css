@@ -323,6 +323,11 @@
 }
 .mcats li:hover{border-color:var(--acid); color:var(--acid)}
 
+/* The sentence that used to sit here is gone, so the button carries the block
+   on its own; it needs a deliberate gap under the note above rather than the
+   zero margin it inherits, and it already sits on the wrap's content edge. */
+.showreel__foot{margin-top:clamp(26px,3vw,38px)}
+
 /* ── 05 · Four-week journey ───────────────────────────────── */
 .journey__hint{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-faint)}
 .journey__rail{
