@@ -492,8 +492,16 @@
 .footer__line{margin-top:20px; font-size:clamp(20px,2.4vw,30px); font-weight:600; letter-spacing:-.035em}
 .footer__line em{font-family:var(--serif); font-style:italic; font-weight:400; color:var(--acid)}
 .footer__nav,.footer__social{display:flex; flex-direction:column; gap:10px}
-.footer__nav a,.footer__social a{font-size:15px; color:var(--fg-mute); transition:color var(--fast)}
-.footer__nav a:hover,.footer__social a:hover{color:var(--acid)}
+.footer__nav a,.footer__social a,.footer__book{font-size:15px; color:var(--fg-mute); transition:color var(--fast)}
+.footer__nav a:hover,.footer__social a:hover,.footer__book:hover{color:var(--acid)}
+.footer__book{font:inherit; font-size:15px; padding:0; text-align:left; align-self:flex-start}
+/* the column label. flex-basis 100% keeps it on its own row when these
+   columns turn into wrapping rows on small screens. */
+.footer__h{
+  flex:0 0 100%; margin-bottom:4px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--fg-faint);
+}
 .footer__foot{
   margin-top:clamp(40px,5vw,64px); padding-top:24px; border-top:1px solid var(--line-soft);
   display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
