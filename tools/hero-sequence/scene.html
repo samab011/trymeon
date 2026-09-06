@@ -1,0 +1,300 @@
+<style>
+:root{
+  --ink:#0B0B0C; --fg:#F4F3F1; --fg-mute:rgba(244,243,241,.58);
+  --acid:#CCFF2E; --ink-2:#121214;
+  --sans:"Inter Tight",-apple-system,Helvetica,Arial,sans-serif;
+  --serif:"Instrument Serif",Georgia,serif;
+  --ease:cubic-bezier(.22,.68,.24,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
+body{font-family:var(--sans);-webkit-font-smoothing:antialiased;font-synthesis-weight:none}
+
+#stage{position:relative;width:1920px;height:1080px;background:var(--ink);overflow:hidden}
+
+/* the ambient lime bloom the live hero carries, driven by the timeline */
+#bloom{
+  position:absolute;top:-22%;left:50%;transform:translateX(-50%);
+  width:1400px;aspect-ratio:1;pointer-events:none;
+  background:radial-gradient(circle, rgba(204,255,46,.10), transparent 62%);
+}
+/* far network sits behind the type, near network in front of it */
+#netFar,#netNear{position:absolute;inset:0;width:1920px;height:1080px}
+#netNear{filter:blur(1.1px)}
+
+#type{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  width:1320px;margin-inline:auto;padding-inline:64px;
+  transform-origin:22% 50%;
+}
+h1{
+  font-size:104px;line-height:.95;letter-spacing:-.04em;font-weight:700;color:var(--fg);
+  margin:0;
+}
+h1 .line{display:block;overflow:hidden;padding-bottom:.09em;margin-bottom:-.09em}
+h1 .line>span{display:block;will-change:transform,opacity}
+h1 .svc{color:var(--acid);font-weight:inherit}
+h1 .join{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--fg-mute)}
+h1 .dot{color:var(--acid)}
+
+#cta{margin-top:46px}
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:10px;
+  padding:17px 30px;border-radius:99px;font-weight:600;font-size:16px;letter-spacing:-.01em;
+  background:var(--acid);color:var(--ink);overflow:hidden;white-space:nowrap;
+}
+/* the light sweep — a highlight band crossing the pill, driven by --sweep */
+.btn::after{
+  content:"";position:absolute;top:0;bottom:0;width:44%;
+  left:calc(var(--sweep, -60) * 1%);
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.72),transparent);
+  pointer-events:none;
+}
+</style>
+
+<div id="stage">
+  <div id="bloom"></div>
+  <canvas id="netFar" width="1920" height="1080"></canvas>
+
+  <div id="type">
+    <h1>
+      <span class="line"><span>Helping Pakistani</span></span>
+      <span class="line"><span>Businesses Grow</span></span>
+      <span class="line"><span><i class="join">with</i> <b class="svc">Websites</b>, <b class="svc">AI&nbsp;Agents</b></span></span>
+      <span class="line"><span><i class="join">&amp;</i> <b class="svc">Motion Videos</b><span class="dot">.</span></span></span>
+    </h1>
+    <div id="cta"><a class="btn">Book a Free Consultation <span>&rarr;</span></a></div>
+  </div>
+
+  <canvas id="netNear" width="1920" height="1080"></canvas>
+</div>
+
+<script>
+/* ============================================================
+   Deterministic hero sequence. Every visual is a pure function of
+   t (seconds) — nothing reads the clock — so the capture harness can
+   seek to any frame and get an identical image every run.
+   ============================================================ */
+const W = 1920, H = 1080, DUR = 18;
+
+/* ── easing ─────────────────────────────────────────────── */
+const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+/* progress through a window, eased */
+const ramp = (t, a, b) => clamp01((t - a) / (b - a));
+const easeOut  = p => 1 - Math.pow(1 - p, 3);
+const easeIO   = p => p < .5 ? 4*p*p*p : 1 - Math.pow(-2*p + 2, 3) / 2;
+const seg = (t, a, b, f) => (f || easeOut)(ramp(t, a, b));
+
+/* ── deterministic RNG, so the network is the same every run ── */
+let _s = 0x2F6E2B1;
+const rnd = () => { _s ^= _s << 13; _s ^= _s >>> 17; _s ^= _s << 5; return ((_s >>> 0) % 100000) / 100000; };
+
+/* ── the network ────────────────────────────────────────────
+   Nodes live in a slab of world space. Depth is real: z runs from
+   just in front of the camera to far behind the type, and the
+   projection is a true perspective divide, so near nodes sweep
+   outward as the camera dollies and far ones barely move. That is
+   where the parallax comes from — it is not faked per layer. */
+const FOCAL = 900;
+const NODES = [];
+for (let i = 0; i < 300; i++) {
+  NODES.push({
+    x: (rnd() - .5) * 3400,
+    y: (rnd() - .5) * 2100,
+    z: 140 + rnd() * 2600,
+    /* a slow organic drift, unique per node */
+    ax: rnd() * Math.PI * 2, ay: rnd() * Math.PI * 2,
+    sp: .18 + rnd() * .30, amp: 9 + rnd() * 20,
+    /* which service this node belongs to, if any — used to light
+       clusters as each service word lands */
+    grp: i % 7 === 0 ? (i % 21 === 0 ? 0 : i % 14 === 0 ? 1 : 2) : -1
+  });
+}
+
+/* edges are precomputed from rest positions, then filtered by live
+   distance each frame, so connections form and break organically
+   without the cost of an all-pairs search per frame */
+const EDGES = [];
+for (let i = 0; i < NODES.length; i++) {
+  for (let j = i + 1; j < NODES.length; j++) {
+    const a = NODES[i], b = NODES[j];
+    const d = Math.hypot(a.x - b.x, a.y - b.y, (a.z - b.z) * .55);
+    if (d < 470) EDGES.push({ i, j, d, ph: rnd() });
+  }
+}
+
+/* a handful of edges carry a travelling lime pulse */
+const PULSES = [];
+for (let k = 0; k < 14; k++) {
+  PULSES.push({ e: Math.floor(rnd() * EDGES.length), off: rnd(), sp: .10 + rnd() * .12 });
+}
+
+const camZ = t => {
+  /* slow push forward that decelerates into the final hold, so the
+     last seconds are almost still and the composition can be read */
+  return -60 + 620 * easeIO(ramp(t, 0, 13.4)) + 26 * ramp(t, 13.4, DUR);
+};
+
+function project(n, t, cz) {
+  const x = n.x + Math.sin(n.ax + t * n.sp) * n.amp;
+  const y = n.y + Math.cos(n.ay + t * n.sp * .8) * n.amp;
+  const z = n.z - cz;
+  if (z < 26) return null;                 /* behind or on the camera */
+  const k = FOCAL / z;
+  return { sx: W / 2 + x * k, sy: H / 2 + y * k, z, k };
+}
+
+/* how lit each service cluster is — rises as its word lands */
+const groupLit = t => [
+  seg(t,  7.0,  8.6),   /* Websites      */
+  seg(t,  8.4, 10.0),   /* AI Agents     */
+  seg(t,  9.8, 11.6)    /* Motion Videos */
+];
+
+function drawNet(ctx, t, nearField) {
+  ctx.clearRect(0, 0, W, H);
+  const cz = camZ(t);
+  const lit = groupLit(t);
+
+  /* the web builds over the opening, then settles */
+  const build  = seg(t, 0.5, 6.2);
+  const settle = 1 - .22 * seg(t, 11.2, 14.4);
+
+  const P = NODES.map(n => project(n, t, cz));
+
+  /* ── edges ── */
+  for (let e = 0; e < EDGES.length; e++) {
+    const E = EDGES[e], A = P[E.i], B = P[E.j];
+    if (!A || !B) continue;
+    const near = (A.z + B.z) / 2 < 620;
+    if (near !== nearField) continue;
+
+    /* connections come in over the build, staggered by edge phase */
+    const on = clamp01((build - E.ph * .82) * 3.4);
+    if (on <= 0) continue;
+
+    const depth = clamp01(1 - (A.z + B.z) / 2 / 2700);
+    const g = NODES[E.i].grp;
+    const glow = g >= 0 && g === NODES[E.j].grp ? lit[g] : 0;
+
+    let a = (nearField ? .070 : .165) * depth * on * settle;
+    a += glow * .30 * depth;
+    if (a < .004) continue;
+
+    ctx.strokeStyle = glow > .02
+      ? `rgba(204,255,46,${a.toFixed(4)})`
+      : `rgba(196,214,168,${(a * .62).toFixed(4)})`;
+    ctx.lineWidth = Math.max(.45, .95 * depth);
+    ctx.beginPath(); ctx.moveTo(A.sx, A.sy); ctx.lineTo(B.sx, B.sy); ctx.stroke();
+  }
+
+  /* ── nodes ── */
+  for (let i = 0; i < NODES.length; i++) {
+    const A = P[i]; if (!A) continue;
+    if (((A.z < 620)) !== nearField) continue;
+    const depth = clamp01(1 - A.z / 2700);
+    const g = NODES[i].grp;
+    const glow = g >= 0 ? lit[g] : 0;
+    const a = ((nearField ? .21 : .40) * depth * build * settle) + glow * .55 * depth;
+    if (a < .006) continue;
+    const r = Math.max(.6, (nearField ? 2.1 : 1.5) * depth * (1 + glow * .9));
+    ctx.fillStyle = glow > .02
+      ? `rgba(204,255,46,${Math.min(1, a).toFixed(4)})`
+      : `rgba(214,226,196,${a.toFixed(4)})`;
+    ctx.beginPath(); ctx.arc(A.sx, A.sy, r, 0, 6.2832); ctx.fill();
+  }
+
+  /* ── travelling lime pulses ── */
+  if (!nearField) {
+    const pulseOn = seg(t, 6.6, 9.0);
+    for (const p of PULSES) {
+      const E = EDGES[p.e], A = P[E.i], B = P[E.j];
+      if (!A || !B) continue;
+      const u = (p.off + t * p.sp) % 1;
+      const x = A.sx + (B.sx - A.sx) * u, y = A.sy + (B.sy - A.sy) * u;
+      const depth = clamp01(1 - (A.z + B.z) / 2 / 2700);
+      const a = .5 * depth * pulseOn * settle;
+      if (a < .01) continue;
+      const grd = ctx.createRadialGradient(x, y, 0, x, y, 15 * depth + 4);
+      grd.addColorStop(0, `rgba(204,255,46,${a.toFixed(3)})`);
+      grd.addColorStop(1, 'rgba(204,255,46,0)');
+      ctx.fillStyle = grd;
+      ctx.beginPath(); ctx.arc(x, y, 15 * depth + 4, 0, 6.2832); ctx.fill();
+    }
+  }
+}
+
+/* ── typography timeline ────────────────────────────────────
+   Each line rises out of its own clip box, exactly the reveal the
+   live site uses, plus a small depth cue: it starts fractionally
+   larger and slightly dimmed, as though it is still approaching. */
+const LINES = [...document.querySelectorAll('h1 .line > span')];
+const LINE_IN = [3.2, 4.5, 6.0, 9.6];   /* line 3 opens on "with"; services fade in within it */
+const svc = [...document.querySelectorAll('.svc')];
+const joins = [...document.querySelectorAll('.join')];
+
+function drawType(t) {
+  LINES.forEach((el, i) => {
+    const p = seg(t, LINE_IN[i], LINE_IN[i] + 1.5);
+    el.style.transform = `translateY(${(1 - p) * 118}%)`;
+    el.style.opacity = (0.1 + 0.9 * p).toFixed(3);
+  });
+
+  /* the two service words on line 3 arrive separately, each easing
+     forward a few px so it reads as depth rather than a fade */
+  const sIn = [[7.0, 8.4], [8.4, 9.8], [9.8, 11.2]];
+  svc.forEach((el, i) => {
+    const p = seg(t, sIn[i][0], sIn[i][1]);
+    el.style.opacity = p.toFixed(3);
+    el.style.transform = `translateZ(0) scale(${(1 - .028 * (1 - p)).toFixed(4)})`;
+    el.style.display = 'inline-block';
+    const cool = 1 - seg(t, 12.4, 16.0);
+    el.style.textShadow = `0 0 ${(26 * p * cool).toFixed(1)}px rgba(204,255,46,${(.32 * p * cool).toFixed(3)})`;
+  });
+  /* "with" precedes the services; "&" arrives with the last line */
+  joins[0].style.opacity = seg(t, 6.0, 7.0).toFixed(3);
+  joins[1].style.opacity = seg(t, 9.6, 10.4).toFixed(3);
+  document.querySelector('.dot').style.opacity = seg(t, 10.6, 11.4).toFixed(3);
+
+  /* the whole block carries the camera's parallax: it sits nearer than
+     the far network and further than the near one, and it scales far
+     less than either, so the words never distort or drift off-frame */
+  const push = easeIO(ramp(t, 0, 13.4));
+  const s = 0.965 + 0.035 * push;
+  document.getElementById('type').style.transform = `translateX(${(-14 * (1 - push)).toFixed(2)}px) scale(${s.toFixed(4)})`;
+
+  /* CTA: fades up, then a single light sweep crosses it */
+  const cIn = seg(t, 13.2, 14.4);
+  const cta = document.getElementById('cta');
+  cta.style.opacity = cIn.toFixed(3);
+  cta.style.transform = `translateY(${((1 - cIn) * 16).toFixed(2)}px)`;
+  const sw = ramp(t, 14.1, 15.5);
+  cta.querySelector('.btn').style.setProperty('--sweep', (-60 + 220 * easeIO(sw)).toFixed(1));
+  const btnCool = 1 - .82 * seg(t, 15.2, 17.2);
+  cta.querySelector('.btn').style.boxShadow =
+    `0 0 ${(46 * cIn * btnCool).toFixed(0)}px rgba(204,255,46,${(.30 * cIn * btnCool).toFixed(3)})`;
+
+  /* ambient bloom breathes up as the services land */
+  document.getElementById('bloom').style.opacity =
+    (0.22 + 0.78 * seg(t, 5.5, 12.0) - 0.42 * seg(t, 13.0, 17.0)).toFixed(3);
+
+  /* the very opening sits in near-darkness and lifts into the scene */
+  document.getElementById('stage').style.filter =
+    `brightness(${(0.16 + 0.84 * seg(t, 0.15, 2.6)).toFixed(3)})`;
+}
+
+const fFar = document.getElementById('netFar').getContext('2d');
+const fNear = document.getElementById('netNear').getContext('2d');
+
+window.__render = function (t) {
+  drawNet(fFar, t, false);
+  drawNet(fNear, t, true);
+  drawType(t);
+};
+/* the capture harness calls this; nothing animates on its own */
+window.__seek = function (frame, fps) { window.__render(frame / fps); return true; };
+window.__DUR = DUR;
+window.__render(0);
+</script>
