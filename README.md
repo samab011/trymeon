@@ -1,19 +1,22 @@
 # SparkUP AI — website
 
-Marketing site for **SparkUP AI**, an AI and digital agency working with
-businesses across Pakistan on three things:
+Marketing site for **SparkUP AI**, a Karachi- and Lahore-based AI studio
+working with businesses across Pakistan on three things:
 
-1. **High-converting business websites** — built to turn attention into enquiries.
-2. **AI agents** — automating customer service, lead handling, bookings and the
-   repetitive work that eats a team's day.
-3. **Motion videos** — product, property and campaign films cut for social media.
+1. **High-converting websites** — to attract more customers and increase revenue.
+2. **Custom AI agents** — taking day-to-day work off the team: enquiries,
+   bookings, follow-ups and support at any hour.
+3. **Motion video** — for products, properties, services, launches; whatever
+   the business sells.
 
-One page, ten sections, no build step. Dark editorial ground, a single electric
-lime accent, large display type with a serif-italic accent word, and depth:
-a 3D hero ecosystem, panels that flip from problem to solution, an industry
-wall that leans toward the pointer, and a scroll-driven transformation tunnel.
-Everything is decoration on top of markup that reads without it, and every
-scene has a static resting state under `prefers-reduced-motion`.
+The site is written for businesses of every kind. Real estate appears as one
+worked example among several — a property walkthrough is one thing motion video
+is good for — and is deliberately not the framing of any section.
+
+Built as a dark editorial agency site: oversized display typography, a single
+acid accent, film grain, scroll-revealed sections, and an interactive plan
+builder that upsells add-ons on top of a base retainer. All pricing is in
+Pakistani rupees.
 
 ## Run it
 
@@ -29,18 +32,11 @@ Deploy by serving the directory as-is (Netlify, Vercel, Pages, S3, nginx).
 ## Structure
 
 ```
-index.html              markup — nav, the ten sections, the six mini-site
-                        <template>s, the site viewer and the booking dialog
-assets/css/styles.css   design tokens, nav, buttons, type, work tabs, agent demos
-assets/css/scene.css    the sections built for this page: hero stage, problem
-                        flip, service cards, journey rail, industry wall,
-                        tunnel, final CTA, footer, booking dialog
+index.html              markup — nav, hero, services, process, work,
+                        plan builder, testimonials, FAQ, contact, footer
+assets/css/styles.css   design tokens + all styling
 assets/css/templates.css  the six miniature websites + preview/viewer chrome
-assets/js/main.js       reveals, counters, nav, tabs, mini-site viewer,
-                        agent demos, showreel films, contact form
-assets/js/scene.js      cursor, magnetic buttons, particle field, hero orbit,
-                        problem flip, mouse tilt, chat loop, wall tilt,
-                        scroll progress, booking dialog
+assets/js/main.js       reveals, counters, nav, rail, plan builder, form
 DESIGN.md               the design system: colour, type, spacing, motion
 ```
 
@@ -48,45 +44,43 @@ DESIGN.md               the design system: colour, type, spacing, motion
 
 | # | Section | What it does |
 |---|---|---|
-| 01 | Hero | Masked line-by-line headline; a glowing core with three service panels orbiting it in 3D, leaning toward the pointer and settling as the page scrolls |
-| 02 | The gap | Three panels that flip on X as they enter the viewport — outdated website → modern site, slow replies → AI agent, static posts → motion |
-| 03 | Services | Three immersive cards: a browser that tilts to the pointer, a WhatsApp transcript that plays and escalates to a human, and a fan of social frames |
-| 04 | Explore what's possible | Three tabs — six full miniature websites that open in a viewer, two live AI agent demos plus the four agent types, and motion films with their categories |
-| 05 | Four-week journey | A horizontal timeline rail whose progress line fills as it is scrolled, and the "never left in the dark" panel |
-| 06 | Industries | Twelve sectors on a wall that leans toward the pointer; each tile opens its website / AI agent / motion use case on hover or focus |
-| 07 | Why SparkUP AI | Four value statements |
-| 08 | From manual to modern | Scroll progress pulls each manual habit out of the left column and lights up its modern counterpart on the right, through a glowing tunnel |
-| 09 | Final CTA | Near-full-screen, over a particle field, with the consultation form in a dialog |
-| 10 | Footer | Minimal: wordmark, the three-word line, navigation, social |
+| — | Hero | Masked line-by-line headline, animated stat counters |
+| 01 | Services | The three pillars, one inverted accent card |
+| 02 | Process | Four-week timeline with per-step deliverables |
+| 03 | Work | Horizontal scroll-snap case rail, colour-coded per case |
+| — | Showcase | "See the work" opens a modal with three tabs — design directions, an agent transcript, motion tiles |
+| 04 | Pricing | Service package + add-on upsells + billing toggle, live PKR total |
+| 05 | FAQ | Native `<details>` accordion |
+| 06 | Contact | Client-validated form, pre-filled with the built plan |
 
-## Motion and performance
+## The plan builder
 
-- **One rAF loop.** Every continuous scene registers a callback with a single
-  frame loop in `scene.js`, so the page never runs more than one animation
-  frame callback at a time.
-- **Nothing animates off-screen.** The hero orbit, the particle fields, the
-  chat loop and the wall tilt all park themselves via `IntersectionObserver`.
-- **Scroll work is throttled** through `requestAnimationFrame` and writes CSS
-  custom properties (`--p`) rather than laying out on every event.
-- **Particle count scales with area** and is capped, so a large display doesn't
-  get ten times the work of a laptop; the canvas is DPR-aware to a factor of 2.
-- **Films are `preload="none"`** with poster frames, and only the tab in view
-  can play one.
-- **Tablet drops the heavy 3D** (the wall stops tilting, the hero grid calms
-  down) and **mobile drops it entirely** — no cursor, no tilt, no magnetism —
-  while keeping the depth that costs nothing.
-- **`prefers-reduced-motion`** stops the orbit at a fixed position, stacks both
-  faces of every problem panel instead of flipping, shows the full transcript
-  at once, and renders the particle field as one static frame.
+The three packages in the builder are the three pillars sold directly — Agent,
+Website and Property Films — not good/better/best tiers of one thing. Add-ons
+are two per pillar, so whichever package a visitor picks there is something
+relevant to stack on it.
 
-## The booking dialog
+The pricing section is the site's conversion mechanic, and it's data-driven:
 
-There is no contact section: "Book a Free Consultation" — in the nav, the hero,
-the work section and the final CTA — opens a `<dialog>` with the enquiry form.
-The form is client-side only (validation and success state, no network call);
-wire the `submit` handler in `assets/js/main.js` to a real endpoint before
-launch. Escape closes it, a backdrop click closes it, and focus returns to the
-control that opened it.
+- Packages carry `data-price` in PKR (Agent 185,000 / Website 245,000 /
+  Property Films 165,000 per month).
+- Add-ons carry `data-addon` and `data-price`, and toggle via `aria-pressed`:
+  a second agent and CRM sync for Agent, landing pages and a design system for
+  Website, a product motion pack and drone footage for Property Films.
+- Quarterly billing applies a 15% discount to `(base + add-ons) × 3` and shows
+  the saved amount.
+- The running total, the plan summary line, and the read-only **Selected plan**
+  field in the contact form all render from one function, so what a visitor
+  builds is exactly what the form submits.
+
+Changing a price means editing one `data-price` attribute — nothing in the JS
+hardcodes an amount.
+
+Amounts are formatted with `Intl` under the `en-PK` locale, which groups in
+plain thousands (`145,000`, not `1,45,000`) and pairs with the `Rs` symbol used
+throughout. Rates are set for the Pakistani market rather than converted from a
+dollar rate — a straight USD conversion would put the entry tier near
+Rs 900,000/month and out of reach of the businesses this site is written for.
 
 ## Localisation for Pakistan
 
@@ -94,11 +88,44 @@ The content is written for the Pakistani market, not translated into it:
 
 - **Channels** — AI agents answer on the website and on WhatsApp, where
   Pakistani customers already are.
-- **Language** — Urdu, Roman Urdu and English support. The booking agent demo
-  runs in Roman Urdu because that is how the conversation actually happens.
-- **Reach** — city datalist and a `+92` phone field on the booking form; the
-  page ships no photographs of its own and no third-party embeds, so it stays
-  light on 4G outside the major cities.
+- **Billing** — PKR invoicing by bank transfer, with filer/non-filer
+  withholding noted in the pricing fine print.
+- **Language** — Urdu, Roman Urdu and English support, with a bilingual design
+  system (Latin and Nastaliq, LTR and RTL) sold as an add-on. The footer line
+  is set in Noto Nastaliq Urdu with `lang="ur" dir="rtl"`.
+- **Reach** — page-weight budgets stated in terms of 4G outside the major
+  cities; city datalist and `+92` phone field on the contact form; Mon–Sat,
+  9am–9pm PKT stated as working hours.
+
+## The hero fractal tree
+
+`assets/js/main.js` draws a recursive fractal tree on a canvas behind the hero.
+It's a port of the "Fractal Bloom" React component into this project's vanilla
+stack, since the site has no React, Tailwind or build step. What changed in the
+port, beyond the palette:
+
+- **Time-based growth.** The original advanced a counter per frame, so it grew
+  twice as fast on a 120Hz display. Growth is now driven by elapsed time and
+  completes in 2.6s regardless of refresh rate.
+- **Batched strokes.** Segments are collected into one `Path2D` per depth
+  level, so a frame costs ~10 stroke calls instead of ~1000.
+- **Draws only when something changed.** It animates while growing, then stops;
+  after that it redraws only on pointer movement. The original ran a permanent
+  60fps loop.
+- **Paused off-screen** via `IntersectionObserver`, with elapsed grow time
+  adjusted so a tree paused mid-growth resumes rather than jumping.
+- **DPR-aware**, sized to the hero element rather than `window`, so it stays
+  sharp on retina and correct if the hero is not full-viewport.
+- **Touch as well as mouse** for the branch-angle influence.
+- **`prefers-reduced-motion`** renders one static, fully grown tree and
+  registers no listeners at all.
+- Depth drops from 9 to 7 below 700px (255 segments instead of 1023), and the
+  root sits right of centre on wide screens so the trunk doesn't run through
+  the left-aligned headline.
+
+The canvas is masked with a CSS gradient — horizontally on desktop so it's
+faintest behind the copy, vertically on narrow screens where the copy is full
+width.
 
 ## Template photography
 
@@ -120,7 +147,9 @@ Two things that bite here:
 
 ## The work showcase
 
-The "Explore what's possible" section holds three tabs on the page itself.
+The hero's "See the work" button opens a `<dialog>` with three tabbed panels
+instead of jumping down the page: design directions, an AI agent transcript,
+and motion tiles.
 
 The "Website designs" tab holds **six complete miniature websites**, one per
 kind of business a client might be:
@@ -175,14 +204,20 @@ Two things worth knowing if you touch it:
   it — `30ch` on a wrapper read as ~255px rather than ~900px and shredded two
   headlines into five lines each.
 
-Keyboard: left/right arrows move between the tabs, the viewer closes on Escape,
-and focus returns to the card that opened it.
+Keyboard: Escape closes, left/right arrows move between tabs, focus returns to
+the button on close, and with JavaScript off the button still navigates to the
+case-study section.
 
 ## Notes
 
 - Fonts load from Google Fonts (Inter Tight, Instrument Serif, JetBrains Mono,
   Noto Nastaliq Urdu), each with a system fallback stack.
-- Metrics, business names and case content are illustrative placeholder
-  content — replace them with real engagements before launch.
-- Verified in Chromium at 1440/1280/820/390px: no horizontal overflow, no
-  console errors, and full `prefers-reduced-motion` fallbacks.
+- The contact form is client-side only — validation and success state, no
+  network call. Wire the `submit` handler in `assets/js/main.js` to a real
+  endpoint before launch.
+- Case studies, metrics and testimonials are illustrative placeholder content.
+  The business names are invented and the work section says so on the page —
+  replace them with real engagements before launch.
+- Verified in Chromium at 1600/1440/1280/1024/768/390px: no horizontal
+  overflow, no console errors, no hero line wrapping at any width, and full
+  `prefers-reduced-motion` fallbacks.

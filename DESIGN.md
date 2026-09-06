@@ -40,15 +40,9 @@ Currency is set as `Rs` at half the numeral size, superscript-aligned, with
 `font-variant-numeric: tabular-nums` on every price and metric so rupee amounts
 line up in columns.
 
-Scale is fluid via `clamp()`. The hero headline now shares its row with the 3D
-stage, so it is sized from its column rather than the viewport —
-`clamp(28px, 4.3vw, 60px)` at `1` line-height, four lines that never wrap inside
-a ~620px column. Section headings are `clamp(38px, 6.4vw, 84px)` at `.98`, and
-the two full-bleed statements (final CTA, dialog title) run larger. Body is
-17px / 1.55.
-
-Italic accent words are chosen for meaning, one per heading: *grow*, *systems*,
-*possible*, *live*, *Pakistan*, *partner*, *modern*, *next*.
+Scale is fluid via `clamp()`. Hero `clamp(50px, 10.4vw, 142px)` at `.9` line-height;
+section headings `clamp(38px, 6.4vw, 84px)` at `.98`. Body is 17px / 1.55.
+The intended contrast ratio is roughly 8:1 between hero and body.
 
 ## Brand mark
 
@@ -75,49 +69,35 @@ Card gaps stay at a flat `14px` at every breakpoint — the grid changes, the ga
 - Marquee is a duplicated track translated `-50%` over 34s.
 - Grain animates `background-position` (not `transform`) so it can't inflate
   document width.
-- Depth is one system, not a per-section effect: a `perspective` on the
-  container, `transform-style: preserve-3d` on the moving layer, and translation
-  on Z. The hero stage, the problem flip, the industry wall and the tunnel all
-  work this way, so they share a vanishing point in the reader's head.
-- The hero orbit is trigonometric, not keyframed: three panels 120° apart on a
-  ring whose radius is measured from the panel width, so the far side never
-  leaves the stage on a narrow screen. Depth sets scale, opacity and z-index.
-- Continuous scenes share one `requestAnimationFrame` loop and stop when their
-  section leaves the viewport.
-- Scroll-linked sections write a `0..1` progress value to `--p` and let CSS do
-  the rest — the journey line's width, the tunnel's glow, the item states.
-- Pointer effects are desktop-only: the cursor halo, magnetic buttons, card
-  tilt and wall lean are all gated on a fine pointer.
-- Every animation is disabled under `prefers-reduced-motion: reduce`. The orbit
-  freezes at a readable position, both faces of each problem panel stack rather
-  than flipping (a flip would hide half the content), the transcript shows in
-  full, and the particle field renders one static frame.
+- The hero fractal tree blooms over 2.6s on a canvas behind the copy, in
+  `--acid` at 55% alpha falling to zero at the branch tips. It is ambient, not
+  content: masked away from the headline, and it stops redrawing once grown.
+- Every animation is disabled under `prefers-reduced-motion: reduce`; the
+  fractal tree renders once, fully grown and static, rather than disappearing.
 
 ## Components
 
 - **Pill nav** — fixed, blurred, hides on scroll-down past 420px, unless the
   mobile menu is open.
-- **Service card** — a two-column block that alternates side by side; the art
-  column holds one live object (tilting browser, playing transcript, floating
-  frames) rather than a screenshot.
-- **Journey rail** — horizontal scroll-snap with `scroll-padding-inline` matched
-  to the gutter, so the first card lines up with the headline above it. The
-  progress line fills from the rail's own `scrollLeft`.
-- **Industry tile** — the name holds the floor of the tile at all times and the
-  three use cases fade into the space above it, so nothing the visitor was
-  reading disappears on hover. Fixed height, so a hover never reflows the wall.
-  On touch every use case is simply shown.
-- **Booking dialog** — native `<dialog>`, backdrop-dismissed, focus returned to
-  the control that opened it. It replaces the contact section entirely.
+- **Service grid** — 3 → 2 → 1 columns; at two columns the last card spans the
+  row so no breakpoint leaves a hole. Cards are equal-height with headings on a
+  shared baseline and the tag row pinned to the card floor via `margin-top:auto`.
+  One card is inverted to `--acid`.
+- **Rail** — horizontal scroll-snap with `scroll-padding-inline` matched to the
+  content gutter, so the first card aligns to the headline above it.
+- **Plan builder** — one radio-style package, multi-select add-ons, and a
+  billing toggle. Three packages need the service grid's last-card row span to
+  avoid a hole at two columns; the six add-ons divide evenly at three, two and
+  one column and must not have it. All totals derive from `data-price` attributes; the quote bar
+  and the contact form's plan field are both rendered from one `render()` pass.
+- **Accordion** — native `<details>`, custom `+`/`×` marker rotated 135°.
 
 ## Accessibility
 
-Every decorative layer — the particle canvases, the hero stage, the grid floor,
-the cursor halo — is `aria-hidden` and `pointer-events:none`; none of them
-carries content.
+Urdu is marked `lang="ur" dir="rtl"` on the text itself rather than its
+container, so the block stays on the footer's left grid while the script still
+shapes and orders right-to-left.
 
-Industry tiles are focusable, and the same rules drive `:hover` and
-`:focus-within`, so the use cases are reachable from the keyboard. Skip link,
-visible `:focus-visible` ring in `--acid`, `role="status"` on form feedback, a
-labelled scrollable region for the journey rail, and a `<dialog>` that returns
-focus to whichever control opened it.
+Skip link, visible `:focus-visible` ring in `--acid`, `aria-pressed` on add-ons,
+`role="radiogroup"` on plans, `role="status"` on form feedback, and a labelled
+scrollable region for the case rail.
