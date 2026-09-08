@@ -583,14 +583,12 @@
       <h2 class="cta__title reveal">Start Your <em>Project</em>.</h2>
       <p class="contact__lede reveal">Send the plan you built above, or just describe the mess. You'll get a written reply from a person within one working day — we work Monday to Saturday, 9am to 9pm PKT.</p>
 
-      <!-- Enquiries POST to a form-relay service, which emails them on. Paste
-           your access key into data-form-key — it is a public, domain-restricted
-           submission identifier, not a credential. While it is empty the form
-           refuses to send and shows the failure message. See "The enquiry form"
-           in README.md. -->
+      <!-- Enquiries POST to the serverless function in api/enquiry.js, which
+           holds the Resend key server-side and emails the studio. Same-origin
+           by default; set an absolute URL here if the function is deployed to a
+           different host than the site. See "The enquiry form" in README.md. -->
       <form class="form reveal" id="form" novalidate
-            data-form-endpoint="https://api.web3forms.com/submit"
-            data-form-key="">
+            data-form-endpoint="/api/enquiry">
         <div class="field">
           <label for="fName">Name</label>
           <input id="fName" name="name" type="text" autocomplete="name" required placeholder="Your name" />

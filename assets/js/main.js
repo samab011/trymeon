@@ -190,16 +190,16 @@
   render();
 
   /* ── Contact form ───────────────────────────────────────
-     The site is static — GitHub Pages runs no code — so the enquiry is
-     POSTed straight to a form-relay service, which emails it on. The
-     endpoint and key come off the form's data attributes rather than being
-     baked in here, so switching provider (or pointing at your own function
-     if the site ever moves to a host that runs one) is a markup change.
+     The enquiry is POSTed as JSON to api/enquiry.js, which holds the Resend
+     key in a server-side environment variable and composes the email. No
+     credential of any kind is sent from, or present in, this file — the
+     browser only ever talks to our own endpoint.
 
-     The key is a public, domain-restricted submission identifier, not a
-     credential: it can only queue a message to the address that registered
-     it. Nothing secret belongs in this file, and nothing secret is in it. */
+     The endpoint comes off the form's data attribute so it can point at a
+     different host without touching this script. */
   var form = $('#form'), note = $('#formNote');
+  var FAILED = 'Something went wrong. Please try again or contact us directly at ' +
+               'sparkup.ai@consultant.com.';
   if (form) {
     var submitBtn = $('button[type="submit"]', form);
     var sending = false;
@@ -233,39 +233,15 @@
       });
       if (!ok) { say('Check the highlighted fields.', true); return; }
 
-      var endpoint = form.dataset.formEndpoint, key = form.dataset.formKey;
-      if (!endpoint || !key) {
-        console.error('[form] No submission endpoint configured — set data-form-endpoint ' +
-                      'and data-form-key on #form. The enquiry was NOT sent.');
-        say('Something went wrong. Please try again or contact us directly at ' +
-            'sparkup.ai@consultant.com.', true);
+      var endpoint = form.dataset.formEndpoint;
+      if (!endpoint) {
+        console.error('[form] No endpoint — set data-form-endpoint on #form.');
+        say(FAILED, true);
         return;
       }
 
-      var f = Object.fromEntries(new FormData(form).entries());
-      var val = function (v) { return (v || '').trim() || 'Not provided'; };
-
-      /* The relay renders each field as "key: value", so the keys ARE the
-         headings in the notification, and their order here is the order they
-         appear in. access_key, subject, from_name, replyto and botcheck are
-         reserved by the relay and are not rendered as rows. */
-      var data = {
-        access_key: key,
-        subject: 'New Project Quote Request — ' + val(f.name),
-        from_name: 'SparkUP AI website',
-        replyto: (f.email || '').trim(),   /* Reply goes straight to the customer */
-        botcheck: f.botcheck || '',
-
-        'Name': val(f.name),
-        'Email': val(f.email),
-        'WhatsApp Number': val(f.phone),
-        'City': val(f.city),
-        'Selected Plan': val(f.plan),
-        'Selected Add-ons': val(f.addons),
-        'Billing': val(f.billing),
-        'Total': val(f.total),
-        'What are they trying to fix?': val(f.message)
-      };
+      /* the raw fields; the function owns the email's headings and wording */
+      var data = Object.fromEntries(new FormData(form).entries());
 
       sending = true;
       submitBtn.disabled = true;
@@ -277,18 +253,24 @@
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(data)
       })
-        .then(function (r) { return r.json().catch(function () { return { success: r.ok }; }); })
-        .then(function (out) {
-          if (!out || out.success !== true) throw new Error(out && out.message || 'relay rejected');
+        .then(function (r) {
+          return r.json().catch(function () { return {}; })
+            .then(function (out) { return { status: r.status, out: out || {} }; });
+        })
+        .then(function (res) {
+          if (res.out.success !== true) {
+            /* the server's own words, so a failure can be diagnosed from the
+               console without exposing anything to the visitor */
+            throw new Error('HTTP ' + res.status + ' — ' + (res.out.message || 'no message'));
+          }
           say('Thank you! Your project request has been received. ' +
               'Our team will be in touch shortly.');
           form.reset();
           render();                      /* restores the plan summary field */
         })
         .catch(function (err) {
-          console.error('[form] submission failed:', err);
-          say('Something went wrong. Please try again or contact us directly at ' +
-              'sparkup.ai@consultant.com.', true);
+          console.error('[form] submission failed:', err && err.message);
+          say(FAILED, true);
         })
         .then(function () {
           sending = false;

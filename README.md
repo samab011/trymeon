@@ -210,96 +210,127 @@ case-study section.
 
 ## The enquiry form
 
-The form in the contact section POSTs the enquiry as JSON and emails it to
-`sparkup.ai@consultant.com`. It never leaves the page, and it never opens the
-visitor's mail client.
+The form in the contact section POSTs the enquiry as JSON to
+`api/enquiry.js`, which emails it to `sparkup.ai@consultant.com` through
+Resend. It never leaves the page and never opens the visitor's mail client.
 
-**This site is static.** GitHub Pages serves files and runs no code, so there is
-no server and no serverless function to hold a secret. The enquiry therefore goes
-to a form-relay service, which is the standard answer for static hosting: the
-browser POSTs to the relay, the relay sends the mail.
+The Resend key lives in a server-side environment variable. The browser only
+ever talks to our own endpoint, so no credential is present in, or sent from,
+`index.html` or `assets/js/`.
+
+### Where it can run
+
+`api/enquiry.js` is a serverless function. **GitHub Pages cannot run it** — Pages
+serves files and executes nothing, so the form will fail there. Deploy to a host
+that runs functions; Vercel needs no configuration beyond `vercel.json`, which is
+already in the repo (import the repo at vercel.com, no build command, output
+directory `.`).
+
+Netlify or Cloudflare Pages work too — the handler is a plain
+`(req, res)` function with no dependencies, so only the export wrapper changes.
+
+If the site must stay on GitHub Pages, the alternative is a form-relay service
+(Web3Forms, Formspree): point `data-form-endpoint` on the form at the relay and
+add its public access key. That needs no server, but the email template below
+comes from the relay rather than from this repository.
 
 ### What you need to provide
 
-One value: a **Web3Forms access key**, free at <https://web3forms.com>. Enter
-`sparkup.ai@consultant.com`, and the key arrives by email. Paste it into
-`index.html`:
+| # | | |
+|---|---|---|
+| 1 | **Service** | [Resend](https://resend.com) — free tier covers 3,000 emails/month |
+| 2 | **Variable** | `RESEND_API_KEY` |
+| 3 | **Where** | Vercel → Project → Settings → Environment Variables. Tick **Production**, **Preview** and **Development** — a variable set only on Production leaves preview deploys failing. |
+| 4 | **Value** | An API key from <https://resend.com/api-keys>, starting `re_`. "Sending access" is enough. |
+| 5 | **Domain** | See below — yes, before going live. |
 
-```html
-<form class="form reveal" id="form" novalidate
-      data-form-endpoint="https://api.web3forms.com/submit"
-      data-form-key="PASTE-YOUR-KEY-HERE">
-```
+Two optional variables, both with working defaults:
 
-That is the whole setup. Until the key is filled in the form validates as normal
-but refuses to send, shows the failure message, and logs why to the console —
-it never pretends to have delivered something.
+| Variable | Default | Set it when |
+|---|---|---|
+| `ENQUIRY_TO` | `sparkup.ai@consultant.com` | the enquiries should go elsewhere |
+| `ENQUIRY_FROM` | `SparkUP AI <onboarding@resend.dev>` | you have verified a domain — see below |
+| `ALLOWED_ORIGIN` | *(none)* | the site and the function are on different origins |
 
-### Why that key is not a secret
+### The sending domain
 
-It is a public submission identifier, not a credential. It authorises one thing:
-queueing a message to the address that registered it. It cannot read mail, cannot
-be used to send anywhere else, and is rate-limited and domain-restricted by the
-relay. Lock it to your domain in the Web3Forms dashboard once the site is live.
+This matters, and it is the most common reason a first send appears to work but
+nothing arrives.
 
-Nothing in this repository is a secret, and no API key, password or SMTP
-credential belongs in `assets/js/` or `index.html`.
+Out of the box the function sends from `onboarding@resend.dev`, Resend's shared
+testing sender. **It only delivers to the email address that owns the Resend
+account.** If `sparkup.ai@consultant.com` is not that address, nothing will
+arrive until you verify a domain.
 
-### Moving to a host that runs code
+To go live: add your domain at <https://resend.com/domains>, add the DNS records
+Resend gives you, wait for verification, then set `ENQUIRY_FROM` to an address on
+it — for example `SparkUP AI <enquiries@yourdomain.com>`. The recipient stays
+`sparkup.ai@consultant.com` either way.
 
-If the site ever moves to Netlify, Vercel or Cloudflare Pages, you can drop the
-relay and post to your own function instead — the client sends a plain JSON
-object, so any endpoint that accepts one will do. Point `data-form-endpoint` at
-your function, empty `data-form-key`, and keep the real mail credential
-(Resend, SendGrid, SMTP) in that host's environment variables where the browser
-can never see it. No JavaScript change is needed.
-
-### What arrives in the email
+### The email that arrives
 
 Subject: **New Project Quote Request — [Customer Name]**
 
 ```
-Name:                         Ayesha Tariq
-Email:                        ayesha@chowkretail.pk
-WhatsApp Number:              +92 300 1234567
-City:                         Lahore
-Selected Plan:                Website — Second AI agent — Rs 310,000/month
-Selected Add-ons:             Second AI agent
-Billing:                      Monthly
-Total:                        Rs 310,000/month
-What are they trying to fix?: Our site gets traffic but nobody enquires…
+New Quote Request
+
+You have received a new project enquiry through the SparkUP AI website.
+
+CUSTOMER DETAILS
+Name:                          Ayesha Tariq
+Email:                         ayesha@chowkretail.pk
+WhatsApp Number:               +92 300 1234567
+City:                          Lahore
+
+PROJECT DETAILS
+Selected Plan:                 Website — Second AI agent — Rs 310,000/month
+Selected Add-ons:              Second AI agent
+Billing:                       Monthly
+Total:                         Rs 310,000/month
+What are they trying to fix?:  Our site gets traffic but nobody enquires…
+
+This enquiry was submitted through the SparkUP AI website quote form.
+
+SparkUP AI
+Web Design · AI Agents · Motion Videos
+sparkup.ai@consultant.com
++44 7984 826727
 ```
 
-The relay renders each submitted field as `heading: value`, so the payload keys
-in `main.js` *are* the headings, and the order they are written in is the order
-they appear. Change a heading by renaming its key. A field the visitor left
-blank reads "Not provided" rather than leaving an empty heading.
+Sent as HTML with a plain-text alternative. Headings and order live in `ROWS` in
+`api/enquiry.js` — the function owns the wording, so a malformed or hostile
+request cannot reshape the message. Reply-to is the customer's address, so
+replying to the alert answers them directly. A blank optional field reads
+"Not provided".
 
-Reply-to is set to the customer's address, so replying to the notification goes
-straight back to them.
+### Responses the endpoint returns
 
-Plan, add-ons, billing and total come from hidden fields the plan builder keeps
-in step, so the email reflects exactly what the visitor had configured when
-they sent it.
+| Status | Body | Meaning |
+|---|---|---|
+| 200 | `{"success":true}` | sent |
+| 422 | `{"success":false,"fields":[…]}` | failed server-side validation |
+| 405 | `{"success":false}` | not a POST |
+| 500 | `{"success":false}` | `RESEND_API_KEY` missing — logged server-side |
+| 502 | `{"success":false}` | Resend rejected it or was unreachable — logged with its reason |
 
-**On the surrounding wrapper.** The introductory line and the SparkUP AI
-sign-off in the notification are part of the relay's own email template, not
-the submitted data, so they cannot be set from this repository. Two ways to get
-them: Web3Forms' custom email template (a paid plan), or moving to a host that
-runs code, where the function composes the whole HTML email itself.
+Failure bodies never describe how the server is wired; the detail goes to the
+server log. The page logs the status and message it received to the console, so
+a failure can be diagnosed without reading anything back to the visitor.
 
-### Behaviour
+### Behaviour on the page
 
 - Name, email, WhatsApp number and the message are required; email and phone are
-  format-checked. Invalid fields are outlined and nothing is sent.
+  format-checked in the browser *and* re-checked in the function, since a request
+  can reach it without going through the page.
 - Success: "Thank you! Your project request has been received. Our team will be
   in touch shortly." — the form clears and the plan summary is restored.
 - Failure: "Something went wrong. Please try again or contact us directly at
-  sparkup.ai@consultant.com." — in the warning colour, and what the visitor
-  typed is left in place so it is not lost.
-- The submit button disables while a request is in flight, so extra clicks
-  cannot queue a duplicate enquiry.
-- An off-screen honeypot field drops bot submissions at the relay.
+  sparkup.ai@consultant.com." — in the warning colour, with what the visitor
+  typed left in place.
+- The submit button disables while a request is in flight, so extra clicks cannot
+  queue a duplicate. Verified: three clicks during a request produce one email.
+- An off-screen honeypot field is answered 200 without sending, so bots do not
+  retry.
 
 ## Notes
 
