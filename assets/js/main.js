@@ -207,11 +207,13 @@
     var CHECKS = [
       ['#fName',  function (v) { return v.length > 1; }],
       ['#fEmail', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }],
-      /* digits only after stripping the punctuation people actually type;
-         9-15 covers Pakistani mobiles through to any E.164 number */
-      ['#fPhone', function (v) { return /^[+\d][\d\s().-]{7,}$/.test(v) &&
-                                        v.replace(/\D/g, '').length >= 9 &&
-                                        v.replace(/\D/g, '').length <= 15; }],
+      /* Country-agnostic: any arrangement of +, spaces, brackets, hyphens,
+         dots and slashes, judged only by digit count. 7-20 spans every
+         national and international form; no country is assumed. */
+      ['#fPhone', function (v) {
+        var d = v.replace(/\D/g, '').length;
+        return /^[+(\d][\d\s()+.\-/]*$/.test(v) && d >= 7 && d <= 20;
+      }],
       ['#fMsg',   function (v) { return v.length > 4; }]
     ];
 

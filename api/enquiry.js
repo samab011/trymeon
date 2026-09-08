@@ -43,21 +43,34 @@ const esc = (s) =>
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
-/* Values are trimmed and length-capped: the browser already validates, but a
-   request can reach this function without going through the page at all. */
-const clean = (v, max = 4000) => String(v == null ? '' : v).trim().slice(0, max);
+/* Trim only. Nothing here truncates: a customer's answer arrives whole,
+   however long it is. Oversized bodies are refused with 413 rather than
+   quietly shortened, so a message is never half-delivered without anyone
+   noticing. */
+const clean = (v) => String(v == null ? '' : v).trim();
+
+/* ~100 KB of text, several times longer than any real enquiry. This is an
+   abuse ceiling on the whole request, not a limit on the message. */
+const MAX_BODY = 100000;
+
+/* Country-agnostic. Accepts +, spaces, brackets, hyphens, dots and slashes in
+   any arrangement, and judges the number by its digit count alone — 7 to 20
+   spans every national and E.164 international form. No country is assumed. */
+const PHONE_SHAPE = /^[+(\d][\d\s()+.\-/]*$/;
+const phoneDigits = (v) => v.replace(/\D/g, '').length;
 
 function validate(body) {
   const errors = [];
-  const name = clean(body.name, 120);
-  const email = clean(body.email, 200);
-  const phone = clean(body.phone, 40);
-  const message = clean(body.message, 4000);
+  const name = clean(body.name);
+  const email = clean(body.email);
+  const phone = clean(body.phone);
+  const message = clean(body.message);
 
   if (name.length < 2) errors.push('name');
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push('email');
-  const digits = phone.replace(/\D/g, '');
-  if (digits.length < 9 || digits.length > 15) errors.push('phone');
+  if (!PHONE_SHAPE.test(phone) || phoneDigits(phone) < 7 || phoneDigits(phone) > 20) {
+    errors.push('phone');
+  }
   if (message.length < 5) errors.push('message');
 
   return { errors, name, email, phone, message };
@@ -145,10 +158,22 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, message: 'Method not allowed.' });
   }
 
+  const raw = typeof req.body === 'string' ? req.body : '';
+  if (raw.length > MAX_BODY) {
+    console.error('[enquiry] body too large:', raw.length, 'bytes — refused, not truncated');
+    return res.status(413).json({ success: false, message: 'That message is too large to send.' });
+  }
+
   const body = typeof req.body === 'string' ? safeParse(req.body) : (req.body || {});
   if (body === null) {
     return res.status(400).json({ success: false, message: 'Malformed request body.' });
   }
+
+  /* Operational diagnostics. Field NAMES and sizes only — never their values,
+     and never the key, of which only the presence is reported. */
+  console.log('[enquiry] POST received | fields:', Object.keys(body).join(',') ||
+              '(none)', '| message chars:', clean(body.message).length,
+              '| RESEND_API_KEY present:', Boolean(process.env.RESEND_API_KEY));
 
   /* the honeypot: a real visitor never sees the field, so anything in it is a bot.
      Answer 200 so the bot believes it succeeded and does not retry. */
@@ -190,7 +215,7 @@ export default async function handler(req, res) {
       return res.status(502).json({ success: false, message: 'Email provider rejected the message.' });
     }
 
-    console.log('[enquiry] sent', out.id || '(no id)', 'to', TO);
+    console.log('[enquiry] accepted by Resend | id:', out.id || '(none returned)', '| to:', TO);
     return res.status(200).json({ success: true, message: 'Enquiry sent.' });
   } catch (err) {
     console.error('[enquiry] send failed:', err && err.message);

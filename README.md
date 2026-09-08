@@ -322,6 +322,15 @@ a failure can be diagnosed without reading anything back to the visitor.
 - Name, email, WhatsApp number and the message are required; email and phone are
   format-checked in the browser *and* re-checked in the function, since a request
   can reach it without going through the page.
+- **The message has no length limit.** No `maxlength`, no word or character
+  count, and nothing truncates it on either side. A request larger than ~100 KB
+  in total is refused with 413 rather than quietly shortened, so a message is
+  never half-delivered without anyone noticing.
+- **The phone field assumes no country.** Any arrangement of `+`, spaces,
+  brackets, hyphens, dots and slashes is accepted, judged only by digit count
+  (7–20, spanning every national and E.164 international form). Verified against
+  `+44 7984 826727`, `0300 1234567`, `+92 300 1234567`, `+1 (212) 555-1234`,
+  `+61 2 9374 4000`, `+81 3-1234-5678`, `020 7946 0958` and others.
 - Success: "Thank you! Your project request has been received. Our team will be
   in touch shortly." — the form clears and the plan summary is restored.
 - Failure: "Something went wrong. Please try again or contact us directly at
