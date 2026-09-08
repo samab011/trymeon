@@ -1,0 +1,8 @@
+{
+  "name": "sparkup-ai-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SparkUP AI marketing site. Static HTML/CSS/JS with one serverless function for the enquiry form.",
+  "type": "module",
+  "engines": { "node": ">=18" }
+}

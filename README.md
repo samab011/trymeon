@@ -229,6 +229,10 @@ directory `.`).
 Netlify or Cloudflare Pages work too — the handler is a plain
 `(req, res)` function with no dependencies, so only the export wrapper changes.
 
+`package.json` exists only to declare `"type": "module"`. There are no
+dependencies and nothing is built; without it a host is entitled to read
+`api/enquiry.js` as CommonJS, and its `export default` would then fail to load.
+
 If the site must stay on GitHub Pages, the alternative is a form-relay service
 (Web3Forms, Formspree): point `data-form-endpoint` on the form at the relay and
 add its public access key. That needs no server, but the email template below
@@ -251,6 +255,30 @@ Two optional variables, both with working defaults:
 | `ENQUIRY_TO` | `sparkup.ai@consultant.com` | the enquiries should go elsewhere |
 | `ENQUIRY_FROM` | `SparkUP AI <onboarding@resend.dev>` | you have verified a domain — see below |
 | `ALLOWED_ORIGIN` | *(none)* | the site and the function are on different origins |
+| `ENQUIRY_DEBUG` | *(none)* | set to `1` while setting the site up, to echo the provider's own rejection reason to the browser console; remove it afterwards |
+
+### Checking a deployment
+
+Open `/api/enquiry` in a browser — a `GET` is a health check and sends nothing:
+
+```json
+{ "ok": true, "runtime": "node 22.x", "resendKeyPresent": true,
+  "deliversTo": "sparkup.ai@consultant.com",
+  "sendsFrom": "SparkUP AI <onboarding@resend.dev>",
+  "usingResendTestSender": true }
+```
+
+It answers the three questions that matter, in order:
+
+- **404 or a hosting error page** — the function is not deployed. The site is on
+  a static host, or the deploy did not pick up `api/`. Nothing else is worth
+  checking until this returns JSON.
+- **`resendKeyPresent: false`** — the variable is missing from this environment,
+  or was added without redeploying. Vercel bakes variables in at build time.
+- **`usingResendTestSender: true`** — sends will only reach the address that owns
+  the Resend account. See below.
+
+It reports no secret: booleans and the addresses already published on the site.
 
 ### The sending domain
 

@@ -154,11 +154,32 @@ function cors(req, res) {
 export default async function handler(req, res) {
   cors(req, res);
   if (req.method === 'OPTIONS') return res.status(204).end();
+
+  /* A plain GET is a health check, so the deployment can be verified from a
+     browser address bar without sending an email. It reports whether the
+     function is running and whether it is configured — never a secret. If this
+     returns 404 or a hosting error page, the function is not deployed at all,
+     which is a different problem from a misconfigured one. */
+  if (req.method === 'GET') {
+    return res.status(200).json({
+      ok: true,
+      service: 'enquiry',
+      runtime: `node ${process.versions.node}`,
+      resendKeyPresent: Boolean(process.env.RESEND_API_KEY),
+      deliversTo: TO,
+      sendsFrom: FROM,
+      usingResendTestSender: FROM.includes('onboarding@resend.dev')
+    });
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, message: 'Method not allowed.' });
   }
 
-  const raw = typeof req.body === 'string' ? req.body : '';
+  /* Hosts differ: some hand the handler a raw string, others a parsed object.
+     Size is checked either way, so the ceiling is real rather than a guard that
+     silently does nothing on whichever host parsed the body first. */
+  const raw = typeof req.body === 'string' ? req.body : JSON.stringify(req.body || {});
   if (raw.length > MAX_BODY) {
     console.error('[enquiry] body too large:', raw.length, 'bytes — refused, not truncated');
     return res.status(413).json({ success: false, message: 'That message is too large to send.' });
@@ -212,7 +233,17 @@ export default async function handler(req, res) {
     const out = await r.json().catch(() => ({}));
     if (!r.ok) {
       console.error('[enquiry] Resend rejected the send:', r.status, out);
-      return res.status(502).json({ success: false, message: 'Email provider rejected the message.' });
+      /* The provider's own reason — "domain is not verified", "invalid from
+         address" — is what actually identifies the problem, but it describes
+         our configuration, so a visitor never sees it. Set ENQUIRY_DEBUG=1
+         while setting the site up to have it echoed to the browser console,
+         then remove the variable. */
+      const detail = process.env.ENQUIRY_DEBUG === '1'
+        ? ` (${r.status}: ${out && (out.message || out.name) || 'no reason given'})`
+        : '';
+      return res.status(502).json({
+        success: false, message: `Email provider rejected the message.${detail}`
+      });
     }
 
     console.log('[enquiry] accepted by Resend | id:', out.id || '(none returned)', '| to:', TO);
