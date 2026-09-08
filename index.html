@@ -583,7 +583,14 @@
       <h2 class="cta__title reveal">Start Your <em>Project</em>.</h2>
       <p class="contact__lede reveal">Send the plan you built above, or just describe the mess. You'll get a written reply from a person within one working day — we work Monday to Saturday, 9am to 9pm PKT.</p>
 
-      <form class="form reveal" id="form" novalidate>
+      <!-- Enquiries POST to a form-relay service, which emails them on. Paste
+           your access key into data-form-key — it is a public, domain-restricted
+           submission identifier, not a credential. While it is empty the form
+           refuses to send and shows the failure message. See "The enquiry form"
+           in README.md. -->
+      <form class="form reveal" id="form" novalidate
+            data-form-endpoint="https://api.web3forms.com/submit"
+            data-form-key="">
         <div class="field">
           <label for="fName">Name</label>
           <input id="fName" name="name" type="text" autocomplete="name" required placeholder="Your name" />
@@ -594,7 +601,7 @@
         </div>
         <div class="field">
           <label for="fPhone">WhatsApp number</label>
-          <input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+92 3XX XXXXXXX" />
+          <input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required placeholder="+92 3XX XXXXXXX" />
         </div>
         <div class="field">
           <label for="fCity">City</label>
@@ -615,6 +622,10 @@
           <label for="fMsg">What are you trying to fix?</label>
           <textarea id="fMsg" name="message" rows="4" required placeholder="Our site gets traffic but nobody enquires, and we can't keep up with WhatsApp…"></textarea>
         </div>
+        <input type="hidden" name="addons" id="fAddons" value="" />
+        <input type="hidden" name="billing" id="fBilling" value="" />
+        <input type="hidden" name="total" id="fTotal" value="" />
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <div class="field field--full form__foot">
           <button class="btn btn--solid" type="submit">Send it <span aria-hidden="true">→</span></button>
           <p class="form__note" id="formNote" role="status"></p>

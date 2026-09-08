@@ -208,6 +208,72 @@ Keyboard: Escape closes, left/right arrows move between tabs, focus returns to
 the button on close, and with JavaScript off the button still navigates to the
 case-study section.
 
+## The enquiry form
+
+The form in the contact section POSTs the enquiry as JSON and emails it to
+`sparkup.ai@consultant.com`. It never leaves the page, and it never opens the
+visitor's mail client.
+
+**This site is static.** GitHub Pages serves files and runs no code, so there is
+no server and no serverless function to hold a secret. The enquiry therefore goes
+to a form-relay service, which is the standard answer for static hosting: the
+browser POSTs to the relay, the relay sends the mail.
+
+### What you need to provide
+
+One value: a **Web3Forms access key**, free at <https://web3forms.com>. Enter
+`sparkup.ai@consultant.com`, and the key arrives by email. Paste it into
+`index.html`:
+
+```html
+<form class="form reveal" id="form" novalidate
+      data-form-endpoint="https://api.web3forms.com/submit"
+      data-form-key="PASTE-YOUR-KEY-HERE">
+```
+
+That is the whole setup. Until the key is filled in the form validates as normal
+but refuses to send, shows the failure message, and logs why to the console —
+it never pretends to have delivered something.
+
+### Why that key is not a secret
+
+It is a public submission identifier, not a credential. It authorises one thing:
+queueing a message to the address that registered it. It cannot read mail, cannot
+be used to send anywhere else, and is rate-limited and domain-restricted by the
+relay. Lock it to your domain in the Web3Forms dashboard once the site is live.
+
+Nothing in this repository is a secret, and no API key, password or SMTP
+credential belongs in `assets/js/` or `index.html`.
+
+### Moving to a host that runs code
+
+If the site ever moves to Netlify, Vercel or Cloudflare Pages, you can drop the
+relay and post to your own function instead — the client sends a plain JSON
+object, so any endpoint that accepts one will do. Point `data-form-endpoint` at
+your function, empty `data-form-key`, and keep the real mail credential
+(Resend, SendGrid, SMTP) in that host's environment variables where the browser
+can never see it. No JavaScript change is needed.
+
+### What arrives in the email
+
+Name, email, WhatsApp number, city, selected plan, add-ons, billing period,
+total, and the answer to "What are you trying to fix?". The plan, add-ons,
+billing and total are carried in hidden fields the plan builder keeps in step,
+so the email reflects exactly what the visitor had configured when they sent it.
+
+### Behaviour
+
+- Name, email, WhatsApp number and the message are required; email and phone are
+  format-checked. Invalid fields are outlined and nothing is sent.
+- Success: "Thank you! Your project request has been received. Our team will be
+  in touch shortly." — the form clears and the plan summary is restored.
+- Failure: "Something went wrong. Please try again or contact us directly at
+  sparkup.ai@consultant.com." — in the warning colour, and what the visitor
+  typed is left in place so it is not lost.
+- The submit button disables while a request is in flight, so extra clicks
+  cannot queue a duplicate enquiry.
+- An off-screen honeypot field drops bot submissions at the relay.
+
 ## Notes
 
 - Fonts load from Google Fonts (Inter Tight, Instrument Serif, JetBrains Mono,

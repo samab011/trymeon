@@ -98,6 +98,11 @@
   var quoteUnit  = $('#quoteUnit');
   var quoteSave  = $('#quoteSave');
   var planField  = $('#fPlan');
+  /* the quote the builder computes, carried into the enquiry as its own
+     fields so the email lists add-ons and total rather than only a string */
+  var addonsField  = $('#fAddons');
+  var billingField = $('#fBilling');
+  var totalField   = $('#fTotal');
 
   function priceOf(el) { return parseInt(el.getAttribute('data-price'), 10) || 0; }
 
@@ -121,6 +126,11 @@
     var names = state.addons.map(function (el) { return $('b', el).textContent.trim(); });
     var mix = planName + ' — ' + (names.length ? names.join(' + ') : 'no add-ons');
     quoteMix.textContent = mix;
+
+    if (addonsField)  addonsField.value  = names.length ? names.join(', ') : 'None';
+    if (billingField) billingField.value = state.bill === 'monthly' ? 'Monthly' : 'Quarterly';
+    if (totalField)   totalField.value   = state.bill === 'monthly'
+      ? rs(monthly) + '/month' : rs(quarterly) + '/quarter';
 
     if (state.bill === 'monthly') {
       quoteTotal.textContent = fmt(monthly);
@@ -179,27 +189,92 @@
 
   render();
 
-  /* ── Contact form (client-side only) ──────────────────── */
+  /* ── Contact form ───────────────────────────────────────
+     The site is static — GitHub Pages runs no code — so the enquiry is
+     POSTed straight to a form-relay service, which emails it on. The
+     endpoint and key come off the form's data attributes rather than being
+     baked in here, so switching provider (or pointing at your own function
+     if the site ever moves to a host that runs one) is a markup change.
+
+     The key is a public, domain-restricted submission identifier, not a
+     credential: it can only queue a message to the address that registered
+     it. Nothing secret belongs in this file, and nothing secret is in it. */
   var form = $('#form'), note = $('#formNote');
   if (form) {
+    var submitBtn = $('button[type="submit"]', form);
+    var sending = false;
+
+    var CHECKS = [
+      ['#fName',  function (v) { return v.length > 1; }],
+      ['#fEmail', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }],
+      /* digits only after stripping the punctuation people actually type;
+         9-15 covers Pakistani mobiles through to any E.164 number */
+      ['#fPhone', function (v) { return /^[+\d][\d\s().-]{7,}$/.test(v) &&
+                                        v.replace(/\D/g, '').length >= 9 &&
+                                        v.replace(/\D/g, '').length <= 15; }],
+      ['#fMsg',   function (v) { return v.length > 4; }]
+    ];
+
+    function say(text, bad) {
+      note.textContent = text;
+      note.classList.toggle('is-bad', !!bad);
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      if (sending) return;               /* a second click while in flight is ignored */
+
       var ok = true;
-      [['#fName', function (v) { return v.length > 1; }],
-       ['#fEmail', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }],
-       ['#fMsg', function (v) { return v.length > 4; }]
-      ].forEach(function (pair) {
+      CHECKS.forEach(function (pair) {
         var input = $(pair[0]);
         var valid = pair[1](input.value.trim());
         input.parentNode.classList.toggle('is-bad', !valid);
         if (!valid) ok = false;
       });
+      if (!ok) { say('Check the highlighted fields.', true); return; }
 
-      if (!ok) { note.textContent = 'Check the highlighted fields.'; return; }
+      var endpoint = form.dataset.formEndpoint, key = form.dataset.formKey;
+      if (!endpoint || !key) {
+        console.error('[form] No submission endpoint configured — set data-form-endpoint ' +
+                      'and data-form-key on #form. The enquiry was NOT sent.');
+        say('Something went wrong. Please try again or contact us directly at ' +
+            'sparkup.ai@consultant.com.', true);
+        return;
+      }
 
-      note.textContent = 'Sent. We reply within one working day.';
-      form.reset();
-      render(); /* restores the plan summary field */
+      var data = Object.fromEntries(new FormData(form).entries());
+      data.access_key = key;
+      data.subject = 'New project request — ' + (data.name || 'website enquiry');
+      data.from_name = 'SparkUP AI website';
+
+      sending = true;
+      submitBtn.disabled = true;
+      form.setAttribute('aria-busy', 'true');
+      say('Sending…');
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (r) { return r.json().catch(function () { return { success: r.ok }; }); })
+        .then(function (out) {
+          if (!out || out.success !== true) throw new Error(out && out.message || 'relay rejected');
+          say('Thank you! Your project request has been received. ' +
+              'Our team will be in touch shortly.');
+          form.reset();
+          render();                      /* restores the plan summary field */
+        })
+        .catch(function (err) {
+          console.error('[form] submission failed:', err);
+          say('Something went wrong. Please try again or contact us directly at ' +
+              'sparkup.ai@consultant.com.', true);
+        })
+        .then(function () {
+          sending = false;
+          submitBtn.disabled = false;
+          form.removeAttribute('aria-busy');
+        });
     });
   }
 
