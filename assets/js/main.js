@@ -242,10 +242,30 @@
         return;
       }
 
-      var data = Object.fromEntries(new FormData(form).entries());
-      data.access_key = key;
-      data.subject = 'New project request — ' + (data.name || 'website enquiry');
-      data.from_name = 'SparkUP AI website';
+      var f = Object.fromEntries(new FormData(form).entries());
+      var val = function (v) { return (v || '').trim() || 'Not provided'; };
+
+      /* The relay renders each field as "key: value", so the keys ARE the
+         headings in the notification, and their order here is the order they
+         appear in. access_key, subject, from_name, replyto and botcheck are
+         reserved by the relay and are not rendered as rows. */
+      var data = {
+        access_key: key,
+        subject: 'New Project Quote Request — ' + val(f.name),
+        from_name: 'SparkUP AI website',
+        replyto: (f.email || '').trim(),   /* Reply goes straight to the customer */
+        botcheck: f.botcheck || '',
+
+        'Name': val(f.name),
+        'Email': val(f.email),
+        'WhatsApp Number': val(f.phone),
+        'City': val(f.city),
+        'Selected Plan': val(f.plan),
+        'Selected Add-ons': val(f.addons),
+        'Billing': val(f.billing),
+        'Total': val(f.total),
+        'What are they trying to fix?': val(f.message)
+      };
 
       sending = true;
       submitBtn.disabled = true;

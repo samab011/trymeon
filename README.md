@@ -256,10 +256,37 @@ can never see it. No JavaScript change is needed.
 
 ### What arrives in the email
 
-Name, email, WhatsApp number, city, selected plan, add-ons, billing period,
-total, and the answer to "What are you trying to fix?". The plan, add-ons,
-billing and total are carried in hidden fields the plan builder keeps in step,
-so the email reflects exactly what the visitor had configured when they sent it.
+Subject: **New Project Quote Request — [Customer Name]**
+
+```
+Name:                         Ayesha Tariq
+Email:                        ayesha@chowkretail.pk
+WhatsApp Number:              +92 300 1234567
+City:                         Lahore
+Selected Plan:                Website — Second AI agent — Rs 310,000/month
+Selected Add-ons:             Second AI agent
+Billing:                      Monthly
+Total:                        Rs 310,000/month
+What are they trying to fix?: Our site gets traffic but nobody enquires…
+```
+
+The relay renders each submitted field as `heading: value`, so the payload keys
+in `main.js` *are* the headings, and the order they are written in is the order
+they appear. Change a heading by renaming its key. A field the visitor left
+blank reads "Not provided" rather than leaving an empty heading.
+
+Reply-to is set to the customer's address, so replying to the notification goes
+straight back to them.
+
+Plan, add-ons, billing and total come from hidden fields the plan builder keeps
+in step, so the email reflects exactly what the visitor had configured when
+they sent it.
+
+**On the surrounding wrapper.** The introductory line and the SparkUP AI
+sign-off in the notification are part of the relay's own email template, not
+the submitted data, so they cannot be set from this repository. Two ways to get
+them: Web3Forms' custom email template (a paid plan), or moving to a host that
+runs code, where the function composes the whole HTML email itself.
 
 ### Behaviour
 
