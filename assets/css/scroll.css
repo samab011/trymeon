@@ -1,0 +1,292 @@
+/* ============================================================
+   SPARKUP AI — the cinematic layer
+
+   Loaded after styles.css and scoped almost entirely to
+   `html.js-scroll`, which assets/js/scroll.js adds only when the
+   browser can support it and the visitor has not asked for reduced
+   motion. Without that class every rule here is inert and the page
+   is exactly the document it was: same sections, same wording, same
+   grid, same form.
+
+   Two rules that must hold for the whole file:
+     · nothing here changes copy, order or interactive behaviour;
+     · nothing here ever animates a property that triggers layout.
+       Only transform, opacity and filter move.
+   ============================================================ */
+
+/* ── Ground ─────────────────────────────────────────────────
+   One fixed layer, painted once, behind the entire document. The
+   light inside it travels as you scroll, so the page reads as a
+   single space you move through rather than a stack of sections.
+
+   It sits at z-index -1, which paints above the root background and
+   below every piece of content — so the base colour moves to <html>
+   and <body> goes transparent, or body's own background would cover
+   it. */
+html{background:var(--ink)}
+.js-scroll body{background:transparent}
+
+.ground{
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  contain:strict;                     /* never let it invalidate the page */
+  opacity:var(--gA,1);
+  transition:opacity .9s var(--ease);
+}
+.ground__glow{
+  position:absolute; top:var(--gy,0%); left:var(--gx,50%);
+  width:min(1500px,150vw); aspect-ratio:1;
+  transform:translate3d(-50%,-50%,0);
+  background:radial-gradient(circle, rgba(204,255,46,.11), rgba(204,255,46,.03) 38%, transparent 66%);
+  will-change:transform;
+}
+.ground__glow--2{
+  top:var(--g2y,40%); left:var(--g2x,90%);
+  width:min(1100px,120vw);
+  /* the cool counter-light: it keeps the lime from reading as a filter
+     over the whole page, and gives the lower half its own temperature */
+  background:radial-gradient(circle, rgba(143,184,255,.085), transparent 62%);
+}
+/* The lime wash. Driven to 1 only while the AI-agent panel owns the
+   screen, so the page itself changes colour for that one service. */
+.ground::after{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(120% 80% at 50% 50%, rgba(204,255,46,.16), transparent 70%),
+    linear-gradient(180deg, rgba(204,255,46,.05), rgba(204,255,46,.10));
+  opacity:var(--lime,0);
+  transition:opacity .25s linear;
+}
+
+/* ── The depth primitive ────────────────────────────────────
+   Every parallaxed element writes --sy / --ss / --sa and nothing
+   else, so one transform declaration serves the whole page and the
+   compositor keeps a single layer per element. */
+.js-scroll [style*="--sy"],
+.js-scroll .hero__title,
+.js-scroll .hero__cta,
+.js-scroll .hero__foot,
+.js-scroll .stats,
+.js-scroll [data-depth]{
+  transform:translate3d(0,var(--sy,0px),0) scale(var(--ss,1));
+  will-change:transform;
+}
+
+/* ── Hero ───────────────────────────────────────────────────
+   The four blocks of the hero sit at four depths and separate as
+   you leave, so the first screen recedes instead of scrolling off.
+   The canvas network behind them pushes back and dims at its own
+   rate, which is what sells the parallax as distance rather than
+   as things sliding at different speeds. */
+.js-scroll .hero{z-index:1; min-height:100svh}
+.js-scroll .hero__title,
+.js-scroll .hero__cta,
+.js-scroll .hero__foot,
+.js-scroll .stats{
+  opacity:var(--sa,1);
+  transform-origin:0% 50%;
+}
+.js-scroll .hero__tree{
+  transform:translate3d(calc(var(--px,0) * 26px), calc(var(--sy,0px) + var(--py,0) * 16px), 0)
+            scale(var(--ss,1));
+  opacity:calc(var(--sa,1) * 1);
+  will-change:transform;
+}
+/* The hero's own bloom answers the pointer. Small, damped in JS, and
+   the only motion on the page that scroll does not drive. */
+.js-scroll .hero::after{
+  transform:translate3d(calc(-50% + var(--px,0) * 44px), calc(var(--py,0) * 30px), 0)
+            scale(calc(1 + var(--heroLift,1) * .06));
+  opacity:calc(.55 + var(--heroLift,1) * .45);
+  will-change:transform;
+}
+
+/* A quiet instruction to scroll. It is the page's own promise that
+   something happens down there, and it leaves the moment you do. */
+.js-scroll .hero__cue{
+  /* Fixed rather than absolute: the hero is taller than the viewport, so an
+     absolutely placed cue would sit below the fold and never be seen at the
+     only moment it is useful. It fades out on --heroLift as you leave. */
+  position:fixed; left:var(--gut); bottom:clamp(18px,3vw,34px); z-index:3;
+  display:flex; align-items:center; gap:12px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--fg-faint); pointer-events:none;
+  opacity:var(--heroLift,1);
+  transition:opacity .5s var(--ease);
+}
+.hero__cue{display:none}
+.js-scroll .hero__cue{display:flex}
+.hero__cue i{
+  display:block; width:1px; height:38px; background:linear-gradient(var(--acid),transparent);
+  animation:cue 2.4s var(--ease) infinite;
+  transform-origin:top;
+}
+@keyframes cue{
+  0%,100%{transform:scaleY(.35); opacity:.4}
+  50%    {transform:scaleY(1);   opacity:1}
+}
+
+/* ── Headline assembly ──────────────────────────────────────
+   Section headings arrive a word at a time. The clip box is the
+   word itself, so nothing reflows and the line can still wrap and
+   balance exactly as it did. */
+.h2--split .w{
+  display:inline-block;
+  transform:translate3d(0,110%,0) rotate(2.4deg);
+  opacity:0;
+  transition:transform .86s var(--ease), opacity .5s linear;
+  transition-delay:calc(var(--wi,0) * 42ms);
+}
+.h2--split.is-set .w{transform:none; opacity:1}
+/* the serif italics carry the accent, so they arrive fractionally later */
+.h2--split em .w{transition-delay:calc(var(--wi,0) * 42ms + 60ms)}
+
+/* ── The signature move: services pin and advance ───────────
+   Below 900px, and with JS off, `.stage` and `.stage__pin` are inert
+   wrappers and the three cards stay the bento grid they have always
+   been. Above it, the stage becomes a tall scroll track with a
+   sticky screen inside, and the same three cards — same headings,
+   same copy, same tags — each take that screen in turn.
+
+   The pin is plain position:sticky. The browser owns the scroll: no
+   wheel handler, no momentum capture, no scroll-jacking. One flick
+   carries you past the whole section. */
+.stage__rail{display:none}
+
+@media (min-width:900px){
+  .js-scroll .stage{
+    /* one viewport to pin, plus roughly one per panel to travel through */
+    height:340vh;
+    position:relative;
+  }
+  .js-scroll .stage__pin{
+    position:sticky; top:0; height:100vh;
+    display:grid; align-content:center;
+    overflow:clip;
+  }
+  /* The heading holds while the panels advance beneath it — the section keeps
+     saying what it is for the whole time you are inside it. It shrinks here
+     because it now has to share one screen with a full-size panel. */
+  .js-scroll .stage__head{
+    margin-bottom:clamp(22px,2.6vw,38px);
+    max-width:min(940px,100%); margin-inline:auto;
+  }
+  .js-scroll .stage__head .h2{font-size:clamp(30px,3.6vw,50px); max-width:22ch}
+  .js-scroll .stage__head .head__note{display:none}
+  .js-scroll .stage__head .kicker{margin-bottom:12px}
+
+  /* The perspective belongs on the panels' own parent. Put it on .stage__pin
+     and it never reaches them: `perspective` applies to a box's children, and
+     .wrap sits in between, flattening the 3D context before the cards see it. */
+  .js-scroll .stage .bento{
+    display:block; position:relative;
+    height:min(540px,58vh);
+    perspective:1400px; perspective-origin:50% 50%;
+    transform-style:preserve-3d;
+  }
+  .js-scroll .stage .card{
+    position:absolute; top:50%; left:50%;
+    width:min(940px,100%); height:100%;
+    margin:0; min-height:0;
+    padding:clamp(34px,3.6vw,58px);
+    transform:
+      translate3d(-50%,-50%,0)
+      translateZ(var(--pz,0px))
+      rotateX(var(--pr,0deg));
+    opacity:var(--hold,0);
+    filter:blur(var(--pf,0px));
+    /* while a panel is off-screen it must not eat clicks meant for the live one */
+    pointer-events:none;
+    transition:none;
+    will-change:transform,opacity;
+    backface-visibility:hidden;
+  }
+  .js-scroll .stage .card.is-live{pointer-events:auto}
+  .js-scroll .stage .card:hover{transform:
+      translate3d(-50%,-50%,0) translateZ(var(--pz,0px)) rotateX(var(--pr,0deg))}
+
+  /* At panel scale the card's own furniture has to grow with it. The numeral
+     stays in flow where it already was — it just becomes the panel's index
+     rather than a label, and the heading tucks up under it. */
+  .js-scroll .stage .card__no{
+    display:block; font-size:clamp(64px,7.4vw,116px); line-height:.74;
+    letter-spacing:-.04em; opacity:.14; margin-bottom:.1em;
+  }
+  .js-scroll .stage .card h3{
+    padding-top:0; max-width:19ch;
+    font-size:clamp(28px,3.3vw,48px); line-height:1.04; letter-spacing:-.035em;
+  }
+  .js-scroll .stage .card p{
+    margin-top:clamp(16px,1.8vw,26px); max-width:56ch;
+    font-size:clamp(16px,1.35vw,19px); line-height:1.6;
+  }
+  .js-scroll .stage .card .tags{margin-top:auto; padding-top:clamp(20px,2.4vw,32px)}
+  .js-scroll .stage .card .tags li{font-size:13px; padding:7px 14px}
+  .js-scroll .stage .card__art--grid{
+    top:clamp(34px,3.6vw,58px); right:clamp(34px,3.6vw,58px);
+    grid-template-columns:repeat(4,18px); gap:9px;
+  }
+  .js-scroll .stage .card__art--grid i{width:18px; height:18px; border-radius:4px}
+  .js-scroll .stage .card__art--wave{
+    top:clamp(34px,3.6vw,58px); right:clamp(34px,3.6vw,58px);
+    height:72px; gap:7px;
+  }
+  .js-scroll .stage .card__art--wave i{width:7px}
+
+  /* The rail. It mirrors the numbers already printed on the cards, so
+     it adds an affordance without adding a new idea. */
+  .js-scroll .stage__rail{
+    display:grid; gap:14px; list-style:none; margin:0; padding:0;
+    position:absolute; left:clamp(20px,4.4vw,64px); top:50%;
+    transform:translateY(-50%);
+    font-family:var(--mono); font-size:11px; letter-spacing:.12em;
+  }
+  .js-scroll .stage__pip{
+    display:flex; align-items:center; gap:10px;
+    color:var(--fg-faint); transition:color .4s var(--ease);
+  }
+  .js-scroll .stage__pip::before{
+    content:""; width:22px; height:1px; background:currentColor;
+    transition:width .5s var(--ease), background .4s var(--ease);
+  }
+  .js-scroll .stage__pip.is-on{color:var(--acid)}
+  .js-scroll .stage__pip.is-on::before{width:44px}
+
+  /* While the lime panel owns the screen the ground is already lime,
+     so the rail and nav need to stop competing with it. */
+  .js-scroll .stage .card--accent{box-shadow:0 60px 120px -60px rgba(204,255,46,.55)}
+}
+
+/* ── Section depth ──────────────────────────────────────────
+   Applied through data-depth in the markup. Values are small on
+   purpose: this should read as the page having thickness, not as
+   elements sliding around. */
+.js-scroll [data-depth]{will-change:transform}
+
+/* ── Nav ────────────────────────────────────────────────────
+   The bar earns its background as you leave the hero rather than
+   carrying one from the first frame. */
+.js-scroll .nav__inner{
+  backdrop-filter:blur(calc((1 - var(--heroLift,1)) * 14px));
+  -webkit-backdrop-filter:blur(calc((1 - var(--heroLift,1)) * 14px));
+}
+
+/* ── Safety ─────────────────────────────────────────────────
+   Belt and braces: if the media query flips after load, or a UA
+   ignores the JS guard, every transform above resolves to nothing
+   and the stage collapses back to the ordinary grid. */
+@media (prefers-reduced-motion:reduce){
+  .ground{display:none}
+  .js-scroll .stage{height:auto}
+  .js-scroll .stage__pin{position:static; height:auto; perspective:none; overflow:visible}
+  .js-scroll .stage .bento{display:grid; height:auto}
+  .js-scroll .stage .card{
+    position:relative; top:auto; left:auto; width:auto; height:auto;
+    transform:none; opacity:1; pointer-events:auto; min-height:280px;
+  }
+  .js-scroll .stage__rail{display:none}
+  .h2--split .w{transform:none; opacity:1}
+  .js-scroll .hero__title,.js-scroll .hero__cta,
+  .js-scroll .hero__foot,.js-scroll .stats,
+  .js-scroll .hero__tree,.js-scroll [data-depth]{transform:none; opacity:1}
+  .js-scroll .hero__cue{display:none}
+}

@@ -17,6 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/css/styles.css" />
 <link rel="stylesheet" href="assets/css/templates.css" />
+<link rel="stylesheet" href="assets/css/scroll.css" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230B0B0C'/><path d='M50 16 Q54.5 45.5 84 50 Q54.5 54.5 50 84 Q45.5 54.5 16 50 Q45.5 45.5 50 16Z' fill='%23CCFF2E'/></svg>" />
 </head>
 <body>
@@ -101,6 +102,9 @@
       <li><b data-count="70" data-suffix="%">0</b><span>enquiries handled without a human</span></li>
     </ul>
   </div>
+
+  <!-- Shown only when the cinematic layer is active; CSS hides it otherwise. -->
+  <div class="hero__cue" aria-hidden="true"><i></i>Scroll</div>
 </section>
 
 <!-- ══ MARQUEE ══ -->
@@ -113,13 +117,22 @@
 
 <!-- ══ SERVICES ══ -->
 <section class="section services" id="services">
-  <div class="wrap">
-    <header class="head">
+  <!-- The scroll stage. Without the cinematic layer (no JS, reduced motion, or
+       a narrow screen) `.stage` and `.stage__pin` are inert wrappers and the
+       three cards below are the same bento grid they have always been. -->
+  <div class="stage" id="svcStage">
+   <div class="stage__pin">
+    <ol class="stage__rail" aria-hidden="true">
+      <li class="stage__pip">Websites</li>
+      <li class="stage__pip">AI Agents</li>
+      <li class="stage__pip">Motion Video</li>
+    </ol>
+    <div class="wrap">
+    <header class="head stage__head">
       <p class="kicker reveal">[ 01 ] What we do</p>
       <h2 class="h2 reveal">Three ways we <em>grow</em> your business.</h2>
       <p class="head__note reveal">Take all three or the one you're missing. Everything below plugs into the pricing builder further down.</p>
     </header>
-
     <div class="bento">
       <article class="card reveal">
         <span class="card__no" aria-hidden="true">01</span>
@@ -144,13 +157,15 @@
         <div class="card__art card__art--wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </article>
     </div>
+    </div>
+   </div>
   </div>
 </section>
 
 <!-- ══ PROCESS ══ -->
 <section class="section process" id="process">
   <div class="wrap">
-    <header class="head">
+    <header class="head" data-depth="34">
       <p class="kicker reveal">Four-Week Journey: Briefing to Live</p>
       <h2 class="h2 reveal">Four weeks from brief to <em>live</em>.</h2>
     </header>
@@ -204,7 +219,7 @@
 <!-- ══ WORK ══ -->
 <section class="section work" id="work">
   <div class="wrap">
-    <header class="head">
+    <header class="head" data-depth="34">
       <p class="kicker reveal">[ 03 ] Explore what's possible</p>
       <h2 class="h2 reveal">Explore what's <em>possible</em>.</h2>
     </header>
@@ -441,7 +456,7 @@
 <!-- ══ PLAN BUILDER ══ -->
 <section class="section builder" id="build">
   <div class="wrap">
-    <header class="head">
+    <header class="head" data-depth="34">
       <p class="kicker reveal">[ 04 ] Build a plan</p>
       <h2 class="h2 reveal">Pick a package. <em>Stack</em> what you need.</h2>
       <p class="head__note reveal">All prices in Pakistani rupees, excluding sales tax. Invoiced monthly in PKR by bank transfer — no dollar billing, no 12-month lock-in.</p>
@@ -557,7 +572,7 @@
 <!-- ══ FAQ ══ -->
 <section class="section faq" id="faq">
   <div class="wrap wrap--narrow">
-    <header class="head">
+    <header class="head" data-depth="34">
       <p class="kicker reveal">[ 05 ] Questions</p>
       <h2 class="h2 reveal">The <em>useful</em> answers.</h2>
     </header>
@@ -1150,5 +1165,6 @@
 };</script>
 
 <script src="assets/js/main.js" defer></script>
+<script src="assets/js/scroll.js" defer></script>
 </body>
 </html>
