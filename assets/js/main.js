@@ -190,16 +190,28 @@
   render();
 
   /* ── Contact form ───────────────────────────────────────
-     The enquiry is POSTed as JSON to api/enquiry.js, which holds the Resend
-     key in a server-side environment variable and composes the email. No
-     credential of any kind is sent from, or present in, this file — the
-     browser only ever talks to our own endpoint.
+     The enquiry is POSTed as JSON and the visitor stays on the page. Nothing
+     here opens a mail client, and the success line appears only after the
+     service has answered success:true — a failure never reads as a send.
 
-     The endpoint comes off the form's data attribute so it can point at a
-     different host without touching this script. */
+     Two routes are supported, chosen by the form's data attributes so the
+     hosting can change without touching this script:
+
+       Web3Forms (the default). Works on any host, including a purely static
+       one, because nothing server-side has to run. The access key is public
+       by design — it authorises queueing a message to the one address that
+       registered it and nothing else — so no secret exists in this file.
+
+       api/enquiry.js. Only works where the host executes functions (Vercel).
+       Holds a Resend key in a server-side environment variable which the
+       browser never sees.
+
+     No API key, SMTP password or private credential is present in, or sent
+     from, this file under either route. */
   var form = $('#form'), note = $('#formNote');
-  var FAILED = 'Something went wrong. Please try again or contact us directly at ' +
-               'sparkup.ai@consultant.com.';
+  var SENT   = 'Thank you! Your enquiry has been sent successfully. ' +
+               'Our team will contact you shortly.';
+  var FAILED = "Sorry, we couldn't send your enquiry. Please try again.";
   if (form) {
     var submitBtn = $('button[type="submit"]', form);
     var sending = false;
@@ -222,6 +234,40 @@
       note.classList.toggle('is-bad', !!bad);
     }
 
+    /* Web3Forms renders the email from the keys it is given, in the order it
+       is given them, so the keys here ARE the headings the studio reads. They
+       are written out rather than taken from the input names for exactly that
+       reason: `phone` would arrive as a heading reading "phone".
+
+       Every field on the form is carried, including the three hidden ones the
+       pricing builder keeps in step, so the email matches what the visitor had
+       configured at the moment they sent it. Nothing is truncated — the message
+       is passed whole, however long it is. */
+    function val(n) {
+      var el = form.elements[n];
+      return el ? String(el.value || '').trim() : '';
+    }
+    function web3Payload(key) {
+      var name = val('name');
+      return {
+        access_key: key,
+        subject: 'New SparkUp AI Website Enquiry – ' + name,
+        from_name: 'SparkUp AI Website',
+        replyto: val('email'),          /* replying to the alert answers the customer */
+        botcheck: !!form.elements.botcheck.checked,
+        'Name': name,
+        'Email': val('email'),
+        'WhatsApp / Phone': val('phone'),
+        'City': val('city') || 'Not provided',
+        'Selected Service/Plan': val('plan'),
+        'Selected Add-ons': val('addons') || 'None',
+        'Billing': val('billing') || 'Not provided',
+        'Total': val('total') || 'Not provided',
+        'Customer Requirements': val('message'),
+        'Submitted from': 'SparkUp AI Website'
+      };
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (sending) return;               /* a second click while in flight is ignored */
@@ -235,15 +281,27 @@
       });
       if (!ok) { say('Check the highlighted fields.', true); return; }
 
-      var endpoint = form.dataset.formEndpoint;
+      var endpoint = form.dataset.formEndpoint || '';
+      var key = (form.dataset.formKey || '').trim();
+      var viaWeb3 = /(^|\.)web3forms\.com\//.test(endpoint);
+
       if (!endpoint) {
         console.error('[form] No endpoint — set data-form-endpoint on #form.');
         say(FAILED, true);
         return;
       }
+      if (viaWeb3 && !key) {
+        /* Refuse rather than report a success for a message that went nowhere. */
+        console.error('[form] No access key. Paste your Web3Forms key into ' +
+                      'data-form-key on #form in index.html. Get one free at ' +
+                      'https://web3forms.com — it is a public submission ' +
+                      'identifier, not a secret. The enquiry was NOT sent.');
+        say(FAILED, true);
+        return;
+      }
 
-      /* the raw fields; the function owns the email's headings and wording */
-      var data = Object.fromEntries(new FormData(form).entries());
+      var data = viaWeb3 ? web3Payload(key)
+                         : Object.fromEntries(new FormData(form).entries());
 
       sending = true;
       submitBtn.disabled = true;
@@ -265,8 +323,9 @@
                console without exposing anything to the visitor */
             throw new Error('HTTP ' + res.status + ' — ' + (res.out.message || 'no message'));
           }
-          say('Thank you! Your project request has been received. ' +
-              'Our team will be in touch shortly.');
+          say(SENT);
+          /* Cleared only on a confirmed send. A failure leaves every field
+             exactly as typed, so nothing has to be entered twice. */
           form.reset();
           render();                      /* restores the plan summary field */
         })

@@ -210,164 +210,92 @@ case-study section.
 
 ## The enquiry form
 
-The form in the contact section POSTs the enquiry as JSON to
-`api/enquiry.js`, which emails it to `sparkup.ai@consultant.com` through
-Resend. It never leaves the page and never opens the visitor's mail client.
+The form in the contact section POSTs the enquiry as JSON and the visitor stays
+on the page. Nothing opens a mail client, and the success line appears only after
+the service has answered `success: true` — a failed send never reads as a sent one.
 
-The Resend key lives in a server-side environment variable. The browser only
-ever talks to our own endpoint, so no credential is present in, or sent from,
-`index.html` or `assets/js/`.
+### Which route it uses, and why
 
-### Where it can run
+The site has no guaranteed server. The GitHub Pages workflow in this repo has
+never once published (`has_pages` is false on the API), and Pages executes
+nothing even when it does publish, so `api/enquiry.js` cannot be relied on. The
+form therefore defaults to **Web3Forms**, which needs nothing server-side and
+works identically on GitHub Pages, Vercel, Netlify or a plain file server.
 
-`api/enquiry.js` is a serverless function. **GitHub Pages cannot run it** — Pages
-serves files and executes nothing, so the form will fail there. Deploy to a host
-that runs functions; Vercel needs no configuration beyond `vercel.json`, which is
-already in the repo (import the repo at vercel.com, no build command, output
-directory `.`).
+Both routes are supported and the form's data attributes choose between them:
 
-Netlify or Cloudflare Pages work too — the handler is a plain
-`(req, res)` function with no dependencies, so only the export wrapper changes.
+| | `data-form-endpoint` | `data-form-key` | Needs |
+|---|---|---|---|
+| **Web3Forms** (default) | `https://api.web3forms.com/submit` | your access key | nothing server-side |
+| Self-hosted | `/api/enquiry` | *(empty)* | Vercel + `RESEND_API_KEY` |
 
-`package.json` exists only to declare `"type": "module"`. There are no
-dependencies and nothing is built; without it a host is entitled to read
-`api/enquiry.js` as CommonJS, and its `export default` would then fail to load.
+### What you must provide
 
-If the site must stay on GitHub Pages, the alternative is a form-relay service
-(Web3Forms, Formspree): point `data-form-endpoint` on the form at the relay and
-add its public access key. That needs no server, but the email template below
-comes from the relay rather than from this repository.
+**One value: a Web3Forms access key.** Get it free at <https://web3forms.com> —
+enter `sparkup.ai@consultant.com`, and the key is emailed to you. No account, no
+dashboard, no DNS, no domain verification. Paste it into `data-form-key` on the
+`<form>` in `index.html`, commit, and redeploy.
 
-### What you need to provide
+Until a key is pasted in, the form **refuses to send** and shows the failure
+message. It never reports a success for a message that went nowhere.
 
-| # | | |
-|---|---|---|
-| 1 | **Service** | [Resend](https://resend.com) — free tier covers 3,000 emails/month |
-| 2 | **Variable** | `RESEND_API_KEY` |
-| 3 | **Where** | Vercel → Project → Settings → Environment Variables. Tick **Production**, **Preview** and **Development** — a variable set only on Production leaves preview deploys failing. |
-| 4 | **Value** | An API key from <https://resend.com/api-keys>, starting `re_`. "Sending access" is enough. |
-| 5 | **Domain** | See below — yes, before going live. |
+### On the access key being in the page
 
-Two optional variables, both with working defaults:
+It is a public submission identifier, not a credential. It authorises queueing a
+message to the one address that registered it and nothing else — it grants no
+account access and cannot be used to read anything. Web3Forms publishes it in
+the browser in all of its own documentation. No API key, SMTP password or
+private secret is present anywhere in the frontend.
 
-| Variable | Default | Set it when |
-|---|---|---|
-| `ENQUIRY_TO` | `sparkup.ai@consultant.com` | the enquiries should go elsewhere |
-| `ENQUIRY_FROM` | `SparkUP AI <onboarding@resend.dev>` | you have verified a domain — see below |
-| `ALLOWED_ORIGIN` | *(none)* | the site and the function are on different origins |
-| `ENQUIRY_DEBUG` | *(none)* | set to `1` while setting the site up, to echo the provider's own rejection reason to the browser console; remove it afterwards |
-
-### Checking a deployment
-
-Open `/api/enquiry` in a browser — a `GET` is a health check and sends nothing:
-
-```json
-{ "ok": true, "runtime": "node 22.x", "resendKeyPresent": true,
-  "deliversTo": "sparkup.ai@consultant.com",
-  "sendsFrom": "SparkUP AI <onboarding@resend.dev>",
-  "usingResendTestSender": true }
-```
-
-It answers the three questions that matter, in order:
-
-- **404 or a hosting error page** — the function is not deployed. The site is on
-  a static host, or the deploy did not pick up `api/`. Nothing else is worth
-  checking until this returns JSON.
-- **`resendKeyPresent: false`** — the variable is missing from this environment,
-  or was added without redeploying. Vercel bakes variables in at build time.
-- **`usingResendTestSender: true`** — sends will only reach the address that owns
-  the Resend account. See below.
-
-It reports no secret: booleans and the addresses already published on the site.
-
-### The sending domain
-
-This matters, and it is the most common reason a first send appears to work but
-nothing arrives.
-
-Out of the box the function sends from `onboarding@resend.dev`, Resend's shared
-testing sender. **It only delivers to the email address that owns the Resend
-account.** If `sparkup.ai@consultant.com` is not that address, nothing will
-arrive until you verify a domain.
-
-To go live: add your domain at <https://resend.com/domains>, add the DNS records
-Resend gives you, wait for verification, then set `ENQUIRY_FROM` to an address on
-it — for example `SparkUP AI <enquiries@yourdomain.com>`. The recipient stays
-`sparkup.ai@consultant.com` either way.
+If you would rather have nothing at all in the page, use the self-hosted route:
+deploy to Vercel, set `RESEND_API_KEY` in Settings → Environment Variables
+(Production, Preview and Development), and point `data-form-endpoint` at
+`/api/enquiry`. That route also needs a verified sending domain before
+`ENQUIRY_FROM` will deliver anywhere other than your own Resend account address.
 
 ### The email that arrives
 
-Subject: **New Project Quote Request — [Customer Name]**
+Subject: `New SparkUp AI Website Enquiry – [Customer Name]`, reply-to set to the
+customer, so replying answers them directly. Both routes carry the same fields in
+the same order:
 
 ```
-New Quote Request
+NEW CUSTOMER ENQUIRY
 
-You have received a new project enquiry through the SparkUP AI website.
+Name: ...
+Email: ...
+WhatsApp / Phone: ...
+City: ...
+Selected Service/Plan: ...
+Selected Add-ons: ...
+Billing: ...
+Total: ...
 
-CUSTOMER DETAILS
-Name:                          Ayesha Tariq
-Email:                         ayesha@chowkretail.pk
-WhatsApp Number:               +92 300 1234567
-City:                          Lahore
+Customer Requirements:
+[the full message]
 
-PROJECT DETAILS
-Selected Plan:                 Website — Second AI agent — Rs 310,000/month
-Selected Add-ons:              Second AI agent
-Billing:                       Monthly
-Total:                         Rs 310,000/month
-What are they trying to fix?:  Our site gets traffic but nobody enquires…
-
-This enquiry was submitted through the SparkUP AI website quote form.
-
-SparkUP AI
-Web Design · AI Agents · Motion Videos
-sparkup.ai@consultant.com
-+44 7984 826727
+Submitted from: SparkUp AI Website
 ```
 
-Sent as HTML with a plain-text alternative. Headings and order live in `ROWS` in
-`api/enquiry.js` — the function owns the wording, so a malformed or hostile
-request cannot reshape the message. Reply-to is the customer's address, so
-replying to the alert answers them directly. A blank optional field reads
-"Not provided".
+Web3Forms renders those labels and values as a list under the subject; the
+self-hosted route composes the layout above exactly. Add-ons, billing and total
+ride in hidden fields the pricing builder keeps in step, so the email matches
+what the visitor had configured when they sent it.
 
-### Responses the endpoint returns
+### Guarantees
 
-| Status | Body | Meaning |
-|---|---|---|
-| 200 | `{"success":true}` | sent |
-| 422 | `{"success":false,"fields":[…]}` | failed server-side validation |
-| 405 | `{"success":false}` | not a POST |
-| 500 | `{"success":false}` | `RESEND_API_KEY` missing — logged server-side |
-| 502 | `{"success":false}` | Resend rejected it or was unreachable — logged with its reason |
-
-Failure bodies never describe how the server is wired; the detail goes to the
-server log. The page logs the status and message it received to the console, so
-a failure can be diagnosed without reading anything back to the visitor.
-
-### Behaviour on the page
-
-- Name, email, WhatsApp number and the message are required; email and phone are
-  format-checked in the browser *and* re-checked in the function, since a request
-  can reach it without going through the page.
-- **The message has no length limit.** No `maxlength`, no word or character
-  count, and nothing truncates it on either side. A request larger than ~100 KB
-  in total is refused with 413 rather than quietly shortened, so a message is
-  never half-delivered without anyone noticing.
-- **The phone field assumes no country.** Any arrangement of `+`, spaces,
-  brackets, hyphens, dots and slashes is accepted, judged only by digit count
-  (7–20, spanning every national and E.164 international form). Verified against
-  `+44 7984 826727`, `0300 1234567`, `+92 300 1234567`, `+1 (212) 555-1234`,
-  `+61 2 9374 4000`, `+81 3-1234-5678`, `020 7946 0958` and others.
-- Success: "Thank you! Your project request has been received. Our team will be
-  in touch shortly." — the form clears and the plan summary is restored.
-- Failure: "Something went wrong. Please try again or contact us directly at
-  sparkup.ai@consultant.com." — in the warning colour, with what the visitor
-  typed left in place.
-- The submit button disables while a request is in flight, so extra clicks cannot
-  queue a duplicate. Verified: three clicks during a request produce one email.
-- An off-screen honeypot field is answered 200 without sending, so bots do not
-  retry.
+- **No truncation.** The message is sent whole, however long. Verified: 15,000
+  characters in, 15,000 characters out.
+- **International numbers.** The phone is judged by digit count alone (7–20)
+  over a permissive character set. `+44 7984 826727`, `0300 1234567`,
+  `+92 300 1234567`, `+1 (212) 555-1234`, `+61 2 9374 4000` and `020 7946 0958`
+  all pass; `abc`, `12` and an empty field do not.
+- **No duplicate sends.** The button is disabled and `pointer-events` removed
+  for the whole request; three rapid clicks produce one request.
+- **Nothing retyped on failure.** The form is cleared only after a confirmed
+  send; an error leaves every field as typed.
+- **Spam protection.** An off-screen `botcheck` honeypot a real visitor never
+  sees, which Web3Forms drops server-side.
 
 ## Notes
 

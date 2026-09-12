@@ -598,12 +598,23 @@
       <h2 class="cta__title reveal">Start Your <em>Project</em>.</h2>
       <p class="contact__lede reveal">Send the plan you built above, or just describe the mess. You'll get a written reply from a person within one working day — we work Monday to Saturday, 9am to 9pm PKT.</p>
 
-      <!-- Enquiries POST to the serverless function in api/enquiry.js, which
-           holds the Resend key server-side and emails the studio. Same-origin
-           by default; set an absolute URL here if the function is deployed to a
-           different host than the site. See "The enquiry form" in README.md. -->
+      <!-- Submission is configured here, not in the script.
+
+           data-form-key is the Web3Forms ACCESS KEY. It is a public submission
+           identifier, not a secret: it only permits queueing a message to the
+           address that registered it, and Web3Forms publishes it in the browser
+           by design. No API key, SMTP password or private credential is, or can
+           be, present in this page.
+
+           The form does not send until a key is pasted in below — it reports the
+           failure instead of pretending to have sent.
+
+           To use the self-hosted route instead (Vercel only, exact email layout,
+           needs RESEND_API_KEY server-side), set data-form-endpoint to
+           "/api/enquiry" and leave data-form-key empty. -->
       <form class="form reveal" id="form" novalidate
-            data-form-endpoint="/api/enquiry">
+            data-form-endpoint="https://api.web3forms.com/submit"
+            data-form-key="">
         <div class="field">
           <label for="fName">Name</label>
           <input id="fName" name="name" type="text" autocomplete="name" required placeholder="Your name" />

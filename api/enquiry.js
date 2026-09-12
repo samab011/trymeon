@@ -29,13 +29,13 @@ const FROM = process.env.ENQUIRY_FROM || 'SparkUP AI <onboarding@resend.dev>';
 const ROWS = [
   ['Name', 'name'],
   ['Email', 'email'],
-  ['WhatsApp Number', 'phone'],
+  ['WhatsApp / Phone', 'phone'],
   ['City', 'city'],
-  ['Selected Plan', 'plan'],
+  ['Selected Service/Plan', 'plan'],
   ['Selected Add-ons', 'addons'],
   ['Billing', 'billing'],
   ['Total', 'total'],
-  ['What are they trying to fix?', 'message']
+  ['Customer Requirements', 'message']
 ];
 
 const esc = (s) =>
@@ -85,25 +85,16 @@ function render(body) {
         <td style="padding:0 0 10px;font:400 16px/1.5 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#101114;white-space:pre-wrap;">${esc(value) || '<span style="color:#9a9d94;">Not provided</span>'}</td>
       </tr>`;
 
-  const group = (title) => `
-      <tr>
-        <td style="padding:26px 0 2px;border-top:1px solid #e6e6e1;font:700 13px/1.4 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#101114;">${title}</td>
-      </tr>`;
-
   const at = (key) => clean(body[key]);
 
   return `<!doctype html><html><body style="margin:0;background:#f6f6f3;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f6f6f3;padding:28px 12px;">
    <tr><td align="center">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:620px;background:#ffffff;border:1px solid #e6e6e1;border-radius:14px;padding:30px 34px;">
-      <tr><td style="font:700 24px/1.25 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#101114;">New Quote Request</td></tr>
-      <tr><td style="padding-top:10px;font:400 15px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#55584f;">You have received a new project enquiry through the SparkUP AI website.</td></tr>
-      ${group('Customer details')}
-      ${ROWS.slice(0, 4).map(([l, k]) => cell(l, at(k))).join('')}
-      ${group('Project details')}
-      ${ROWS.slice(4).map(([l, k]) => cell(l, at(k))).join('')}
+      <tr><td style="font:700 24px/1.25 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;letter-spacing:.02em;color:#101114;">NEW CUSTOMER ENQUIRY</td></tr>
+      ${ROWS.map(([l, k]) => cell(l, at(k))).join('')}
       <tr><td style="padding:26px 0 0;border-top:1px solid #e6e6e1;font:400 13px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#7a7d74;">
-        This enquiry was submitted through the SparkUP AI website quote form.
+        Submitted from: SparkUp AI Website
       </td></tr>
       <tr><td style="padding-top:18px;font:400 13px/1.7 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;color:#55584f;">
         <strong style="color:#101114;">SparkUP AI</strong><br />
@@ -120,17 +111,14 @@ function render(body) {
 function renderText(body) {
   const at = (key) => clean(body[key]) || 'Not provided';
   return [
-    'New Quote Request',
+    'NEW CUSTOMER ENQUIRY',
     '',
-    'You have received a new project enquiry through the SparkUP AI website.',
+    ...ROWS.slice(0, 8).map(([l, k]) => `${l}: ${at(k)}`),
     '',
-    'CUSTOMER DETAILS',
-    ...ROWS.slice(0, 4).map(([l, k]) => `\n${l}:\n${at(k)}`),
+    'Customer Requirements:',
+    at('message'),
     '',
-    'PROJECT DETAILS',
-    ...ROWS.slice(4).map(([l, k]) => `\n${l}:\n${at(k)}`),
-    '',
-    'This enquiry was submitted through the SparkUP AI website quote form.',
+    'Submitted from: SparkUp AI Website',
     '',
     'SparkUP AI',
     'Web Design · AI Agents · Motion Videos',
@@ -224,7 +212,7 @@ export default async function handler(req, res) {
         from: FROM,
         to: [TO],
         reply_to: email,          /* replying to the alert answers the customer */
-        subject: `New Project Quote Request — ${name}`,
+        subject: `New SparkUp AI Website Enquiry \u2013 ${name}`,
         html: render(body),
         text: renderText(body)
       })
