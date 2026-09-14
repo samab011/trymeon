@@ -15,7 +15,7 @@
   --paper-2:    #E7E2D6;
   --fg:         #F4F3F1;
   --fg-mute:    rgba(244,243,241,.58);
-  --fg-faint:   rgba(244,243,241,.34);
+  --fg-faint:   rgba(244,243,241,.48);   /* .34 computed to 2.85:1 on --ink; .48 is 4.61:1 */
   --acid:       #CCFF2E;
   --acid-deep:  #A9DB12;
   --clay:       #FF6B4A;
@@ -137,7 +137,7 @@ input,textarea{font:inherit; color:inherit}
 .nav__links a:hover{color:var(--fg); background:rgba(255,255,255,.06)}
 .nav__actions{display:flex; align-items:center; gap:10px}
 
-.burger{display:none; width:42px; height:42px; border-radius:99px; border:1px solid var(--line); place-items:center}
+.burger{display:none; width:44px; height:44px; border-radius:99px; border:1px solid var(--line); place-items:center}
 .burger span{display:block; width:16px; height:1.5px; background:var(--fg); transition:transform var(--fast), opacity var(--fast)}
 .burger span+span{margin-top:5px}
 .burger[aria-expanded="true"] span:first-child{transform:translateY(3.25px) rotate(45deg)}
@@ -246,7 +246,7 @@ input,textarea{font:inherit; color:inherit}
   transition:color var(--fast), transform .45s var(--ease);
 }
 .card:hover .card__no{color:var(--acid); transition:color var(--fast), transform .08s linear}
-.card--accent .card__no{color:rgba(11,11,12,.5)}
+.card--accent .card__no{color:rgba(11,11,12,.62)}
 .card--accent:hover .card__no{color:rgba(11,11,12,.9)}
 @media (prefers-reduced-motion:reduce){ .card__no{transform:none} }
 .card h3{padding-top:52px; font-size:clamp(21px,2vw,27px); font-weight:600; letter-spacing:-.03em; line-height:1.15}
@@ -389,13 +389,13 @@ input,textarea{font:inherit; color:inherit}
   margin-top:14px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;
   padding:clamp(22px,2.6vw,34px); border-radius:var(--r); background:var(--paper); color:var(--ink);
 }
-.quote__label{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(11,11,12,.5)}
+.quote__label{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(11,11,12,.62)}
 .quote__mix{margin-top:8px; font-size:clamp(19px,2.2vw,27px); font-weight:600; letter-spacing:-.03em; max-width:36ch}
 .quote__right{display:flex; align-items:center; gap:clamp(18px,2.6vw,34px); flex-wrap:wrap}
 .quote__total{display:flex; align-items:baseline; gap:2px; font-weight:700; letter-spacing:-.05em}
-.quote__total span{font-size:clamp(15px,1.5vw,20px); color:rgba(11,11,12,.45); margin-right:6px; letter-spacing:0}
+.quote__total span{font-size:clamp(15px,1.5vw,20px); color:rgba(11,11,12,.62); margin-right:6px; letter-spacing:0}
 .quote__total b{font-size:clamp(38px,5vw,62px); font-variant-numeric:tabular-nums}
-.quote__total em{font-family:var(--mono); font-size:12px; font-style:normal; color:rgba(11,11,12,.5); margin-left:6px}
+.quote__total em{font-family:var(--mono); font-size:12px; font-style:normal; color:rgba(11,11,12,.62); margin-left:6px}
 .quote__save{font-family:var(--mono); font-size:12px; color:var(--acid-deep); background:var(--ink); padding:6px 12px; border-radius:99px}
 .quote .btn--solid{background:var(--ink); color:var(--paper)}
 .quote .btn--solid:hover{background:var(--acid); color:var(--ink)}
@@ -453,6 +453,19 @@ input,textarea{font:inherit; color:inherit}
 /* a failure reads in the warning colour the invalid fields already use, rather
    than the lime that means success */
 .form__note.is-bad{color:var(--clay)}
+/* A failed field said so in one way only — a red border — which is invisible to
+   a screen reader and ambiguous to anyone who cannot separate the two colours.
+   Each field now carries its own message, and the input is marked aria-invalid. */
+.field__err{
+  display:none; margin-top:7px; gap:6px; align-items:flex-start;
+  font-size:13px; line-height:1.4; color:var(--clay);
+}
+.field.is-bad .field__err{display:flex}
+.field__err::before{
+  content:"!"; flex:none; width:15px; height:15px; margin-top:1px;
+  border:1px solid currentColor; border-radius:50%;
+  font-size:10px; font-weight:700; line-height:13px; text-align:center;
+}
 .field.is-bad input,.field.is-bad textarea{border-color:var(--clay)}
 /* the relay's honeypot: off-screen rather than display:none, so bots that skip
    hidden inputs still fill it, and never in the tab order or the a11y tree */
@@ -499,6 +512,10 @@ input,textarea{font:inherit; color:inherit}
   .footer__sign p{margin-left:0}
 }
 @media (max-width:860px){
+  /* 15px/1.55 text plus 5px padding came to a 33px tap target; these are thumb
+     targets on a phone, so they go to the 44px minimum here only — the desktop
+     footer keeps the tighter rhythm. */
+  .footer__cols a{padding-block:11px}
   .hero__tree{
     opacity:.55;
     -webkit-mask-image:linear-gradient(to top, #000 18%, rgba(0,0,0,.22) 62%, transparent 88%);

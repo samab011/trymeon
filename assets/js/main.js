@@ -216,18 +216,54 @@
     var submitBtn = $('button[type="submit"]', form);
     var sending = false;
 
+    /* [selector, test, message]. The message is the point: a red border is one
+       signal in one channel, which a screen reader cannot read and which anyone
+       who cannot separate those two colours cannot see. Each field says what is
+       wrong with it, in its own words, next to itself. */
     var CHECKS = [
-      ['#fName',  function (v) { return v.length > 1; }],
-      ['#fEmail', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }],
+      ['#fName',  function (v) { return v.length > 1; },
+       'Please enter your name.'],
+      ['#fEmail', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); },
+       'Please enter a valid email address, like you@company.com.pk.'],
       /* Country-agnostic: any arrangement of +, spaces, brackets, hyphens,
          dots and slashes, judged only by digit count. 7-20 spans every
          national and international form; no country is assumed. */
       ['#fPhone', function (v) {
         var d = v.replace(/\D/g, '').length;
         return /^[+(\d][\d\s()+.\-/]*$/.test(v) && d >= 7 && d <= 20;
-      }],
-      ['#fMsg',   function (v) { return v.length > 4; }]
+      },
+       'Please enter a phone number we can reach you on, with the country code.'],
+      ['#fMsg',   function (v) { return v.length > 4; },
+       'Please tell us a little about what you need.']
     ];
+
+    /* The message element is created here rather than in the markup so the
+       six fields stay as they are, and so the id wiring for aria-describedby
+       cannot drift out of step with the field it describes. */
+    function errNode(input) {
+      var id = input.id + 'Err';
+      var el = document.getElementById(id);
+      if (!el) {
+        el = document.createElement('p');
+        el.className = 'field__err';
+        el.id = id;
+        input.parentNode.appendChild(el);
+      }
+      return el;
+    }
+    function mark(input, valid, message) {
+      var el = errNode(input);
+      input.parentNode.classList.toggle('is-bad', !valid);
+      if (valid) {
+        el.textContent = '';
+        input.removeAttribute('aria-invalid');
+        input.removeAttribute('aria-describedby');
+      } else {
+        el.textContent = message;
+        input.setAttribute('aria-invalid', 'true');
+        input.setAttribute('aria-describedby', el.id);
+      }
+    }
 
     function say(text, bad) {
       note.textContent = text;
@@ -268,18 +304,39 @@
       };
     }
 
+    /* Clear a field's error the moment it becomes valid, but never raise a new
+       one mid-keystroke — nobody wants to be told their email is wrong while
+       they are still halfway through typing it. */
+    CHECKS.forEach(function (pair) {
+      var input = $(pair[0]);
+      if (!input) return;
+      input.addEventListener('input', function () {
+        if (input.parentNode.classList.contains('is-bad') &&
+            pair[1](input.value.trim())) {
+          mark(input, true);
+        }
+      });
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (sending) return;               /* a second click while in flight is ignored */
 
-      var ok = true;
+      var ok = true, firstBad = null;
       CHECKS.forEach(function (pair) {
         var input = $(pair[0]);
         var valid = pair[1](input.value.trim());
-        input.parentNode.classList.toggle('is-bad', !valid);
-        if (!valid) ok = false;
+        mark(input, valid, pair[2]);
+        if (!valid) { ok = false; if (!firstBad) firstBad = input; }
       });
-      if (!ok) { say('Check the highlighted fields.', true); return; }
+      if (!ok) {
+        say('Please check the fields marked below.', true);
+        /* Send the caret to the first problem rather than leaving someone to
+           hunt for it — this is the short-form equivalent of focusing an error
+           summary, and it moves the screen reader to the message too. */
+        if (firstBad) firstBad.focus();
+        return;
+      }
 
       var endpoint = form.dataset.formEndpoint || '';
       var key = (form.dataset.formKey || '').trim();
@@ -327,6 +384,7 @@
           /* Cleared only on a confirmed send. A failure leaves every field
              exactly as typed, so nothing has to be entered twice. */
           form.reset();
+          CHECKS.forEach(function (pair) { mark($(pair[0]), true); });
           render();                      /* restores the plan summary field */
         })
         .catch(function (err) {
