@@ -133,7 +133,7 @@
 
   /* ── Hero ───────────────────────────────────────────────────
      The first screen recedes rather than scrolling away: the
-     headline, the CTA, the lede and the stats sit at four different
+     headline, the CTA and the lede sit at three different
      depths and separate as you leave, and the canvas network behind
      them pushes back and dims. It reads as a camera pulling out of
      the composition instead of a page moving up. */
@@ -142,7 +142,6 @@
     var heroTitle = $('.hero__title', hero);
     var heroCta   = $('.hero__cta', hero);
     var heroFoot  = $('.hero__foot', hero);
-    var heroStats = $('.stats', hero);
     var heroTree  = $('.hero__tree', hero);
 
     /* Depth pairs: [element, how far it lags, how much it fades]. The
@@ -150,8 +149,7 @@
     var heroLayers = [
       [heroTitle, -120, .55],
       [heroCta,    -84, .70],
-      [heroFoot,   -54, .80],
-      [heroStats,  -26, .88]
+      [heroFoot,   -54, .80]
     ];
 
     track(hero, {

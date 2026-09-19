@@ -26,33 +26,6 @@
     revealables.forEach(function (el) { io.observe(el); });
   }
 
-  /* ── Stat counters ────────────────────────────────────── */
-  var counters = $$('[data-count]');
-  function runCount(el) {
-    var target = parseFloat(el.getAttribute('data-count'));
-    var suffix = el.getAttribute('data-suffix') || '';
-    if (reduced) { el.textContent = target.toLocaleString('en-PK') + suffix; return; }
-    var start = performance.now(), dur = 1400;
-    (function tick(now) {
-      var p = Math.min((now - start) / dur, 1);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(target * eased).toLocaleString('en-PK') + suffix;
-      if (p < 1) requestAnimationFrame(tick);
-    })(start);
-  }
-  if ('IntersectionObserver' in window) {
-    var cio = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        runCount(e.target);
-        cio.unobserve(e.target);
-      });
-    }, { threshold: 0.6 });
-    counters.forEach(function (el) { cio.observe(el); });
-  } else {
-    counters.forEach(runCount);
-  }
-
   /* ── Nav: stuck state + hide on scroll down ───────────── */
   var nav = $('#nav'), lastY = window.pageYOffset, ticking = false;
   function onScroll() {

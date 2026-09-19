@@ -204,16 +204,6 @@ input,textarea{font:inherit; color:inherit}
 .hero__lede{max-width:46ch; color:var(--fg-mute); font-size:clamp(16px,1.35vw,19px)}
 .hero__lede p+p{margin-top:.85em}
 
-.stats{
-  list-style:none; padding:0; margin-top:clamp(56px,8vw,110px);
-  display:grid; grid-template-columns:repeat(4,1fr); gap:2px;
-  border-top:1px solid var(--line);
-}
-.stats li{padding:26px 22px 0; border-right:1px solid var(--line-soft)}
-.stats li:last-child{border-right:0}
-.stats b{display:block; font-variant-numeric:tabular-nums; font-size:clamp(32px,4.4vw,58px); font-weight:700; letter-spacing:-.045em; line-height:1}
-.stats span{display:block; margin-top:8px; font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--fg-faint)}
-
 /* ── Marquee ──────────────────────────────────────────────── */
 .marquee{
   border-block:1px solid var(--line); overflow:hidden; padding-block:20px;
@@ -524,9 +514,6 @@ input,textarea{font:inherit; color:inherit}
   .hero__tree.is-on{opacity:.55}
   .nav__links,.nav__call{display:none}
   .burger{display:grid}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .stats li{border-bottom:1px solid var(--line-soft); padding-bottom:22px}
-  .stats li:nth-child(2n){border-right:0}
 }
 @media (max-width:660px){
   .bento{grid-template-columns:1fr}
