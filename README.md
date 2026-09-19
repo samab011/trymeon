@@ -5,7 +5,7 @@ working with businesses across Pakistan on three things:
 
 1. **High-converting websites** — to attract more customers and increase revenue.
 2. **Custom AI agents** — taking day-to-day work off the team: enquiries,
-   bookings, follow-ups and support at any hour.
+   bookings, follow-ups and customer questions at any hour.
 3. **Motion video** — for products, properties, services, launches; whatever
    the business sells.
 
